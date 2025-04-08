@@ -13,8 +13,11 @@ const Wrapper = styled.div`
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    min-height: 100vh;
-    background-color:rgb(244, 244, 244);
+    padding: 0 40px;
+    min-height: 100%;
     overflow-y: auto;
+    margin-top: 106px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `

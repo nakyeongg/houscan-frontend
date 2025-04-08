@@ -54,7 +54,7 @@ button {
     padding:0; 
     cursor:pointer;
     font-family: var(--mainfont);
-    line-height: 150%;
+    line-height: 140%;
 }
 
 a {
@@ -86,50 +86,50 @@ input:focus {
 }
 
 @font-face {
-    font-family: "Pretendard-Thin";
-    src: url("/fonts/Pretendard-Thin.otf") format("opentype");
+    font-family: "SUIT-THIN";
+    src: url("/fonts/SUIT-THIN.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-Light";
-    src: url("/fonts/Pretendard-Light.otf") format("opentype");
+    font-family: "SUIT-LIGHT";
+    src: url("/fonts/SUIT-LIGHT.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-Regular";
-    src: url("/fonts/Pretendard-Regular.otf") format("opentype");
+    font-family: "SUIT-REGULAR";
+    src: url("/fonts/SUIT-REGULAR.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-Medium";
-    src: url("/fonts/Pretendard-Medium.otf") format("opentype");
+    font-family: "SUIT-MEDIUM";
+    src: url("/fonts/SUIT-MEDIUM.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-SemiBold";
-    src: url("/fonts/Pretendard-SemiBold.otf") format("opentype");
+    font-family: "SUIT-SEMIBOLD";
+    src: url("/fonts/SUIT-SEMIBOLD.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-Bold";
-    src: url("/fonts/Pretendard-Bold.otf") format("opentype");
+    font-family: "SUIT-BOLD";
+    src: url("/fonts/SUIT-BOLD.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-ExtraBold";
-    src: url("/fonts/Pretendard-ExtraBold.otf") format("opentype");
+    font-family: "SUIT-EXTRABOLD";
+    src: url("/fonts/SUIT-EXTRABOLD.TTF") format("opentype");
     font-style: normal;
 }
 
 @font-face {
-    font-family: "Pretendard-Black";
-    src: url("/fonts/Pretendard-Black.otf") format("opentype");
+    font-family: "SUIT-HEAVY";
+    src: url("/fonts/SUIT-HEAVY.TTF") format("opentype");
     font-style: normal;
 }
 `;

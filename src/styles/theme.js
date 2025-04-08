@@ -19,19 +19,19 @@ export const theme = {
     
     fonts: {
         default: fontGenerator(
-            "Pretendard-Regular",
+            "SUIT-REGULAR",
             "1rem",
             "400",
             "140%",
             "-0.025em"
         ),
-        PretendardThin: fontGenerator("Pretendard-Thin"),
-        PretendardLight: fontGenerator("Pretendard-Light"),
-        PretendardRegular: fontGenerator("Pretendard-Regular"),
-        PretendardMedium: fontGenerator("Pretendard-Medium"),
-        PretendardSemiBold: fontGenerator("Pretendard-SemiBold"),
-        PretendardBold: fontGenerator("Pretendard-Bold"),
-        PretendardExtraBold: fontGenerator("Pretendard-ExtraBold"),
-        PretendardBlack: fontGenerator("Pretendard-Black"),
+        SUITThin: fontGenerator("SUIT-THIN"),
+        SUITLight: fontGenerator("SUIT-LIGHT"),
+        SUITRegular: fontGenerator("SUIT-REGULAR"),
+        SUITMedium: fontGenerator("SUIT-MEDIUM"),
+        SUITSemiBold: fontGenerator("SUIT-SEMIBOLD"),
+        SUITBold: fontGenerator("SUIT-BOLD"),
+        SUITExtraBold: fontGenerator("SUIT-EXTRABOLD"),
+        SUITBlack: fontGenerator("SUIT-HEAVY"),
     },
 };
