@@ -72,7 +72,7 @@ export const Guide = styled.p`
     font-size: 18px;
 `
 
-export const SignupButton = styled.p`
+export const LoginButton = styled.p`
     font-size: 18px;
     color: ${({ theme }) => theme.colors.mainColor};
     text-decoration: underline;

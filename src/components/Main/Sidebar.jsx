@@ -19,16 +19,18 @@ export const Sidebar = ({ onClose }) => {
                 </Category>
                 {!isLogin ? (
                     <>
-                        <Link to='login'>
+                        <Link to='/login'>
                             <Category>
                                 <Icon src={user} />
                                 <Name>로그인</Name>
                             </Category>
                         </Link>
-                        <Category>
-                            <Icon src={userAdd} />
-                            <Name>회원가입</Name>
-                        </Category>                    
+                        <Link to='/signup'>
+                            <Category>
+                                <Icon src={userAdd} />
+                                <Name>회원가입</Name>
+                            </Category>
+                        </Link>               
                     </>
                 ):( 
                     <>

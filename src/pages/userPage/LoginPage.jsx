@@ -41,13 +41,14 @@ const LoginPage = () => {
                             placeholder='비밀번호를 입력하세요' 
                             value={password}
                             onChange={handlePassword}
+                            type='password'
                         />
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>
                         <S.Button disabled={disable} >로그인</S.Button>
                         <S.GuideWrapper>
                             <S.Guide>아직 회원이 아니신가요?</S.Guide>
-                            <Link to='/'>
+                            <Link to='/signup'>
                                 <S.SignupButton>회원가입</S.SignupButton>
                             </Link>
                         </S.GuideWrapper>
