@@ -4,6 +4,7 @@ import close from '../../assets/icons/close.svg';
 import file from '../../assets/icons/file.svg';
 import user from '../../assets/icons/user.svg';
 import userAdd from '../../assets/icons/userAdd.svg';
+import { Link } from 'react-router-dom';
 
 export const Sidebar = ({ onClose }) => {
     const [isLogin, setIsLogin] = useState(false);
@@ -18,10 +19,12 @@ export const Sidebar = ({ onClose }) => {
                 </Category>
                 {!isLogin ? (
                     <>
-                        <Category>
-                            <Icon src={user} />
-                            <Name>로그인</Name>
-                        </Category>
+                        <Link to='login'>
+                            <Category>
+                                <Icon src={user} />
+                                <Name>로그인</Name>
+                            </Category>
+                        </Link>
                         <Category>
                             <Icon src={userAdd} />
                             <Name>회원가입</Name>
