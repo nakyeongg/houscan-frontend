@@ -13,8 +13,8 @@ const MainPage = () => {
             <Header />
             <Layout>
                 <Slider />
-                <SubscriptionList />
-                <Link to='/'>
+                <SubscriptionList display='none' />
+                <Link to='/subscription'>
                     <S.More>더보기</S.More>
                 </Link>
             </Layout>

@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { subscriptionData } from './../../constant/subscriptionData';
 import { PendingBadge, ProcessBadge, ClosedBadge } from './Badge';
+import { Pagination } from './Pagination';
 
-export const SubscriptionList = () => {
+export const SubscriptionList = ({ display }) => {
+    const [page, setPage] = useState(1);
+
+    const handlePageChange = ({ selected }) => {
+        setPage(selected + 1);
+    };
+
+    const offset = (page - 1) * 10;
+    const currentPageData = subscriptionData.slice(offset, offset + 10);
+
     return (
         <Wrapper>
             <TopWrapper>
@@ -18,7 +28,7 @@ export const SubscriptionList = () => {
                 </StateWrapper>
             </TopWrapper>
             <Line></Line>
-            {subscriptionData.map((subscription, index) => (
+            {currentPageData.map((subscription, index) => (
                 <SubscriptionWraper key={index}>
                     <TitleWrapper>
                         <p>{subscription.title}</p>
@@ -35,6 +45,11 @@ export const SubscriptionList = () => {
                     </StateWrapper>
                 </SubscriptionWraper>
             ))}
+            <Pagination
+                length={subscriptionData.length}
+                handlePageChange={handlePageChange}
+                display={display}
+            />
         </Wrapper>
     )
 }

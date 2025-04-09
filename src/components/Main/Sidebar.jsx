@@ -13,10 +13,12 @@ export const Sidebar = ({ onClose }) => {
         <Wrapper>
             <Close src={close} onClick={onClose}/>
             <Container>
-                <Category>
-                    <Icon src={file} />
-                    <Name>청약 공고</Name>
-                </Category>
+                <Link to='/subscription'>
+                    <Category>
+                        <Icon src={file} />
+                        <Name>청약 공고</Name>
+                    </Category>                
+                </Link>
                 {!isLogin ? (
                     <>
                         <Link to='/login'>
