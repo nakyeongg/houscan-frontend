@@ -7,6 +7,7 @@ import PersonalInformationPage from './pages/userPage/PersonalInformationPage';
 import SubscriptionListPage from './pages/subscriptionPage/SubscriptionListPage';
 import SubscriptionDetailPage from './pages/subscriptionPage/SubscriptionDetailPage';
 import HouseDetailPage from './pages/subscriptionPage/HouseDetailPage';
+import ChatbotPage from './pages/chatbotPage/ChatbotPage';
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path='/subscription' element={<SubscriptionListPage />} />
                 <Route path='/subscription/detail' element={<SubscriptionDetailPage />} />
                 <Route path='/subscription/detail/house' element={<HouseDetailPage />} />
+                <Route path='/chatbot' element={<ChatbotPage />} />
             </Routes>
         </BrowserRouter>
     )
