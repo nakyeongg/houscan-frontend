@@ -9,27 +9,27 @@ export const Wrapper = styled.div`
     margin-bottom: 27px;
 `
 
-export const InputWrapper = styled.div`
-    border: 1px solid #ACB1C6;
-    border-radius: 100px;
-    height: 50px;
-    width: 100%;
-    padding: 10px 20px;
+export const ButtonWrapper = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
 `
 
 export const Input = styled.input`
-    border: 0;
-    width: 100%;
-    &::placeholder {
-        color: #ACB1C6;
-    }
+    position: absolute;
 `
 
-export const InputIcon = styled.img`
-    width: 27px;
-    height: 27px;
-    margin-left: 4px;
+export const Text = styled.p`
+    width: 75px;
+    height: 35px;
+    border-radius: 20px;
+    font-family: ${({ theme }) =>
+    theme.fonts.SUITSemiBold["font-family"]};
+    color: ${({selected}) => selected ? '#007BFF' : '#000000'};
+    background-color: ${({selected}) => selected ? '#C4E0FF' : '#FFFFFF'};
+    border: ${({selected}) => selected ? '1px solid #007BFF' : '1px solid #000000'};
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
