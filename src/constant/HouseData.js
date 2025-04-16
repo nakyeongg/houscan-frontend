@@ -1,4 +1,4 @@
-export const HouseData = [
+export const houseData = [
     {
         id: 1,
         name: '아성플러스(양재대로 143길 31, 명일동 312-143)',

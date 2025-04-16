@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { HouseData } from '../../constant/HouseData';
+import { houseData } from '../../constant/houseData';
 import { Pagination } from './Pagination';
 
 export const HouseList = ({ display }) => {
@@ -11,7 +11,7 @@ export const HouseList = ({ display }) => {
     };
 
     const offset = (page - 1) * 10;
-    const currentPageData = HouseData.slice(offset, offset + 10);
+    const currentPageData = houseData.slice(offset, offset + 10);
 
     return (
         <Wrapper>
@@ -41,7 +41,7 @@ export const HouseList = ({ display }) => {
                 </SubscriptionWraper>
             ))}
             <Pagination
-                length={HouseData.length}
+                length={houseData.length}
                 handlePageChange={handlePageChange}
                 display={display}
             />

@@ -1,4 +1,4 @@
-export const HouseDetailData = {
+export const houseDetailData = {
     name: '아성플러스',
     address: '양재대로 143길 31, 명일동 312-143',
     total: '15',
