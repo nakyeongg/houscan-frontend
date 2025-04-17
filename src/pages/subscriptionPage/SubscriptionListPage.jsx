@@ -4,7 +4,7 @@ import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import { SubscriptionList } from '../../components/subscription/SubscriptionList';
-import { ButtonModal } from '../../components/user/ButtonModal';
+import { ButtonModal } from '../../components/modal/ButtonModal';
 
 const SubscriptionListPage = () => {
     const [isLogin, setIsLogin] = useState(true);
