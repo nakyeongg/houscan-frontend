@@ -67,7 +67,7 @@ const Wrapper = styled.div`
 `
 
 const Close = styled.img`
-    margin-top: 40px;
+    margin-top: 30px;
     width: 30px;
     height: 30px;
 
