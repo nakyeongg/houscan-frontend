@@ -6,9 +6,9 @@ const axiosInstace = axios.create({
 
 axiosInstace.interceptors.request.use(
     (config) => {
-        const csrftoken = localStorage.getItem('csrftoken');
-        if (csrftoken) {
-            config.headers["Authorization"] = `Bearer ${csrftoken}`;
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
         return config;
     },
