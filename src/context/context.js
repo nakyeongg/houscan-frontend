@@ -3,10 +3,10 @@ import React, { createContext, useContext, useState } from 'react';
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-    const [islogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     return (
-        <AppContext.Provider value={{islogin, setIsLogin}}>
+        <AppContext.Provider value={{isLogin, setIsLogin}}>
             {children}
         </AppContext.Provider>
     )

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../context/context';
 
 export const Sidebar = ({ onClose }) => {
-    const {isLogin, setISLogin} = useGlobalContext();
+    const {isLogin, setIsLogin} = useGlobalContext();
 
     return (
         <Wrapper>

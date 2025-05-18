@@ -12,7 +12,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [disable, setDisable] = useState(true);
     const navigate = useNavigate();
-    const [islogin, setIsLogin] = useState(false);
+    const {isLogin, setIsLogin} = useGlobalContext();
 
     const handleEmail = (event) => {
         setEmail(event.target.value)
@@ -39,7 +39,8 @@ const LoginPage = () => {
                 console.log('로그인 실페');
             }
         } catch(error) {
-            alert('로그인 실패', error);
+            console.log('로그인 실패', error);
+            alert(error.response.data.message);
         }
     }
 
