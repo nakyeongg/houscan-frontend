@@ -4,6 +4,7 @@ import { Header } from '../../components/main/Header';
 import { Layout } from '../../layout/Layout';
 import { ButtonModal } from '../../components/modal/ButtonModal';
 import { InputModal } from '../../components/modal/InputModal';
+import { useNavigate } from 'react-router-dom';
 import axiosInstace from '../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
 
@@ -15,6 +16,7 @@ const MyPage = () => {
     const [nowPassword, setNowPassword] = useState('');
     const [changedPassword, setChangedPassword] = useState('');
     const [activeModal, setActiveModal] = useState(null);
+    const navigate = useNavigate();
     console.log('isLogin?', isLogin);
     
     const handleInfo = async () => {
@@ -82,6 +84,19 @@ const MyPage = () => {
         }
     }
 
+    const handleLogout = async () => {
+        try {
+            const response = await axiosInstace.delete('/api/users/auth/');
+            console.log('로그아웃 성공', response);
+            localStorage.removeItem('accessToken');
+            alert('로그아웃되었습니다.');
+            setIsLogin(false);
+            navigate('/');
+        } catch(error) {
+            console.log('로그아웃 실패', error);
+        }
+    }
+
     const handleCancel = () => {
         setChangedName('');
         setNowPassword('');
@@ -131,7 +146,7 @@ const MyPage = () => {
                     title='로그아웃 하시겠습니까?'
                     blueButtonText='로그아웃'
                     whtieButtonText='취소'
-                    blueButtonClick={() => setActiveModal(null)}
+                    blueButtonClick={handleLogout}
                     whiteButtonClick={() => setActiveModal(null)}
                 />
             )
