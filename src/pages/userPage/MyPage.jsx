@@ -97,6 +97,24 @@ const MyPage = () => {
         }
     }
 
+    const handleDelete = async () => {
+        try {
+            const response = await axiosInstace.delete('/api/users/delete/');
+            console.log('회원탈퇴 성공', response);
+            setActiveModal('deleteConfirm');
+        } catch(error) {
+            console.log('회원탈퇴 실패', error);
+
+        }
+    }
+
+    const handleDeleteConfirm = () => {
+        setActiveModal(null);
+        setIsLogin(false);
+        localStorage.removeItem('accessToken');
+        navigate('/');
+    }
+
     const handleCancel = () => {
         setChangedName('');
         setNowPassword('');
@@ -156,7 +174,7 @@ const MyPage = () => {
                     title='정말로 탈퇴하시겠습니까?'
                     blueButtonText='확인'
                     whtieButtonText='취소'
-                    blueButtonClick={() => setActiveModal('deleteConfirm')}
+                    blueButtonClick={handleDelete}
                     whiteButtonClick={() => setActiveModal(null)}
                     />
             )
@@ -165,7 +183,7 @@ const MyPage = () => {
                 <ButtonModal
                     title='탈퇴가 완료되었습니다'
                     blueButtonText='확인'
-                    blueButtonClick={() => setActiveModal(null)}
+                    blueButtonClick={handleDeleteConfirm}
                     desc='그동안 저희 사이트를 이용해주셔서 감사합니다. 앞으로 더 좋은 모습으로 만나뵐 수 있도록 노력하겠습니다.'
                 />
             )

@@ -75,7 +75,7 @@ const LoginPage = () => {
                         <S.Button disabled={disable} onClick={handleLogin}>로그인</S.Button>
                         <S.GuideWrapper>
                             <S.Guide>아직 회원이 아니신가요?</S.Guide>
-                            <S.SignupButton>회원가입</S.SignupButton>
+                            <S.SignupButton onClick={() => navigate('/signup')}>회원가입</S.SignupButton>
                         </S.GuideWrapper>
                     </S.ColumnWrapper>
                 </S.Wrapper>
