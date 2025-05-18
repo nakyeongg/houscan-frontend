@@ -5,18 +5,51 @@ import { Layout } from '../../layout/Layout';
 import { ButtonModal } from '../../components/modal/ButtonModal';
 import { InputModal } from '../../components/modal/InputModal';
 import axiosInstace from '../../apis/axiosInstance';
+import { useGlobalContext } from '../../context/context';
 
 const MyPage = () => {
-    const [name, setName] = useState('사용자');
-    const [email, setEmail] = useState('example@naver.com');
+    
+    const [name, setName] = useState('');
+    const [changedName, setChangedName] = useState('');
+    const [email, setEmail] = useState('');
     const [activeModal, setActiveModal] = useState(null);
     
     const handleInfo = async () => {
         try {
             const response = await axiosInstace.get('/api/users/my');
-            console.log('나의 정보 가져오기 성공',response);
+            console.log('나의 정보 가져오기 성공', response);
+            setName(response.data.nickname);
+            setEmail(response.data.email);
         } catch(error) {
             console.log('나의 정보 가져오기 실패', error);
+        }
+    }
+
+    const handleChangedName = (event) => {
+        setChangedName(event.target.value)
+    }
+
+    const changeName = async () => {
+        console.log('changedName',changedName);
+        if (!changedName.trim()) {
+            alert('닉네임을 입력해주세요.');
+            return;
+        }
+        if (changedName===name) {
+            alert('기존과 다른 닉네임을 입력해주세요.');
+            return;
+        }
+        try {
+            const response = await axiosInstace.patch('/api/users/my/', {
+                nickname: changedName.trim(),
+            })
+            setActiveModal(null);
+            console.log('닉네임 변경 요청', response);
+            setName(changedName.trim());
+            setChangedName('');
+        } catch(error) {
+            console.log('닉네임 변경 에러', error);
+            alert('닉네임 변경에 실패했습니다. 다시 시도해주세요.');
         }
     }
 
@@ -31,9 +64,11 @@ const MyPage = () => {
                     title='닉네임 변경'
                     blueButtonText='저장'
                     whtieButtonText='취소'
-                    blueButtonClick={() => setActiveModal(null)}
+                    blueButtonClick={changeName}
                     whiteButtonClick={() => setActiveModal(null)}
                     placeholder1='닉네임을 입력하세요'
+                    value1={changedName}
+                    onChange1={handleChangedName}
                 />
             )
         } else if (activeModal==='password') {

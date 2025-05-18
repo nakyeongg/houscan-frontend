@@ -41,10 +41,12 @@ export const Sidebar = ({ onClose }) => {
                             <Icon src={user} />
                             <Name>개인 정보 입력</Name>
                         </Category>
-                        <Category>
-                            <Icon src={user} />
-                            <Name>마이페이지</Name>
-                        </Category>  
+                        <Link to='/mypage'>
+                            <Category>
+                                <Icon src={user} />
+                                <Name>마이페이지</Name>
+                            </Category>
+                        </Link> 
                     </>
                 )}
             </Container>
