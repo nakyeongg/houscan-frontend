@@ -5,9 +5,10 @@ import file from '../../assets/icons/file.svg';
 import user from '../../assets/icons/user.svg';
 import userAdd from '../../assets/icons/userAdd.svg';
 import { Link } from 'react-router-dom';
+import { useGlobalContext } from '../../context/context';
 
 export const Sidebar = ({ onClose }) => {
-    const [isLogin, setIsLogin] = useState(false);
+    const {isLogin, setISLogin} = useGlobalContext();
 
     return (
         <Wrapper>

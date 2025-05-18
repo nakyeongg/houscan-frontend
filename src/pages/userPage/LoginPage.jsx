@@ -5,12 +5,14 @@ import { Layout } from '../../layout/Layout';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axiosInstace from './../../apis/axiosInstance';
+import { useGlobalContext } from '../../context/context';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [disable, setDisable] = useState(true);
     const navigate = useNavigate();
+    const [islogin, setIsLogin] = useState(false);
 
     const handleEmail = (event) => {
         setEmail(event.target.value)
@@ -29,7 +31,9 @@ const LoginPage = () => {
             console.log('로그인 요청 성공', response);
             if (response.data.message==='로그인 성공!') {
                 console.log('로그인 성공', response.data);
-                localStorage.getItem('accessToken', response.data.token.access);
+                console.log('토큰을 저장합니다',response.data.token.access);
+                localStorage.setItem('accessToken', response.data.token.access);
+                setIsLogin(true);
                 navigate('/');
             } else {
                 console.log('로그인 실페');

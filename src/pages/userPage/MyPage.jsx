@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './MyPage.styled';
 import { Header } from '../../components/main/Header';
 import { Layout } from '../../layout/Layout';
 import { ButtonModal } from '../../components/modal/ButtonModal';
 import { InputModal } from '../../components/modal/InputModal';
+import axiosInstace from '../../apis/axiosInstance';
 
 const MyPage = () => {
     const [name, setName] = useState('사용자');
     const [email, setEmail] = useState('example@naver.com');
     const [activeModal, setActiveModal] = useState(null);
+    
+    const handleInfo = async () => {
+        try {
+            const response = await axiosInstace.get('/api/users/my');
+            console.log('나의 정보 가져오기 성공',response);
+        } catch(error) {
+            console.log('나의 정보 가져오기 실패', error);
+        }
+    }
+
+    useEffect(() => {
+        handleInfo();
+    }, [])
 
     const handleModal = () => {
         if (activeModal==='nickname') {

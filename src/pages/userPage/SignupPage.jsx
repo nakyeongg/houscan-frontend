@@ -46,6 +46,7 @@ const SignupPage = () => {
             navigate('/login');
         } catch(error) {
             console.log('회원가입 실패', error);
+            alert(error.response.data.message);
         }
     }
 
