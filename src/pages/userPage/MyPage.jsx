@@ -8,11 +8,14 @@ import axiosInstace from '../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
 
 const MyPage = () => {
-    
+    const {isLogin, setIsLogin} = useGlobalContext();
     const [name, setName] = useState('');
     const [changedName, setChangedName] = useState('');
     const [email, setEmail] = useState('');
+    const [nowPassword, setNowPassword] = useState('');
+    const [changedPassword, setChangedPassword] = useState('');
     const [activeModal, setActiveModal] = useState(null);
+    console.log('isLogin?', isLogin);
     
     const handleInfo = async () => {
         try {
@@ -27,6 +30,14 @@ const MyPage = () => {
 
     const handleChangedName = (event) => {
         setChangedName(event.target.value)
+    }
+
+    const handleNowPassword = (event) => {
+        setNowPassword(event.target.value)
+    }
+
+    const handleChangedPassword = (event) => {
+        setChangedPassword(event.target.value)
     }
 
     const changeName = async () => {
@@ -47,10 +58,35 @@ const MyPage = () => {
             console.log('닉네임 변경 요청', response);
             setName(changedName.trim());
             setChangedName('');
+            alert('닉네임이 성공적으로 변경되었습니다.');
         } catch(error) {
             console.log('닉네임 변경 에러', error);
             alert('닉네임 변경에 실패했습니다. 다시 시도해주세요.');
         }
+    }
+
+    const changePassword = async () => {
+        try {
+            const response = await axiosInstace.post('/api/users/change-pw/', {
+                current_password: nowPassword,
+                new_password: changedPassword,
+            });
+            setNowPassword('');
+            setChangedPassword('');
+            console.log('비밀번호 변경 요청 성공', response);
+            setActiveModal(null);
+            alert(response.data.message);
+        } catch(error) {
+            console.log('비밀번호 변경 에러', error);
+            alert(error.response.data.message);
+        }
+    }
+
+    const handleCancel = () => {
+        setChangedName('');
+        setNowPassword('');
+        setChangedPassword('');
+        setActiveModal(null);
     }
 
     useEffect(() => {
@@ -65,7 +101,7 @@ const MyPage = () => {
                     blueButtonText='저장'
                     whtieButtonText='취소'
                     blueButtonClick={changeName}
-                    whiteButtonClick={() => setActiveModal(null)}
+                    whiteButtonClick={handleCancel}
                     placeholder1='닉네임을 입력하세요'
                     value1={changedName}
                     onChange1={handleChangedName}
@@ -77,10 +113,16 @@ const MyPage = () => {
                     title='비밀번호 변경'
                     blueButtonText='저장'
                     whtieButtonText='취소'
-                    blueButtonClick={() => setActiveModal(null)}
-                    whiteButtonClick={() => setActiveModal(null)}
-                    placeholder1='비밀번호를 입력하세요'
-                    placeholder2='비밀번호를 다시 입력하세요'
+                    blueButtonClick={changePassword}
+                    whiteButtonClick={handleCancel}
+                    placeholder1='현재 비밀번호를 입력하세요'
+                    placeholder2='새 비밀번호를 다시 입력하세요'
+                    value1={nowPassword}
+                    value2={changedPassword}
+                    onChange1={handleNowPassword}
+                    onChange2={handleChangedPassword}
+                    type1="password"
+                    type2="password"
                 />
             )
         } else if (activeModal==='logout') {
