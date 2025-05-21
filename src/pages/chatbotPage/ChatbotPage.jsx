@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as S from './ChatbotPage.styled';
 import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
 import chatbot from '../../assets/images/chatbot.png';
 import send from '../../assets/icons/send.svg';
+import aiAxiosInstace from '../../apis/aiAxiosInstance';
 
 const ChatbotPage = () => {
+    // const handlePdf = async () => {
+    //     try {
+    //         const response = await aiAxiosInstace.get('/api/available-pdfs');
+    //         console.log(response);
+    //     } catch(error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    const handleChat = async () => {
+        try {
+            const response = await aiAxiosInstace.post('/api/chat', {
+                pdf_name: "1_[공고문] 2024년 2차 청년 매입임대주택 입주자모집공고문 (3).pdf",
+                query: "이 공고의 지원자격요건이 뭔지 알려줘"
+            });
+            console.log(response);
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        // handlePdf();
+        handleChat();
+    }, [])
+    
     return (
         <>
             <Header/>
