@@ -37,10 +37,12 @@ export const Sidebar = ({ onClose }) => {
                     </>
                 ):( 
                     <>
+                    <Link to='/information'>
                         <Category>
                             <Icon src={user} />
                             <Name>개인 정보 입력</Name>
                         </Category>
+                    </Link>
                         <Link to='/mypage'>
                             <Category>
                                 <Icon src={user} />

@@ -8,14 +8,13 @@ import { ButtonModal } from '../../components/modal/ButtonModal';
 
 const SubscriptionListPage = () => {
     const [isLogin, setIsLogin] = useState(true);
-    const [isInfoEntered, setIsInfoEntered] = useState(false);
+    const [isInfoEntered, setIsInfoEntered] = useState(true);
+    const [selectedRank, setSelectedRank] = useState();
 
     const Ranks = [
         {text: '1순위', value: 0},
         {text: '2순위', value: 1},
     ]
-
-    const [selectedRank, setSelectedRank] = useState();
 
     const handleRank = (event) => {
         const value = Number(event.target.value);

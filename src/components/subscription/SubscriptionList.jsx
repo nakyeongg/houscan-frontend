@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { subscriptionData } from './../../constant/subscriptionData';
 import { PendingBadge, ProcessBadge, ClosedBadge } from './Badge';
 import { Pagination } from './Pagination';
+import axiosInstance from '../../apis/axiosInstance';
 
 export const SubscriptionList = ({ display }) => {
+    const [subscriptions, setSubscriptions]= useState([]);
     const [page, setPage] = useState(1);
+
+    const hadleSubscription = async () => {
+        try {
+            const response = await axiosInstance.get('/api/announcements/');
+            console.log('공고 리스트 가져오기', response);
+            setSubscriptions(response.data);
+        } catch(error) {
+            console.log('공고 가져오기 에러', error);
+        }	
+    }
+
+    useEffect(() => {
+        hadleSubscription();
+    }, [])
 
     const handlePageChange = ({ selected }) => {
         setPage(selected + 1);
     };
 
     const offset = (page - 1) * 10;
-    const currentPageData = subscriptionData.slice(offset, offset + 10);
+    const currentPageData = subscriptions.slice(offset, offset + 10);
 
     return (
         <Wrapper>
@@ -31,22 +46,22 @@ export const SubscriptionList = ({ display }) => {
             {currentPageData.map((subscription, index) => (
                 <SubscriptionWraper key={index}>
                     <TitleWrapper>
-                        <p>{subscription.title}</p>
+                        <p>{subscription.file_name}</p>
                     </TitleWrapper>
                     <DateWrapper>
-                        <p>{subscription.date}</p>
+                        <p>{subscription.posted_date}</p>
                     </DateWrapper>
                     <StateWrapper>
-                        { 
-                            subscription.state==='pending' ? <PendingBadge /> :
-                            subscription.state==='progress' ? <ProcessBadge /> :
+                        {
+                            subscription.state==='upcoming' ? <PendingBadge /> :
+                            subscription.state==='open' ? <ProcessBadge /> :
                             <ClosedBadge />
                         }
                     </StateWrapper>
                 </SubscriptionWraper>
             ))}
             <Pagination
-                length={subscriptionData.length}
+                length={subscriptions.length}
                 handlePageChange={handlePageChange}
                 display={display}
             />
