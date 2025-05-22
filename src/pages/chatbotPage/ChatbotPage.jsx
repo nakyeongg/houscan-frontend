@@ -20,7 +20,7 @@ const ChatbotPage = () => {
         try {
             const response = await aiAxiosInstace.post('/api/chat', {
                 pdf_name: "1_[공고문] 2024년 2차 청년 매입임대주택 입주자모집공고문 (3).pdf",
-                query: "이 공고의 지원자격요건이 뭔지 알려줘"
+                query: "나 대학생인데 이 공고 지원 가능해?"
             });
             console.log(response);
         } catch(error) {

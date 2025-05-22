@@ -31,8 +31,22 @@ export const Category = styled.div`
     theme.fonts.SUITMedium["font-family"]};
 `
 
-export const Detail = styled.div`
+export const MiniCategory = styled.div`
+    font-size: 17px;
+    font-family: ${({ theme }) =>
+    theme.fonts.SUITMedium["font-family"]};
+`
 
+export const Score = styled.div`
+    font-size: 17px;
+    color: #FF0000;
+`
+
+export const RowWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
 `
 
 export const PdfLink = styled(Link)`

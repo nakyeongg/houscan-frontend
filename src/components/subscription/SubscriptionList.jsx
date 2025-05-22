@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { PendingBadge, ProcessBadge, ClosedBadge } from './Badge';
 import { Pagination } from './Pagination';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
 export const SubscriptionList = ({ display }) => {
@@ -18,6 +20,8 @@ export const SubscriptionList = ({ display }) => {
         }	
     }
 
+    // const 
+
     useEffect(() => {
         hadleSubscription();
     }, [])
@@ -32,9 +36,9 @@ export const SubscriptionList = ({ display }) => {
     return (
         <Wrapper>
             <TopWrapper>
-                <TitleWrapper>
+                <TopTitleWrapper>
                     <p>제목</p>
-                </TitleWrapper>
+                </TopTitleWrapper>
                 <DateWrapper>
                     <p>모집기간</p>
                 </DateWrapper>
@@ -45,7 +49,7 @@ export const SubscriptionList = ({ display }) => {
             <Line></Line>
             {currentPageData.map((subscription, index) => (
                 <SubscriptionWraper key={index}>
-                    <TitleWrapper>
+                    <TitleWrapper to={`/subscription/${subscription.id}`}>
                         <p>{subscription.file_name}</p>
                     </TitleWrapper>
                     <DateWrapper>
@@ -83,7 +87,7 @@ const TopWrapper = styled.div`
     display: flex;
 `
 
-const TitleWrapper = styled.div`
+const TopTitleWrapper = styled.div`
     width: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -91,6 +95,17 @@ const TitleWrapper = styled.div`
     text-overflow: ellipsis;
     word-break: break-all;
     margin-right: 10px;
+`
+
+const TitleWrapper = styled(Link)`
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    margin-right: 10px;
+    border: 1px solid red;
 `
 
 const DateWrapper = styled.div`
