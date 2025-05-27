@@ -15,7 +15,7 @@ export const Sidebar = ({ onClose }) => {
             <Close src={close} onClick={onClose}/>
             <Container>
                 <Link to='/subscription'>
-                    <Category>
+                    <Category onClick={onClose}>
                         <Icon src={file} />
                         <Name>청약 공고</Name>
                     </Category>                
@@ -23,13 +23,13 @@ export const Sidebar = ({ onClose }) => {
                 {!isLogin ? (
                     <>
                         <Link to='/login'>
-                            <Category>
+                            <Category onClick={onClose}>
                                 <Icon src={user} />
                                 <Name>로그인</Name>
                             </Category>
                         </Link>
                         <Link to='/signup'>
-                            <Category>
+                            <Category onClick={onClose}>
                                 <Icon src={userAdd} />
                                 <Name>회원가입</Name>
                             </Category>
@@ -37,14 +37,14 @@ export const Sidebar = ({ onClose }) => {
                     </>
                 ):( 
                     <>
-                    <Link to='/information'>
-                        <Category>
-                            <Icon src={user} />
-                            <Name>개인 정보 입력</Name>
-                        </Category>
-                    </Link>
+                        <Link to='/information'>
+                            <Category onClick={onClose}>
+                                <Icon src={user} />
+                                <Name>개인 정보 입력</Name>
+                            </Category>
+                        </Link>
                         <Link to='/mypage'>
-                            <Category>
+                            <Category onClick={onClose}>
                                 <Icon src={user} />
                                 <Name>마이페이지</Name>
                             </Category>
