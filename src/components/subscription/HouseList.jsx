@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { houseData } from '../../constant/houseData';
 import { Pagination } from './Pagination';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export const HouseList = ({ display }) => {
+export const HouseList = ({ houses, display }) => {
+    const {id} = useParams();
+    const navigate = useNavigate();
     const [page, setPage] = useState(1);
+
+    const handleHouse = () => {
+        // navigate(`/subscription/${id}/${houseId}`, { state: {house:house} });
+    }
 
     const handlePageChange = ({ selected }) => {
         setPage(selected + 1);
     };
 
     const offset = (page - 1) * 10;
-    const currentPageData = houseData.slice(offset, offset + 10);
+    const currentPageData = houses.slice(offset, offset + 10);
 
     return (
         <Wrapper>
@@ -19,9 +27,9 @@ export const HouseList = ({ display }) => {
                 <RegionWrapper>
                     <p>자치구</p>
                 </RegionWrapper>
-                <HouseWrapper>
+                <TopHouseWrapper>
                     <p>대상주택</p>
-                </HouseWrapper>
+                </TopHouseWrapper>
                 <NumberWrapper>
                     <p>총 세대수</p>
                 </NumberWrapper>
@@ -32,11 +40,11 @@ export const HouseList = ({ display }) => {
                     <RegionWrapper>
                         <p>{house.region}</p>
                     </RegionWrapper>
-                    <HouseWrapper>
+                    <HouseWrapper onClick={handleHouse}>
                         <p>{house.name}</p>
                     </HouseWrapper>
                     <NumberWrapper>
-                        <p>{house.number}호</p>
+                        <p>{house.supply_households}</p>
                     </NumberWrapper>
                 </SubscriptionWraper>
             ))}
@@ -72,10 +80,17 @@ const RegionWrapper = styled.div`
     margin-right: 10px;
 `
 
-const HouseWrapper = styled.div`
+const TopHouseWrapper = styled.div`
     width: 100%;
     max-width: 100%;
     margin-right: 10px;
+`
+
+const HouseWrapper = styled.button`
+    width: 100%;
+    max-width: 100%;
+    margin-right: 10px;
+    text-align: left;
 `
 
 const NumberWrapper = styled.div`

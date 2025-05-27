@@ -1,35 +1,62 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as S from './ChatbotPage.styled';
 import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
 import chatbot from '../../assets/images/chatbot.png';
 import send from '../../assets/icons/send.svg';
+import loading from '../../assets/images/loading.gif';
+import { useLocation } from 'react-router-dom';
 import aiAxiosInstace from '../../apis/aiAxiosInstance';
 
 const ChatbotPage = () => {
-    // const handlePdf = async () => {
-    //     try {
-    //         const response = await aiAxiosInstace.get('/api/available-pdfs');
-    //         console.log(response);
-    //     } catch(error) {
-    //         console.log(error);
-    //     }
-    // }
+    const { state } = useLocation();
+    const pdf = state.pdf;
+    const title = state.title;
+    const [question, setQuestion] = useState('');
+    const [messages, setMessages] = useState([]);
+    const messagesRef = useRef();
+    const [isBotLoading, setIsBotLoading] = useState(false);
 
-    const handleChat = async () => {
+    const handlePdf = async () => {
         try {
-            const response = await aiAxiosInstace.post('/api/chat', {
-                pdf_name: "1_[공고문] 2024년 2차 청년 매입임대주택 입주자모집공고문 (3).pdf",
-                query: "나 대학생인데 이 공고 지원 가능해?"
-            });
+            const response = await aiAxiosInstace.get('/api/available-pdfs');
             console.log(response);
         } catch(error) {
             console.log(error);
         }
     }
 
+    const handleChat = async () => {
+        if (!question.trim()) return;
+        const userQuestion = question;
+        setQuestion('');
+        setIsBotLoading(true);
+        setMessages(prev => [...prev, {type: 'user', text: userQuestion}]);
+        try {
+            const response = await aiAxiosInstace.post('/api/chat', {
+                pdf_name: pdf,
+                query: question
+            });
+            const answer = response.data.data.answer;
+            setIsBotLoading(false);
+            setMessages(prev => [...prev, {type: 'bot', text: answer}]);
+        } catch(error) {
+            setIsBotLoading(false);
+            setMessages(prev => [...prev, {type: 'bot', text: '오류가 발생했습니다. 다시 질문을 해주세요.'}]);
+            console.log(error);
+        }
+    }
+
+    const handleInput = (event) => {
+        setQuestion(event.target.value);
+    }
+
     useEffect(() => {
-        // handlePdf();
+        messagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+
+    useEffect(() => {
         handleChat();
     }, [])
     
@@ -37,26 +64,35 @@ const ChatbotPage = () => {
         <>
             <Header/>
             <Layout>
-                <S.Title>[청년형] 특화형 매입임대주택(은평구) 입주자 모집 공고(운영기관 : 협동조합 큰바위얼굴)</S.Title>
+                <S.Title>{title}</S.Title>
                 <S.ChatWrapper>
-                    <S.BotWrapper>
-                        <S.BotImage src={chatbot} />
-                        <S.BotChat>해당하는 청약 공고에 대해서 궁금한 점이 있다면 물어보세요!해당하는 청약 공고에 대해서 궁금한 점이 있다면 물어보세요!</S.BotChat>
-                    </S.BotWrapper>
-                    <S.UserWrapper>
-                        <S.UserChat>내가 이 공고에 해당되지 않는 이유가 뭐야?</S.UserChat>
-                    </S.UserWrapper>
-                    <S.BotWrapper>
-                        <S.BotImage src={chatbot} />
-                        <S.BotChat>해당하는 청약 공고에 대해서 궁금한 점이 있다면 물어보세요!</S.BotChat>
-                    </S.BotWrapper>
-                    <S.UserWrapper>
-                        <S.UserChat>내가 이 공고에 해당되지 않는 이유가 뭐야?내가 이 공고에 해당되지 않는 이유가 뭐야?</S.UserChat>
-                    </S.UserWrapper>
+                    {messages.map((message, index) => (
+                        message.type === 'user' ? (
+                            <S.UserWrapper>
+                                <S.UserChat>{message.text}</S.UserChat>
+                            </S.UserWrapper>
+                        ) : (
+                            <S.BotWrapper>
+                                <S.BotImage src={chatbot} />
+                                <S.BotChat>{message.text}</S.BotChat>
+                            </S.BotWrapper>
+                        )
+                    ))}
+                    {isBotLoading && 
+                        <S.BotWrapper>
+                            <S.BotImage src={chatbot} />
+                            <S.BotLoading src={loading}/>
+                        </S.BotWrapper>
+                    }
+                    <div ref={messagesRef}/>
                 </S.ChatWrapper>
                 <S.InputWrapper>
-                    <S.Input placeholder='무엇이든 물어보세요'/>
-                    <S.InputButton onClick={() => {}}>
+                    <S.Input 
+                        placeholder='무엇이든 물어보세요'
+                        value={question}
+                        onChange={handleInput}
+                    />
+                    <S.InputButton onClick={handleChat}>
                         <S.InputImg src={send} />
                     </S.InputButton>
                 </S.InputWrapper>

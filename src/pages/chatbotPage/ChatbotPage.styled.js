@@ -4,7 +4,7 @@ export const Title = styled.h1`
     font-size: 20px;
     font-family: ${({ theme }) => 
     theme.fonts.SUITSemiBold["font-family"]};
-    padding: 30px 0;
+    padding: 20px 0;
     border-top: 1px solid #EEEEEE;
     border-bottom: 1px solid #EEEEEE;
     width: 100%;
@@ -44,6 +44,11 @@ export const BotChat = styled.p`
     padding: 20px 30px;
     font-family: ${({ theme }) => 
     theme.fonts.SUITMedium["font-family"]};
+`
+
+export const BotLoading = styled.img`
+    width: 50px;
+    height: 50px;
 `
 
 export const UserWrapper = styled.div`

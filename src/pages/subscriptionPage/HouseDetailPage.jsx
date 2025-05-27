@@ -6,7 +6,7 @@ import { Footer } from '../../components/main/Footer';
 import KakaoMap from '../../components/subscription/KakaoMap';
 import { houseDetailData } from './../../constant/houseDetailData';
 
-const HouseDetailPage = () => {
+const HouseDetailPage = ({ house }) => {
     console.log('window.kakao',window.kakao);
     return (
         <>

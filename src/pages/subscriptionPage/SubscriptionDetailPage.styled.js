@@ -54,3 +54,22 @@ export const PdfLink = styled(Link)`
     text-decoration: underline;
     width: fit-content;
 `
+
+export const ChatbotButton = styled.button`
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 55px;
+    right: 30px;
+    z-index: 1;
+
+    &:hover {
+        opacity: 0.8;
+    }
+`
+
+export const ChatbotIcon = styled.img`
+    width: 100%;
+    height: 100%;
+`

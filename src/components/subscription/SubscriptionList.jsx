@@ -20,8 +20,6 @@ export const SubscriptionList = ({ display }) => {
         }	
     }
 
-    // const 
-
     useEffect(() => {
         hadleSubscription();
     }, [])
@@ -50,7 +48,7 @@ export const SubscriptionList = ({ display }) => {
             {currentPageData.map((subscription, index) => (
                 <SubscriptionWraper key={index}>
                     <TitleWrapper to={`/subscription/${subscription.id}`}>
-                        <p>{subscription.file_name}</p>
+                        <p>{subscription.title}</p>
                     </TitleWrapper>
                     <DateWrapper>
                         <p>{subscription.posted_date}</p>
@@ -105,7 +103,6 @@ const TitleWrapper = styled(Link)`
     text-overflow: ellipsis;
     word-break: break-all;
     margin-right: 10px;
-    border: 1px solid red;
 `
 
 const DateWrapper = styled.div`
