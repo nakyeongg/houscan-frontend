@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
@@ -7,13 +7,28 @@ import hamburger from '../../assets/icons/hamburger.svg';
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const sidebarRef = useRef();
+
+    const handleClose = (event) => {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClose);
+        return () => {
+            document.removeEventListener("mousedown", handleClose);
+        }
+    }, [sidebarRef]);
+
 
     const handleSidebar = () => {
         setIsOpen(!isOpen);
     }
 
     return (
-        <Wrapper>
+        <Wrapper ref={sidebarRef}>
             <MainLink to='/'>
                 <Logo src={logo}/>
             </MainLink>
