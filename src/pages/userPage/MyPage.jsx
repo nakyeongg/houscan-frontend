@@ -122,6 +122,18 @@ const MyPage = () => {
         setActiveModal(null);
     }
 
+    const handleNameEnter = (event) => {
+        if (event.key === "Enter") {
+            changeName();
+        }
+    }
+    
+    const handlePasswordEnter = (event) => {
+        if (event.key === "Enter") {
+            changePassword();
+        }
+    }
+
     useEffect(() => {
         handleInfo();
     }, [])
@@ -138,6 +150,7 @@ const MyPage = () => {
                     placeholder1='닉네임을 입력하세요'
                     value1={changedName}
                     onChange1={handleChangedName}
+                    onKeyDown1={handleNameEnter}
                 />
             )
         } else if (activeModal==='password') {
@@ -156,6 +169,7 @@ const MyPage = () => {
                     onChange2={handleChangedPassword}
                     type1="password"
                     type2="password"
+                    onKeyDown2={handlePasswordEnter}
                 />
             )
         } else if (activeModal==='logout') {
@@ -217,7 +231,7 @@ const MyPage = () => {
                         <S.EditButton onClick={() => {setActiveModal('password')}}>비밀번호 변경</S.EditButton>
                     </S.ValueWrapper>
                 </S.Wrapper>
-                <S.InformationButton>개인정보 입력 페이지로 이동</S.InformationButton>
+                <S.InformationButton onClick={() => navigate('/information')}>개인정보 입력 페이지로 이동</S.InformationButton>
                 <S.GreyButton onClick={() =>{setActiveModal('logout')}}>로그아웃</S.GreyButton>
                 <S.GreyButton onClick={() => setActiveModal('delete')}>회원탈퇴</S.GreyButton>
             </Layout>

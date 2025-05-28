@@ -44,6 +44,12 @@ const LoginPage = () => {
         }
     }
 
+    const handleEnter = (event) => {
+        if (event.key === "Enter") {
+            handleLogin();
+        }
+    }
+
     useEffect(() => {
         setDisable(email.trim() === "" || password.trim() === "");
     }, [email, password]);
@@ -69,6 +75,7 @@ const LoginPage = () => {
                             value={password}
                             onChange={handlePassword}
                             type='password'
+                            onKeyDown={handleEnter}
                         />
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>

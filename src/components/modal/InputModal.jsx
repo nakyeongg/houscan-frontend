@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const InputModal = ({ title, blueButtonText, whtieButtonText, blueButtonClick, whiteButtonClick, placeholder1, placeholder2=null, value1, value2, onChange1, onChange2, type1, type2 }) => {
+export const InputModal = ({ title, blueButtonText, whtieButtonText, blueButtonClick, whiteButtonClick, placeholder1, placeholder2=null, value1, value2, onChange1, onChange2, type1, type2, onKeyDown1, onKeyDown2 }) => {
     return (
         <Wrapper>
             <Title>{title}</Title>
             <InputWrapper>
-                <Input placeholder={placeholder1} value={value1} onChange={onChange1} type={type1} />
-                {placeholder2 && <Input placeholder={placeholder2} value={value2} onChange={onChange2} type={type2} />}
+                <Input placeholder={placeholder1} value={value1} onChange={onChange1} type={type1} onKeyDown={onKeyDown1}/>
+                {placeholder2 && <Input placeholder={placeholder2} value={value2} onChange={onChange2} type={type2} onKeyDown={onKeyDown2} />}
             </InputWrapper>
             <ButtonWrapper>
                 <BlueButton onClick={blueButtonClick}>{blueButtonText}</BlueButton>

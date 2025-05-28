@@ -50,6 +50,12 @@ const SignupPage = () => {
         }
     }
 
+    const handleEnter = (event) => {
+        if (event.key === "Enter") {
+            handleSignup();
+        }
+    }
+
     return (
             <>
                 <Header />
@@ -88,6 +94,7 @@ const SignupPage = () => {
                                 value={passwordConfirm}
                                 onChange={handlePasswordConfirm}
                                 type='password'
+                                onKeyDown={handleEnter}
                             />
                         </S.ColumnWrapper>
                         <S.ColumnWrapper>
