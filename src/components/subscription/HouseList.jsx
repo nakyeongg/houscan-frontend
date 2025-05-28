@@ -10,8 +10,10 @@ export const HouseList = ({ houses, display }) => {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
 
-    const handleHouse = () => {
-        // navigate(`/subscription/${id}/${houseId}`, { state: {house:house} });
+    console.log('houses',houses);
+
+    const handleHouse = (house) => {
+        navigate(`/house/${house.id}`);
     }
 
     const handlePageChange = ({ selected }) => {
@@ -40,7 +42,7 @@ export const HouseList = ({ houses, display }) => {
                     <RegionWrapper>
                         <p>{house.region}</p>
                     </RegionWrapper>
-                    <HouseWrapper onClick={handleHouse}>
+                    <HouseWrapper onClick={()=>handleHouse(house)}>
                         <p>{house.name}</p>
                     </HouseWrapper>
                     <NumberWrapper>
