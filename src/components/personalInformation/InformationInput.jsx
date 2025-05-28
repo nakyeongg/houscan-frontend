@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const InformationInput = ({ placeholder, onChange }) => {
+export const InformationInput = ({ placeholder, onChange, value }) => {
     return (
         <Input 
             placeholder={placeholder} 
             onChange={(event) => onChange(event.target.value)}
             type='number'
+            value={value ?? ''}
         />
     )
 }

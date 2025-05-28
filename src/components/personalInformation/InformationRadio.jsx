@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-export const InformationRadio = ({ options, onChange }) => {
+export const InformationRadio = ({ options, onChange, value }) => {
 
-    const [selectedOption, setSelectedOption] = useState();
+    const [selectedOption, setSelectedOption] = useState(value);
 
     const hendledOption = (event) => {
-        const value = Number(event.target.value);
+        setSelectedOption(Number(event.target.value));
+        onChange(Number(event.target.value));
+    }
+
+    useEffect(() => {
         setSelectedOption(value);
-        onChange(value);
-    }    
+    }, [value])
 
     return (
         <Wrapper>

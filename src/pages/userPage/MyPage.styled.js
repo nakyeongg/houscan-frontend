@@ -32,6 +32,7 @@ export const Value = styled.p`
     border: 1px solid #E5E7EB;
     padding: 12px;
     width: 100%;
+    cursor: default;
 `
 
 export const EditButton = styled.button`
