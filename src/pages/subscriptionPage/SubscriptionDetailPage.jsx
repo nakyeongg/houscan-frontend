@@ -17,6 +17,7 @@ const SubscriptionDetailPage = () => {
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [region, setRegion] = useState("전체");
     const navigate = useNavigate();
 
     const scheduleLabel = {
@@ -48,6 +49,10 @@ const SubscriptionDetailPage = () => {
     const handleChatbot = () => {
         const pdf = subscription.pdf_name;
         navigate('/chatbot', { state: {pdf: pdf, title: title}});
+    }
+
+    const handleRegionChange = (newRegion) => {
+        setRegion(newRegion);
     }
 
     useEffect(() => {
@@ -82,22 +87,20 @@ const SubscriptionDetailPage = () => {
                                     })}
                                 </S.CategoryWrapper>
                             )}
-                            {subscription.priority_score.priority_criteria && (
+                            {Array.isArray(subscription?.priority_score?.priority_criteria) && (
                                 <S.CategoryWrapper>
                                     <S.Category>신청자격</S.Category>
-                                    {subscription.priority_score.priority_criteria && (
-                                        subscription.priority_score.priority_criteria.map((priority, index) => (
+                                    {subscription.priority_score.priority_criteria.map((priority, index) => (
                                         <div key={index}>
                                             <S.MiniCategory>{priority.priority}</S.MiniCategory>
                                             {priority.criteria.map((criterion, index) => (
                                                 <p>• {criterion}</p>
                                             ))}
                                         </div>
-                                    ))
-                                    )}
+                                    ))}
                                 </S.CategoryWrapper>
                             )}
-                            {subscription.priority_score.score_items && (
+                            {(subscription.priority_score.score_items && subscription.priority_score.score_items[0].priority!==null) && (
                                 <S.CategoryWrapper>
                                 <S.Category>가점사항</S.Category>
                                 {subscription.priority_score.score_items.map((items, index) => (
@@ -132,8 +135,8 @@ const SubscriptionDetailPage = () => {
                                 <p>본 정보는 AI를 활용하여 요약되었으며, 정확성이 보장되지 않을 수 있으므로 참고용으로만 사용하기시 바랍니다. 더 자세한 정보는 아래의 첨부파일을 참고하세요.</p>
                             </S.CategoryWrapper>
                         </S.Wrapper>
-                        <RegionButton />
-                        <HouseList houses={houses}/>
+                        <RegionButton onDataChange={handleRegionChange}/>
+                        <HouseList houses={houses} onDataChange={handleRegionChange} region={region}/>
                         <S.ChatbotButton onClick={handleChatbot}>
                             <S.ChatbotIcon src={chatbot} />
                         </S.ChatbotButton>

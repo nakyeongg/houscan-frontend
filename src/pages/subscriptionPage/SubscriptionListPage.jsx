@@ -19,7 +19,6 @@ const SubscriptionListPage = () => {
     const [hasCookie, setHasCookie] = useState(true); // 쿠키의 저장 여부
     const [cookies, setCookies] = useCookies(); // 쿠키에 저장되는 내용
 
-
     const Ranks = [
         {text: '1순위', value: 0},
         {text: '2순위', value: 1},

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-export const RegionButton = () => {
+export const RegionButton = ({ onDataChange }) => {
 
     const Regions = [
         {text: '전체', value: 0},
@@ -32,10 +32,20 @@ export const RegionButton = () => {
         {text: '중랑구', value: 25},
     ]
 
-    const [selectedRegion, setSelectedRegion] = useState();
+    const [selectedRegion, setSelectedRegion] = useState(0);
+    const [selectedRegionText, setSelectedRegionText] = useState('전체');
 
-    const hendleRegion = (event) => {
-        setSelectedRegion(Number(event.target.value));
+    const handleRegion = (event) => {
+        const value = Number(event.target.value);
+        const selected = Regions.find(region => region.value === value);
+        setSelectedRegion(value);
+        setSelectedRegionText(selected.text);
+        onDataChange(selected.text);
+    }
+
+    const handleDataToParent = () => {
+        const newRegion = selectedRegionText;
+        onDataChange(newRegion);
     }
 
     return (
@@ -46,13 +56,14 @@ export const RegionButton = () => {
                         type='radio'
                         name='region'
                         value={region.value}
-                        onChange={hendleRegion}
+                        onChange={handleRegion}
                         checked={index === selectedRegion}
+                        onClick={handleDataToParent}
                     />
                     <Text
                         selected={index === selectedRegion}
                     >
-                    {region.text}
+                        {region.text}
                     </Text>
                 </label>
                 ))
@@ -88,4 +99,5 @@ const Text = styled.p`
     border: ${({selected}) => selected ? '1px solid #007BFF' : '1px solid #000000'};
     background-color: ${({selected}) => selected ? '#C4E0FF' : '#FFFFFF'};
     color: ${({selected}) => selected ? '#007BFF' : '#000000'};
+    cursor: pointer;
 `

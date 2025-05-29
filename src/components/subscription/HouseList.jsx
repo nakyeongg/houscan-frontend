@@ -5,12 +5,11 @@ import { Pagination } from './Pagination';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-export const HouseList = ({ houses, display }) => {
-    const {id} = useParams();
+export const HouseList = ({ houses, display, region }) => {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
 
-    console.log('houses',houses);
+    console.log('houses', houses);
 
     const handleHouse = (house) => {
         navigate(`/house/${house.id}`);
@@ -38,17 +37,33 @@ export const HouseList = ({ houses, display }) => {
             </TopWrapper>
             <Line></Line>
             {currentPageData.map((house, index) => (
-                <SubscriptionWraper key={index}>
-                    <RegionWrapper>
-                        <p>{house.region}</p>
-                    </RegionWrapper>
-                    <HouseWrapper onClick={()=>handleHouse(house)}>
-                        <p>{house.name}</p>
-                    </HouseWrapper>
-                    <NumberWrapper>
-                        <p>{house.supply_households}</p>
-                    </NumberWrapper>
-                </SubscriptionWraper>
+                region==="전체" ? (
+                    <SubscriptionWrapper key={index}>
+                        <RegionWrapper>
+                            <p>{house.district}</p>
+                        </RegionWrapper>
+                        <HouseWrapper onClick={()=>handleHouse(house)}>
+                            <p>{house.name}</p>
+                        </HouseWrapper>
+                        <NumberWrapper>
+                            <p>{house.supply_households}</p>
+                        </NumberWrapper>
+                    </SubscriptionWrapper>
+                ) : (
+                    region===house.district ? (
+                        <SubscriptionWrapper key={index}>
+                            <RegionWrapper>
+                                <p>{house.district}</p>
+                            </RegionWrapper>
+                            <HouseWrapper onClick={()=>handleHouse(house)}>
+                                <p>{house.name}</p>
+                            </HouseWrapper>
+                            <NumberWrapper>
+                                <p>{house.supply_households}</p>
+                            </NumberWrapper>
+                        </SubscriptionWrapper>
+                    ) : null
+                )
             ))}
             <Pagination
                 length={houseData.length}
@@ -93,6 +108,7 @@ const HouseWrapper = styled.button`
     max-width: 100%;
     margin-right: 10px;
     text-align: left;
+    font-size: 14px;
 `
 
 const NumberWrapper = styled.div`
@@ -110,7 +126,7 @@ const Line = styled.div`
     background-color: #EEEEEE;
 `
 
-const SubscriptionWraper = styled.div`
+const SubscriptionWrapper = styled.div`
     border-bottom: 1px solid #EEEEEE;
     display: flex;
     align-items: center;
