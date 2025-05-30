@@ -22,7 +22,7 @@ const App = () => {
                 <Route path='/subscription' element={<SubscriptionListPage />} />
                 <Route path='/subscription/:id' element={<SubscriptionDetailPage />} />
                 <Route path='/house/:id' element={<HouseDetailPage />} />
-                <Route path='/chatbot' element={<ChatbotPage />} />
+                <Route path='/chatbot/:id' element={<ChatbotPage />} />
             </Routes>
         </BrowserRouter>
     )

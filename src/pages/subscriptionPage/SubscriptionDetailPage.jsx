@@ -47,8 +47,7 @@ const SubscriptionDetailPage = () => {
     }
 
     const handleChatbot = () => {
-        const pdf = subscription.pdf_name;
-        navigate('/chatbot', { state: {pdf: pdf, title: title}});
+        navigate(`/chatbot/${id}`);
     }
 
     const handleRegionChange = (newRegion) => {

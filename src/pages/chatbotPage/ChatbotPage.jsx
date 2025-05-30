@@ -5,13 +5,15 @@ import { Header } from '../../components/main/Header';
 import chatbot from '../../assets/images/chatbot.png';
 import send from '../../assets/icons/send.svg';
 import loading from '../../assets/images/loading.gif';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import aiAxiosInstace from '../../apis/aiAxiosInstance';
+import axiosInstace from '../../apis/axiosInstance';
 
 const ChatbotPage = () => {
+    const { id } = useParams();
     const { state } = useLocation();
-    const pdf = state.pdf;
-    const title = state.title;
+    const [title, setTitle] = useState('');
+    const [pdf, setPdf] = useState('');
     const [question, setQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const messagesRef = useRef();
@@ -23,6 +25,17 @@ const ChatbotPage = () => {
             console.log(response);
         } catch(error) {
             console.log(error);
+        }
+    }
+
+    const handleName = async () => {
+        try {
+            const response = await axiosInstace.get(`/api/announcements/${id}/pdf-name`);
+            console.log('이름 가져오기 성공', response);
+            setPdf(response.data.pdf_name);
+            setTitle(response.data.title);
+        } catch(error) {
+            console.log('pdf 이름 가져오기 실패', error);
         }
     }
 
@@ -51,12 +64,19 @@ const ChatbotPage = () => {
         setQuestion(event.target.value);
     }
 
+    const handleEnter = (event) => {
+        if (event.key==="Enter") {
+            handleChat();
+        }
+    }
+
     useEffect(() => {
         messagesRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
 
     useEffect(() => {
+        handleName();
         handleChat();
     }, [])
     
@@ -91,6 +111,7 @@ const ChatbotPage = () => {
                         placeholder='무엇이든 물어보세요'
                         value={question}
                         onChange={handleInput}
+                        onKeyDown={handleEnter}
                     />
                     <S.InputButton onClick={handleChat}>
                         <S.InputImg src={send} />
