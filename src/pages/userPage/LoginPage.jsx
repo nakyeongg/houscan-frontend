@@ -33,6 +33,7 @@ const LoginPage = () => {
                 console.log('로그인 성공', response.data);
                 console.log('토큰을 저장합니다',response.data.token.access);
                 localStorage.setItem('accessToken', response.data.token.access);
+                localStorage.setItem('refreshToken', response.data.token.refresh)
                 setIsLogin(true);
                 navigate('/');
             } else {
