@@ -13,7 +13,6 @@ import axiosInstace from '../../apis/axiosInstance';
 
 const SubscriptionDetailPage = () => {
     const {id} = useParams();
-    const [title, setTitle] = useState('');
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +38,6 @@ const SubscriptionDetailPage = () => {
             setSubscription(response.data);
             setHouses(response.data.housing_info);
             console.log('주택 정보', houses);
-            setTitle(response.data.title);
             setIsLoading(false);
         } catch(error) {
             console.log('공고 디테일 가져오기 에러', error);
@@ -68,6 +66,12 @@ const SubscriptionDetailPage = () => {
                     <>
                         <S.Wrapper>
                             <S.Title>{subscription.title}</S.Title>
+                            {subscription.criteria.content && (
+                                <S.CategoryWrapper>
+                                    <S.Category>신청자격</S.Category>
+                                    <p>{subscription.criteria.content}</p>
+                                </S.CategoryWrapper>
+                            )}
                             {subscription.schedule && (
                                 <S.CategoryWrapper>
                                     <S.Category>모집일정</S.Category>
@@ -79,40 +83,44 @@ const SubscriptionDetailPage = () => {
                                                 ? value
                                                 : `${value.start ?? ''} ~ ${value.end ?? ''}`.trim();
                                             return (
-                                            <p key={key}>
-                                                {label}: {displayValue}
-                                            </p>
+                                            <S.RowWrapper key={key}>
+                                                • {label}: {displayValue}
+                                            </S.RowWrapper>
                                         );
                                     })}
                                 </S.CategoryWrapper>
                             )}
-                            {Array.isArray(subscription?.priority_score?.priority_criteria) && (
+                            {Array.isArray(subscription.priority_score.priority_criteria) && subscription.priority_score.priority_criteria.length > 0 && subscription.priority_score.priority_criteria[0].priority!==null && (
                                 <S.CategoryWrapper>
-                                    <S.Category>신청자격</S.Category>
-                                    {subscription.priority_score.priority_criteria.map((priority, index) => (
+                                    <S.Category>순위별 자격요건</S.Category>
+                                    <S.MiniCategoryWrapper>
+                                        {subscription.priority_score.priority_criteria.map((priority, index) => (
+                                            <div key={index}>
+                                                <S.MiniCategory>{priority.priority}</S.MiniCategory>
+                                                {Array.isArray(priority.criteria) && priority.criteria.map((criterion, index) => (
+                                                    <S.RowWrapper key={index}>• {criterion}</S.RowWrapper>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </S.MiniCategoryWrapper>
+                                </S.CategoryWrapper>
+                            )}
+                            {(Array.isArray(subscription.priority_score.score_items) && subscription.priority_score.score_items.length > 0 && subscription.priority_score.score_items[0].priority!==null) && (
+                                <S.CategoryWrapper>
+                                <S.Category>가점사항</S.Category>
+                                <S.MiniCategoryWrapper>
+                                    {subscription.priority_score.score_items.map((items, index) => (
                                         <div key={index}>
-                                            <S.MiniCategory>{priority.priority}</S.MiniCategory>
-                                            {priority.criteria.map((criterion, index) => (
-                                                <p>• {criterion}</p>
+                                            <S.MiniCategory>{items.priority}</S.MiniCategory>
+                                            {items.items.map((item, index) => (
+                                                <S.RowWrapper key={index}>
+                                                    <p>• {item.item}</p>
+                                                    <S.Score>{item.score}점</S.Score>
+                                                </S.RowWrapper>
                                             ))}
                                         </div>
                                     ))}
-                                </S.CategoryWrapper>
-                            )}
-                            {(subscription.priority_score.score_items && subscription.priority_score.score_items[0].priority!==null) && (
-                                <S.CategoryWrapper>
-                                <S.Category>가점사항</S.Category>
-                                {subscription.priority_score.score_items.map((items, index) => (
-                                    <div key={index}>
-                                        <S.MiniCategory>{items.priority}</S.MiniCategory>
-                                        {items.items.map((item, index) => (
-                                            <S.RowWrapper key={index}>
-                                                <p>• {item.item}</p>
-                                                <S.Score>{item.score}점</S.Score>
-                                            </S.RowWrapper>
-                                        ))}
-                                    </div>
-                                ))}
+                                </S.MiniCategoryWrapper>
                             </S.CategoryWrapper>
                             )}
                             {subscription.residence_period && (
@@ -125,7 +133,7 @@ const SubscriptionDetailPage = () => {
                                 <S.CategoryWrapper>
                                     <S.Category>유의사항</S.Category>
                                     {subscription.precautions.map((precaution, index) => (
-                                        <p key={index}>• {precaution}</p>
+                                        <S.RowWrapper key={index}>• {precaution}</S.RowWrapper>
                                     ))}
                                     <p></p>
                                 </S.CategoryWrapper>
@@ -134,8 +142,12 @@ const SubscriptionDetailPage = () => {
                                 <p>본 정보는 AI를 활용하여 요약되었으며, 정확성이 보장되지 않을 수 있으므로 참고용으로만 사용하기시 바랍니다. 더 자세한 정보는 아래의 첨부파일을 참고하세요.</p>
                             </S.CategoryWrapper>
                         </S.Wrapper>
-                        <RegionButton onDataChange={handleRegionChange}/>
-                        <HouseList houses={houses} onDataChange={handleRegionChange} region={region}/>
+                        {houses && (
+                            <>
+                                <RegionButton onDataChange={handleRegionChange}/>
+                                <HouseList houses={houses} onDataChange={handleRegionChange} region={region}/>
+                            </>
+                        )}
                         <S.ChatbotButton onClick={handleChatbot}>
                             <S.ChatbotIcon src={chatbot} />
                         </S.ChatbotButton>

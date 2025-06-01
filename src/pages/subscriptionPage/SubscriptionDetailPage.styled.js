@@ -19,7 +19,7 @@ export const Title = styled.h1`
 
 export const CategoryWrapper = styled.div`
     padding: 20px 0;
-    gap: 12px;
+    /* gap: 12px; */
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #EEEEEE;
@@ -29,6 +29,13 @@ export const Category = styled.div`
     font-size: 18px;
     font-family: ${({ theme }) =>
     theme.fonts.SUITMedium["font-family"]};
+    margin-bottom: 12px;
+`
+
+export const MiniCategoryWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 `
 
 export const MiniCategory = styled.div`
@@ -47,11 +54,13 @@ export const RowWrapper = styled.div`
     align-items: center;
     gap: 5px;
     flex-wrap: wrap;
+    margin-top: 3px;
 `
 
 export const PdfLink = styled(Link)`
     color: ${({theme}) => theme.colors.mainColor} !important;
-    text-decoration: underline;
+    text-decoration: underline;import { MiniCategory } from './SubscriptionDetailPage.styled';
+
     width: fit-content;
 `
 
