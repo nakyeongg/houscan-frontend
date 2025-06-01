@@ -52,13 +52,11 @@ export const personalInformationData = [
     },
     {
         id: 7,
-        question: '해당되는 항목을 선택해주세요',
+        question: '복지 수혜 대상에 해당되십니까?',
         type: 'radio',
         options: [
-            {text: '생계·의료·주거급여 수급자 가구', value: 0},
-            {text: '지원대상 한부모 가족', value: 1},
-            {text: '차상위계층 가구', value: 2},
-            {text: '해당없음', value: 3},
+            {text: '예', value: 0},
+            {text: '아니오', value: 1},
         ]
     },
     {

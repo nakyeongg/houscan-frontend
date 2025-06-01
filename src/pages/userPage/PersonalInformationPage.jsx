@@ -36,7 +36,7 @@ const PersonalInformationPage = () => {
             "graduate": answers[3]===0,
             "employed": answers[4]===0,
             "job_seeker": answers[5]===0,
-            "welfare_receipient": answers[6]!==3,
+            "welfare_receipient": answers[6]===0,
             "parents_own_house": answers[7]===0,
             "disability_in_family": answers[8]===0,
             "subscription_account": Number(answers[9]),
@@ -54,7 +54,7 @@ const PersonalInformationPage = () => {
             data.graduate ? 0 : 1,
             data.employed ? 0 : 1,
             data.job_seeker ? 0 : 1,
-            data.welfare_receipient ? 0 : 3, // 옵션 변경 필요
+            data.welfare_receipient ? 0 : 1,
             data.parents_own_house ? 0 : 1,
             data.disability_in_family ? 0 : 1,
             data.subscription_account,
