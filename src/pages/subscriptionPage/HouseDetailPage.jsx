@@ -39,6 +39,7 @@ const HouseDetailPage = () => {
             setSupplyHouseholds(tempSupply);
             setType(tempType);
             setHouseType(tempHouseType);
+            console.log('tempType???????????????',tempType);
             setIsLoading(false);
         } catch(error) {
             console.log('주택 정보 가져오기 에러', error);
@@ -107,10 +108,10 @@ const HouseDetailPage = () => {
                                                 <p>{supply}</p>
                                             </S.HouseCategoryContent>
                                             <S.HouseCategoryContent>
-                                                <p>{type[index]}</p>
+                                                <p>{(type[index]&& type.length > 0) ? type[index] : "유형 없음"}</p>
                                             </S.HouseCategoryContent>
                                             <S.HouseCategoryContent>
-                                                <p>{houseType[index]}</p>
+                                                <p>{houseType[index] ? houseType[index] : "주택형 없음"}</p>
                                             </S.HouseCategoryContent>
                                         </S.HouseCategoryWrapper>
                                     ))}
