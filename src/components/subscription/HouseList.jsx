@@ -11,6 +11,28 @@ export const HouseList = ({ houses, display, region }) => {
 
     console.log('houses', houses);
 
+    console.log('세대수', houses[0].supply_households);
+
+    // 공급 호수를 모두 더해서 총 호수를 계산
+    const handleTotalHouseholds = (house) => {
+        let total = 0;
+            try {
+                const fixedStr = house.replace(/'/g, '"');
+                const arr = JSON.parse(fixedStr);
+
+                arr.forEach((item) => {
+                    const cleaned = item.endsWith('호') ? item.slice(0, -1) : item;
+                    const num = parseInt(cleaned, 10);
+                    if (!isNaN(num)) {
+                        total += num;
+                    }
+                }) 
+            } catch(error) {
+                console.log(error);
+            }
+        return total;
+    }
+
     const handleHouse = (house) => {
         navigate(`/house/${house.id}`);
     }
@@ -40,26 +62,26 @@ export const HouseList = ({ houses, display, region }) => {
                 region==="전체" ? (
                     <SubscriptionWrapper key={index}>
                         <RegionWrapper>
-                            <p>{house.district}</p>
+                            <p>{house.district ? house.district : "해당없음"}</p>
                         </RegionWrapper>
                         <HouseWrapper onClick={()=>handleHouse(house)}>
-                            <p>{house.name}</p>
+                            <p>{house.name ? house.name : house.address}</p>
                         </HouseWrapper>
                         <NumberWrapper>
-                            <p>{house.supply_households}</p>
+                            <p>{handleTotalHouseholds(house.supply_households)}호</p>
                         </NumberWrapper>
                     </SubscriptionWrapper>
                 ) : (
                     region===house.district ? (
                         <SubscriptionWrapper key={index}>
                             <RegionWrapper>
-                                <p>{house.district}</p>
+                                <p>{house.district ? house.district : "해당없음"}</p>
                             </RegionWrapper>
                             <HouseWrapper onClick={()=>handleHouse(house)}>
                                 <p>{house.name}</p>
                             </HouseWrapper>
                             <NumberWrapper>
-                                <p>{house.supply_households}</p>
+                                <p>{handleTotalHouseholds(house.supply_households)}호</p>
                             </NumberWrapper>
                         </SubscriptionWrapper>
                     ) : null
@@ -89,7 +111,7 @@ const TopWrapper = styled.div`
 `
 
 const RegionWrapper = styled.div`
-    width: 49px;
+    width: 73px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

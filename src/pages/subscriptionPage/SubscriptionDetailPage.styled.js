@@ -59,8 +59,7 @@ export const RowWrapper = styled.div`
 
 export const PdfLink = styled(Link)`
     color: ${({theme}) => theme.colors.mainColor} !important;
-    text-decoration: underline;import { MiniCategory } from './SubscriptionDetailPage.styled';
-
+    text-decoration: underline;
     width: fit-content;
 `
 

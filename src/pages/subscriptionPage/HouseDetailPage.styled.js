@@ -31,6 +31,18 @@ export const Title = styled.h2`
     theme.fonts.SUITMedium["font-family"]};
 `
 
+export const HouseCategoryWrapper = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+`
+
+export const HouseCategoryContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`
+
 export const Content = styled.p`
 
 `
