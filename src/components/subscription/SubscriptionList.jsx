@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
-export const SubscriptionList = ({ display }) => {
+export const SubscriptionList = ({ display, rank }) => {
     const [subscriptions, setSubscriptions]= useState([]);
     const [page, setPage] = useState(1);
+
+    console.log('rank', rank);
 
     const hadleSubscription = async () => {
         try {
@@ -17,7 +19,7 @@ export const SubscriptionList = ({ display }) => {
             setSubscriptions(response.data);
         } catch(error) {
             console.log('공고 가져오기 에러', error);
-        }	
+        }
     }
 
     useEffect(() => {
@@ -29,7 +31,10 @@ export const SubscriptionList = ({ display }) => {
     };
 
     const offset = (page - 1) * 10;
-    const currentPageData = subscriptions.slice(offset, offset + 10);
+    const filteredSubscriptions
+        = rank ? subscriptions.filter(subscription => subscription.analysis.priority === rank)
+        : subscriptions;
+    const currentPageData = filteredSubscriptions.slice(offset, offset + 10);
 
     return (
         <Wrapper>

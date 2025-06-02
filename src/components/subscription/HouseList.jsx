@@ -78,7 +78,7 @@ export const HouseList = ({ houses, display, region }) => {
                                 <p>{house.district ? house.district : "해당없음"}</p>
                             </RegionWrapper>
                             <HouseWrapper onClick={()=>handleHouse(house)}>
-                                <p>{house.name}</p>
+                                <p>{house.name ? house.name : house.address}</p>
                             </HouseWrapper>
                             <NumberWrapper>
                                 <p>{handleTotalHouseholds(house.supply_households)}호</p>

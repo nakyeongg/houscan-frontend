@@ -42,7 +42,9 @@ const PersonalInformationPage = () => {
             "subscription_account": Number(answers[9]),
             "total_assets": Number(answers[10]),
             "car_value": Number(answers[11]),
-            "income_range": answers[12]===0 ? "100% 이하" : "50% 이하"
+            "income_range": answers[12]===0 ? "100% 이하" : "50% 이하",
+            "is_eligible": null,
+            "priority_info": null,
         }
     }
 
@@ -73,7 +75,6 @@ const PersonalInformationPage = () => {
                 setIsAnswered(true);
                 setAnswers(mapFetchAnswers(response.data));
                 console.log('isAnswered', isAnswered);
-                
             }
             setIsLoading(false);
         } catch(error) {
@@ -89,28 +90,35 @@ const PersonalInformationPage = () => {
 
     const handleSubmit = async () => {
         try {
+            setIsLoading(true);
             const data = mapAnswers(answers);
+            console.log('data?????', data);
             const response = await axiosInstace.post('api/profile/create/', data);
             console.log('개인정보 입력 요청 성공', response);
             alert('개인 정보가 저장되었습니다.');
+            setIsLoading(false);
             navigate('/');
         } catch(error) {
             console.log('개인정보 입력 요청 실패', error);
+            setIsLoading(false);
         }
     }
 
     const handleEdit = async () => {
         try {
+            setIsLoading(true);
             const data = mapAnswers(answers);
+            console.log('data', data);
             const response = await axiosInstace.patch('/api/profile/', data);
             console.log('개인정보 수정 성공', response);
             alert('개인 정보가 수정되었습니다.');
+            setIsLoading(false);
             navigate('/');
         } catch(error) {
             console.log(error);
+            setIsLoading(false);
         }
     }
-
 
     useEffect(() => {
         const allAnswered = answers.every(answer => answer !== null && answer !== undefined);

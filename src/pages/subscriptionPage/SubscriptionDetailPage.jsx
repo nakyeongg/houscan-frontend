@@ -7,6 +7,7 @@ import { Footer } from '../../components/main/Footer';
 import { RegionButton } from '../../components/subscription/RegionButton';
 import { HouseList } from '../../components/subscription/HouseList';
 import chatbot from '../../assets/images/chatbot.png';
+import info from '../../assets/icons/info.svg';
 import loading from '../../assets/images/loading.gif';
 import { useNavigate } from 'react-router-dom';
 import axiosInstace from '../../apis/axiosInstance';
@@ -65,6 +66,24 @@ const SubscriptionDetailPage = () => {
                 ) : (
                     <>
                         <S.Wrapper>
+                            {subscription.analysis.is_eligible ? (
+                                <S.BadgeWrapper>
+                                    <S.Badge>해당됨</S.Badge>
+                                    <S.Badge>{subscription.analysis.priority}</S.Badge>
+                                </S.BadgeWrapper>
+                            ) : (
+                                <>
+                                    <S.WarningBadge>
+                                        <S.InfoIcon src={info}/>
+                                        <p>해당되지 않음</p>
+                                    </S.WarningBadge>
+                                    {/* <S.ReasonWrapper>
+                                        {subscription.analysis.reasons.length && subscription.analysis.reasons.map((reason, index) => (
+                                            <S.Reason key={index}>{reason}</S.Reason>
+                                        ))}
+                                    </S.ReasonWrapper> */}
+                                </>
+                            )}
                             <S.Title>{subscription.title}</S.Title>
                             {subscription.criteria.content && (
                                 <S.CategoryWrapper>

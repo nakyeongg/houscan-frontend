@@ -2,6 +2,7 @@ import axios from "axios";
 
 const axiosInstace = axios.create({
     baseURL: 'https://houscan.shop',
+    timeout: 300000,
 });
 
 axiosInstace.interceptors.request.use(

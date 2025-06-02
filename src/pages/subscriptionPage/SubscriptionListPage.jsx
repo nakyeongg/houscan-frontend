@@ -15,6 +15,7 @@ const SubscriptionListPage = () => {
     const {isLogin, setIsLogin} = useGlobalContext();
     const [userId, setUserId] = useState(0);
     const [selectedRank, setSelectedRank] = useState();
+    const [selectedRankText, setSelectedRankText] = useState();
     const [isAnswered, setIsAnswers] = useState(false);
     const [hasCookie, setHasCookie] = useState(true); // 쿠키의 저장 여부
     const [cookies, setCookies] = useCookies(); // 쿠키에 저장되는 내용
@@ -26,11 +27,14 @@ const SubscriptionListPage = () => {
 
     const handleRank = (event) => {
         const value = Number(event.target.value);
-        console.log('click',value)
+        const text = Ranks.find(rank => rank.value === value).text;
+        console.log('click', value, text);
         if (value===selectedRank) {
             setSelectedRank(undefined);
+            setSelectedRankText(undefined);
         } else {
             setSelectedRank(value);
+            setSelectedRankText(text)
         }
     }
 
@@ -132,7 +136,7 @@ const SubscriptionListPage = () => {
                         )}
                     </S.Wrapper>
                 )}
-                <SubscriptionList />
+                <SubscriptionList rank={selectedRankText}/>
             </Layout>
             <Footer />
         </>
