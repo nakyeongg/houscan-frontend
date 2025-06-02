@@ -66,7 +66,8 @@ const SubscriptionDetailPage = () => {
                 ) : (
                     <>
                         <S.Wrapper>
-                            {subscription.analysis.is_eligible ? (
+                            {subscription.analysis.is_eligible!==null && 
+                                subscription.analysis.is_eligible ? (
                                 <S.BadgeWrapper>
                                     <S.Badge>해당됨</S.Badge>
                                     <S.Badge>{subscription.analysis.priority}</S.Badge>
