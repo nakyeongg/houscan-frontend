@@ -66,7 +66,7 @@ const SubscriptionDetailPage = () => {
                 ) : (
                     <>
                         <S.Wrapper>
-                            {subscription.analysis.is_eligible!==null && 
+                            {subscription.analysis!==null && (
                                 subscription.analysis.is_eligible ? (
                                 <S.BadgeWrapper>
                                     <S.Badge>해당됨</S.Badge>
@@ -78,13 +78,13 @@ const SubscriptionDetailPage = () => {
                                         <S.InfoIcon src={info}/>
                                         <p>해당되지 않음</p>
                                     </S.WarningBadge>
-                                    {/* <S.ReasonWrapper>
+                                    <S.ReasonWrapper>
                                         {subscription.analysis.reasons.length && subscription.analysis.reasons.map((reason, index) => (
                                             <S.Reason key={index}>{reason}</S.Reason>
                                         ))}
-                                    </S.ReasonWrapper> */}
+                                    </S.ReasonWrapper>
                                 </>
-                            )}
+                            ))}
                             <S.Title>{subscription.title}</S.Title>
                             {subscription.criteria.content && (
                                 <S.CategoryWrapper>
