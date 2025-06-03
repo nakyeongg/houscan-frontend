@@ -68,7 +68,7 @@ export const SubscriptionList = ({ display, rank }) => {
                 </SubscriptionWraper>
             ))}
             <Pagination
-                length={subscriptions.length}
+                length={filteredSubscriptions.length}
                 handlePageChange={handlePageChange}
                 display={display}
             />

@@ -20,6 +20,8 @@ const SubscriptionListPage = () => {
     const [hasCookie, setHasCookie] = useState(true); // 쿠키의 저장 여부
     const [cookies, setCookies] = useCookies(); // 쿠키에 저장되는 내용
 
+    console.log(isLogin, isAnswered);
+    
     const Ranks = [
         {text: '1순위', value: 0},
         {text: '2순위', value: 1},
@@ -97,9 +99,8 @@ const SubscriptionListPage = () => {
         <>
             <Header />
             <Layout>
-                {!hasCookie && (
                     <S.Wrapper>
-                        { (isLogin && isAnswered) ? (
+                        { (isLogin && isAnswered) && (
                             <S.ButtonWrapper>
                                 {Ranks.map((rank, index) => (
                                     <label key={index}>
@@ -117,25 +118,27 @@ const SubscriptionListPage = () => {
                                     </label>
                                 ))}
                             </S.ButtonWrapper>
-                        ) : !isLogin ? (
-                            <ButtonModal
-                                title='로그인 후 개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
-                                blueButtonText='로그인하러 가기'
-                                whtieButtonText='머무르기'
-                                blueButtonClick={() => navigate('/login')}
-                                whiteButtonClick={handleStay}
-                            />
-                        ) : (
-                            <ButtonModal
-                                title='개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
-                                blueButtonText='개인정보 입력하러 가기'
-                                whtieButtonText='머무르기'
-                                blueButtonClick={() => navigate('/information')}
-                                whiteButtonClick={handleStay}
-                            />
+                        )}
+                        {!hasCookie && (
+                            !isLogin ? (
+                                <ButtonModal
+                                    title='로그인 후 개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
+                                    blueButtonText='로그인하러 가기'
+                                    whtieButtonText='머무르기'
+                                    blueButtonClick={() => navigate('/login')}
+                                    whiteButtonClick={handleStay}
+                                />
+                            ) : (
+                                <ButtonModal
+                                    title='개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
+                                    blueButtonText='개인정보 입력하러 가기'
+                                    whtieButtonText='머무르기'
+                                    blueButtonClick={() => navigate('/information')}
+                                    whiteButtonClick={handleStay}
+                                />
+                            )
                         )}
                     </S.Wrapper>
-                )}
                 <SubscriptionList rank={selectedRankText}/>
             </Layout>
             <Footer />
