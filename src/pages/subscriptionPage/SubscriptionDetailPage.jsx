@@ -73,23 +73,21 @@ const SubscriptionDetailPage = () => {
                                     <S.Badge>{subscription.analysis.priority}</S.Badge>
                                 </S.BadgeWrapper>
                             ) : (
-                                <>
-                                    <S.WarningBadge>
-                                        <S.InfoIcon src={info}/>
-                                        <p>해당되지 않음</p>
-                                    </S.WarningBadge>
-                                    <S.ReasonWrapper>
-                                        {subscription.analysis.reasons.length && subscription.analysis.reasons.map((reason, index) => (
-                                            <S.Reason key={index}>{reason}</S.Reason>
-                                        ))}
-                                    </S.ReasonWrapper>
-                                </>
+                                <S.WarningBadge>해당되지 않음</S.WarningBadge>
                             ))}
                             <S.Title>{subscription.title}</S.Title>
                             {subscription.criteria.content && (
                                 <S.CategoryWrapper>
                                     <S.Category>신청자격</S.Category>
                                     <p>{subscription.criteria.content}</p>
+                                    {subscription.analysis!==null && !subscription.analysis.is_eligible && subscription.analysis.reasons.length && (
+                                        <S.ReasonWrapper>
+                                            <S.ReasonTitle>미해당 사유</S.ReasonTitle>
+                                            {subscription.analysis.reasons.map((reason, index) => (
+                                            <S.Reason key={index}>{reason}</S.Reason>
+                                        ))}
+                                        </S.ReasonWrapper>
+                                    )}
                                 </S.CategoryWrapper>
                             )}
                             {subscription.schedule && (

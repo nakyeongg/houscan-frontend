@@ -26,40 +26,54 @@ export const Badge = styled.p`
     justify-content: center;
     width: fit-content;
     padding: 0 15px;
+    cursor: default;
 `
 
-export const WarningBadge = styled.div`
+export const WarningBadge = styled.p`
     height: 35px;
     border-radius: 20px;
     font-family: ${({ theme }) =>
     theme.fonts.SUITSemiBold["font-family"]};
-    color: #760400;
-    background-color: #FF9A9A;
+    color: rgb(59, 59, 59);
+    background-color:rgb(220, 220, 220);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
     width: fit-content;
     padding: 0 15px;
-    cursor: pointer;
     margin-bottom: 20px;
-`
+    position: relative;
+    cursor: default;
 
-export const InfoIcon = styled.img`
-    width: 18px;
-    height: 18px;
+    &:hover > div {
+        display: flex;
+    }
+
+    &:hover > img {
+        display: flex;
+    }
 `
 
 export const ReasonWrapper = styled.div`
+    color: #333;
+    padding: 16px 20px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    padding: 10px 0;
+    margin-top: 10px;
+    background-color: rgba(255, 0, 0, 0.07);
+`
+
+export const ReasonTitle = styled.h2`
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #760400;
+    font-family: ${({ theme }) => theme.fonts.SUITMedium["font-family"]};
 `
 
 export const Reason = styled.p`
-    color: #760400;
-    font-family: ${({ theme }) =>
-    theme.fonts.SUITSemiBold["font-family"]};
+    color: #333333;
 `
 
 export const Title = styled.h1`
