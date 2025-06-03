@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const aiAxiosInstace = axios.create({
+const aiAxiosInstance = axios.create({
     baseURL: 'https://houscan.store',
 });
 
-export default aiAxiosInstace;
+export default aiAxiosInstance;

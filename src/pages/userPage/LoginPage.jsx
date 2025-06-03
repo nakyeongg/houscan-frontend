@@ -4,7 +4,7 @@ import { Header } from '../../components/main/Header';
 import { Layout } from '../../layout/Layout';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import axiosInstace from './../../apis/axiosInstance';
+import axiosInstance from './../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
 
 const LoginPage = () => {
@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axiosInstace.post('/api/users/auth/', {
+            const response = await axiosInstance.post('/api/users/auth/', {
                 email,
                 password,
             })

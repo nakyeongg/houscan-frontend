@@ -5,7 +5,7 @@ import { Layout } from '../../layout/Layout';
 import { ButtonModal } from '../../components/modal/ButtonModal';
 import { InputModal } from '../../components/modal/InputModal';
 import { useNavigate } from 'react-router-dom';
-import axiosInstace from '../../apis/axiosInstance';
+import axiosInstance from '../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
 
 const MyPage = () => {
@@ -21,7 +21,7 @@ const MyPage = () => {
     
     const handleInfo = async () => {
         try {
-            const response = await axiosInstace.get('/api/users/my');
+            const response = await axiosInstance.get('/api/users/my');
             console.log('나의 정보 가져오기 성공', response);
             setName(response.data.nickname);
             setEmail(response.data.email);
@@ -53,7 +53,7 @@ const MyPage = () => {
             return;
         }
         try {
-            const response = await axiosInstace.patch('/api/users/my/', {
+            const response = await axiosInstance.patch('/api/users/my/', {
                 nickname: changedName.trim(),
             })
             setActiveModal(null);
@@ -69,7 +69,7 @@ const MyPage = () => {
 
     const changePassword = async () => {
         try {
-            const response = await axiosInstace.post('/api/users/change-pw/', {
+            const response = await axiosInstance.post('/api/users/change-pw/', {
                 current_password: nowPassword,
                 new_password: changedPassword,
             });
@@ -86,7 +86,7 @@ const MyPage = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axiosInstace.delete('/api/users/auth/');
+            const response = await axiosInstance.delete('/api/users/auth/');
             console.log('로그아웃 성공', response);
             localStorage.removeItem('accessToken');
             alert('로그아웃되었습니다.');
@@ -99,7 +99,7 @@ const MyPage = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await axiosInstace.delete('/api/users/delete/');
+            const response = await axiosInstance.delete('/api/users/delete/');
             console.log('회원탈퇴 성공', response);
             setActiveModal('deleteConfirm');
         } catch(error) {

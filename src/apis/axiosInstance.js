@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const axiosInstace = axios.create({
+const axiosInstance = axios.create({
     baseURL: 'https://houscan.shop',
     timeout: 300000,
 });
 
-axiosInstace.interceptors.request.use(
+axiosInstance.interceptors.request.use(
     (config) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
@@ -20,7 +20,7 @@ axiosInstace.interceptors.request.use(
 
 const getNewAcessToken = async (refreshToken) => {
     try {
-        const response = await axiosInstace.post('/token/refresh/', {
+        const response = await axiosInstance.post('/token/refresh/', {
             "refresh": refreshToken
         });
         console.log('새로운 acessToken 가져오기 성공', response);
@@ -32,7 +32,7 @@ const getNewAcessToken = async (refreshToken) => {
     }
 }
 
-axiosInstace.interceptors.response.use(
+axiosInstance.interceptors.response.use(
     (response) => {
         return response;
     },
@@ -45,9 +45,9 @@ axiosInstace.interceptors.response.use(
                 // 새로운 AccessToken을 받아와서 다시 요청 보내기
                 const refreshToken = localStorage.getItem('refreshToken');
                 const newAccessToken = await getNewAcessToken(refreshToken);
-                axiosInstace.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+                axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
                 originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-                return axiosInstace(originalRequest);
+                return axiosInstance(originalRequest);
             } catch(error) {
                 console.log('accessToken 재발급 실패', error);
             }
@@ -56,4 +56,4 @@ axiosInstace.interceptors.response.use(
     }
 )
 
-export default axiosInstace;
+export default axiosInstance;

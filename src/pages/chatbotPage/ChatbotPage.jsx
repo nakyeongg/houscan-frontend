@@ -6,8 +6,8 @@ import chatbot from '../../assets/images/chatbot.png';
 import send from '../../assets/icons/send.svg';
 import loading from '../../assets/images/loading.gif';
 import { useLocation, useParams } from 'react-router-dom';
-import aiAxiosInstace from '../../apis/aiAxiosInstance';
-import axiosInstace from '../../apis/axiosInstance';
+import aiAxiosInstance from '../../apis/aiAxiosInstance';
+import axiosInstance from '../../apis/axiosInstance';
 
 const ChatbotPage = () => {
     const { id } = useParams();
@@ -21,7 +21,7 @@ const ChatbotPage = () => {
 
     const handlePdf = async () => {
         try {
-            const response = await aiAxiosInstace.get('/api/available-pdfs');
+            const response = await aiAxiosInstance.get('/api/available-pdfs');
             console.log(response);
         } catch(error) {
             console.log(error);
@@ -30,7 +30,7 @@ const ChatbotPage = () => {
 
     const handleName = async () => {
         try {
-            const response = await axiosInstace.get(`/api/announcements/${id}/pdf-name`);
+            const response = await axiosInstance.get(`/api/announcements/${id}/pdf-name`);
             console.log('이름 가져오기 성공', response);
             setPdf(response.data.pdf_name);
             setTitle(response.data.title);
@@ -46,7 +46,7 @@ const ChatbotPage = () => {
         setIsBotLoading(true);
         setMessages(prev => [...prev, {type: 'user', text: userQuestion}]);
         try {
-            const response = await aiAxiosInstace.post('/api/chat', {
+            const response = await aiAxiosInstance.post('/api/chat', {
                 pdf_name: pdf,
                 query: question
             });

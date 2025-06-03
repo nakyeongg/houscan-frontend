@@ -4,7 +4,7 @@ import { Header } from '../../components/main/Header';
 import { Layout } from '../../layout/Layout';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import axiosInstace from '../../apis/axiosInstance';
+import axiosInstance from '../../apis/axiosInstance';
 
 const SignupPage = () => {
     const [nickname, setNickname] = useState('');
@@ -36,7 +36,7 @@ const SignupPage = () => {
 
     const handleSignup = async () => {
         try {
-            const response = await axiosInstace.post('/api/users/signup/', {
+            const response = await axiosInstance.post('/api/users/signup/', {
                 'email': email,
                 'nickname': nickname,
                 'password': password,

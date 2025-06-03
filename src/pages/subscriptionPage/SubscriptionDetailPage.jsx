@@ -10,7 +10,7 @@ import chatbot from '../../assets/images/chatbot.png';
 import info from '../../assets/icons/info.svg';
 import loading from '../../assets/images/loading.gif';
 import { useNavigate } from 'react-router-dom';
-import axiosInstace from '../../apis/axiosInstance';
+import axiosInstance from '../../apis/axiosInstance';
 
 const SubscriptionDetailPage = () => {
     const {id} = useParams();
@@ -34,7 +34,7 @@ const SubscriptionDetailPage = () => {
     const handleDetail = async () => {
         try {
             setIsLoading(true);
-            const response = await axiosInstace.get(`/api/announcements/${id}`);
+            const response = await axiosInstance.get(`/api/announcements/${id}`);
             console.log('공고 디테일 가져오기 성공', response.data);
             setSubscription(response.data);
             setHouses(response.data.housing_info);

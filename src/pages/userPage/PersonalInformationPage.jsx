@@ -7,7 +7,7 @@ import { InformationInput } from '../../components/personalInformation/Informati
 import { InformationRadio } from '../../components/personalInformation/InformationRadio';
 import loading from '../../assets/images/loading.gif';
 import { useNavigate } from 'react-router-dom';
-import axiosInstace from './../../apis/axiosInstance';
+import axiosInstance from './../../apis/axiosInstance';
 
 const PersonalInformationPage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +69,7 @@ const PersonalInformationPage = () => {
     const getPersonalInformation = async () => {
         try {
             setIsLoading(true);
-            const response = await axiosInstace.get('/api/profile/');
+            const response = await axiosInstance.get('/api/profile/');
             console.log('개인정보 가져오기 성공', response.data);
             if (response.status===200) {
                 setIsAnswered(true);
@@ -93,7 +93,7 @@ const PersonalInformationPage = () => {
             setIsLoading(true);
             const data = mapAnswers(answers);
             console.log('data?????', data);
-            const response = await axiosInstace.post('api/profile/create/', data);
+            const response = await axiosInstance.post('api/profile/create/', data);
             console.log('개인정보 입력 요청 성공', response);
             alert('개인 정보가 저장되었습니다.');
             setIsLoading(false);
@@ -109,7 +109,7 @@ const PersonalInformationPage = () => {
             setIsLoading(true);
             const data = mapAnswers(answers);
             console.log('data', data);
-            const response = await axiosInstace.patch('/api/profile/', data);
+            const response = await axiosInstance.patch('/api/profile/', data);
             console.log('개인정보 수정 성공', response);
             alert('개인 정보가 수정되었습니다.');
             setIsLoading(false);

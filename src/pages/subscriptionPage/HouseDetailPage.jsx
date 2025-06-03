@@ -6,7 +6,7 @@ import { Footer } from '../../components/main/Footer';
 import loading from '../../assets/images/loading.gif';
 import KakaoMap from '../../components/subscription/KakaoMap';
 import { useParams } from 'react-router-dom';
-import axiosInstace from './../../apis/axiosInstance';
+import axiosInstance from './../../apis/axiosInstance';
 
 const HouseDetailPage = () => {
     const {id} = useParams();
@@ -30,7 +30,7 @@ const HouseDetailPage = () => {
     const handleHouse = async () => {
         try {
             setIsLoading(true);
-            const response = await axiosInstace.get(`/api/announcements/house/${id}`);
+            const response = await axiosInstance.get(`/api/announcements/house/${id}`);
             console.log('주택 정보 가져오기 성공', response);
             setHouse(response.data.housing_info);
             const tempSupply = handleList(response.data.housing_info.supply_households);

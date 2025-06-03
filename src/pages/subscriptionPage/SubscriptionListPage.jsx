@@ -8,7 +8,7 @@ import { ButtonModal } from '../../components/modal/ButtonModal';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/context';
 import { useCookies } from 'react-cookie';
-import axiosInstace from '../../apis/axiosInstance';
+import axiosInstance from '../../apis/axiosInstance';
 
 const SubscriptionListPage = () => {
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const SubscriptionListPage = () => {
 
     const getUserId = async () => {
         try {
-            const response = await axiosInstace.get('/api/users/my/');
+            const response = await axiosInstance.get('/api/users/my/');
             console.log('유저 id 요청 성공', response);
             setUserId(response.data.id);
         } catch(error) {
@@ -52,7 +52,7 @@ const SubscriptionListPage = () => {
     
     const getPersonalInformation = async () => {
         try {
-            const response = await axiosInstace.get('/api/profile/');
+            const response = await axiosInstance.get('/api/profile/');
             console.log('개인정보 작성 여부 확인 성공', response.data);
             if (response.status===200) {
                 setIsAnswers(true);
