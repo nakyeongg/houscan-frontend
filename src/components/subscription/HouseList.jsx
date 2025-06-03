@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { houseData } from '../../constant/houseData';
 import { Pagination } from './Pagination';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const HouseList = ({ houses, display, region }) => {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
 
     console.log('houses', houses);
-
-    console.log('세대수', houses[0].supply_households);
 
     // 공급 호수를 모두 더해서 총 호수를 계산
     const handleTotalHouseholds = (house) => {
@@ -41,8 +37,11 @@ export const HouseList = ({ houses, display, region }) => {
         setPage(selected + 1);
     };
 
+    const filteredHouses = region === "전체" 
+        ? houses
+        : houses.filter(houses => houses.district === region);
     const offset = (page - 1) * 10;
-    const currentPageData = houses.slice(offset, offset + 10);
+    const currentPageData = filteredHouses.slice(offset, offset + 10);
 
     return (
         <Wrapper>
@@ -59,36 +58,20 @@ export const HouseList = ({ houses, display, region }) => {
             </TopWrapper>
             <Line></Line>
             {currentPageData.map((house, index) => (
-                region==="전체" ? (
-                    <SubscriptionWrapper key={index}>
-                        <RegionWrapper>
-                            <p>{house.district ? house.district : "해당없음"}</p>
-                        </RegionWrapper>
-                        <HouseWrapper onClick={()=>handleHouse(house)}>
-                            <p>{house.name ? house.name : house.address}</p>
-                        </HouseWrapper>
-                        <NumberWrapper>
-                            <p>{handleTotalHouseholds(house.supply_households)}호</p>
-                        </NumberWrapper>
-                    </SubscriptionWrapper>
-                ) : (
-                    region===house.district ? (
-                        <SubscriptionWrapper key={index}>
-                            <RegionWrapper>
-                                <p>{house.district ? house.district : "해당없음"}</p>
-                            </RegionWrapper>
-                            <HouseWrapper onClick={()=>handleHouse(house)}>
-                                <p>{house.name ? house.name : house.address}</p>
-                            </HouseWrapper>
-                            <NumberWrapper>
-                                <p>{handleTotalHouseholds(house.supply_households)}호</p>
-                            </NumberWrapper>
-                        </SubscriptionWrapper>
-                    ) : null
-                )
+                <SubscriptionWrapper key={index}>
+                    <RegionWrapper>
+                        <p>{house.district ? house.district : "해당없음"}</p>
+                    </RegionWrapper>
+                    <HouseWrapper onClick={()=>handleHouse(house)}>
+                        <p>{house.name ? house.name : house.address}</p>
+                    </HouseWrapper>
+                    <NumberWrapper>
+                        <p>{handleTotalHouseholds(house.supply_households)}호</p>
+                    </NumberWrapper>
+                </SubscriptionWrapper>
             ))}
             <Pagination
-                length={houseData.length}
+                length={filteredHouses.length}
                 handlePageChange={handlePageChange}
                 display={display}
             />
