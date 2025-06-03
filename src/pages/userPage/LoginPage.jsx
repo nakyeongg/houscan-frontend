@@ -67,6 +67,7 @@ const LoginPage = () => {
                             placeholder='example@naver.com' 
                             value={email}
                             onChange={handleEmail}
+                            onKeyDown={handleEnter}
                         />
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>

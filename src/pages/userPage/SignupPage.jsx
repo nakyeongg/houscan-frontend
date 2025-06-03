@@ -68,6 +68,7 @@ const SignupPage = () => {
                                 placeholder='닉네임을 입력하세요' 
                                 value={nickname}
                                 onChange={handleNickname}
+                                onKeyDown={handleEnter}
                             />
                         </S.ColumnWrapper>
                         <S.ColumnWrapper>
@@ -76,6 +77,7 @@ const SignupPage = () => {
                                 placeholder='example@naver.com' 
                                 value={email}
                                 onChange={handleEmail}
+                                onKeyDown={handleEnter}
                             />
                         </S.ColumnWrapper>
                         <S.ColumnWrapper>
@@ -85,6 +87,7 @@ const SignupPage = () => {
                                 value={password}
                                 onChange={handlePassword}
                                 type='password'
+                                onKeyDown={handleEnter}
                             />
                         </S.ColumnWrapper>
                         <S.ColumnWrapper>

@@ -169,6 +169,7 @@ const MyPage = () => {
                     onChange2={handleChangedPassword}
                     type1="password"
                     type2="password"
+                    onKeyDown1={handlePasswordEnter}
                     onKeyDown2={handlePasswordEnter}
                 />
             )
