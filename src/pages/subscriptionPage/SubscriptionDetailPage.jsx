@@ -61,9 +61,7 @@ const SubscriptionDetailPage = () => {
         <>
             <Header />
             <Layout>
-                {isLoading || !subscription ? (
-                    <img src={loading} alt="loading icon" />
-                ) : (
+                {subscription && (
                     <>
                         <S.Wrapper>
                             {subscription.analysis!==null && (

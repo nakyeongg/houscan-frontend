@@ -105,7 +105,7 @@ const HouseDetailPage = () => {
                                     {supplyHouseholds.map((supply, index) => (
                                         <S.HouseCategoryWrapper key={index}>
                                             <S.HouseCategoryContent>
-                                                <p>{supply}</p>
+                                                <p>{supply.endsWith('호') ? supply.slice(0, -1) : supply}호</p>
                                             </S.HouseCategoryContent>
                                             <S.HouseCategoryContent>
                                                 <p>{(type[index]&& type.length > 0) ? type[index] : "유형 없음"}</p>
