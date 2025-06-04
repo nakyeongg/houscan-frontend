@@ -5,15 +5,15 @@ import { Header } from '../../components/main/Header';
 import { personalInformationData } from './../../constant/personalInformationData';
 import { InformationInput } from '../../components/personalInformation/InformationInput';
 import { InformationRadio } from '../../components/personalInformation/InformationRadio';
-import loading from '../../assets/images/loading.gif';
+import { ProgressBar } from '../../components/personalInformation/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
 
 const PersonalInformationPage = () => {
-    const [isLoading, setIsLoading] = useState(false);
     const [isAnswered, setIsAnswered] = useState(); // 처음 작성하는 것인지 수정하는 것인지 파악하기 위함
     const [disable, setDisable] = useState(true);
     const [answers, setAnswers] = useState(Array(personalInformationData.length).fill(null)); // 현재 체크한 답변
+    const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (index, value) => {
@@ -68,7 +68,6 @@ const PersonalInformationPage = () => {
 
     const getPersonalInformation = async () => {
         try {
-            setIsLoading(true);
             const response = await axiosInstance.get('/api/profile/');
             console.log('개인정보 가져오기 성공', response.data);
             if (response.status===200) {
@@ -76,47 +75,36 @@ const PersonalInformationPage = () => {
                 setAnswers(mapFetchAnswers(response.data));
                 console.log('isAnswered', isAnswered);
             }
-            setIsLoading(false);
         } catch(error) {
             console.log('개인정보 가져오기 에러', error);
             if (error.response.status===404) {
                 setIsAnswered(false);
                 console.log('isAnswered', isAnswered);
-                setIsLoading(false);
             }
-            setIsLoading(false);
         }
     }
 
     const handleSubmit = async () => {
         try {
-            setIsLoading(true);
+            setLoading(true);
             const data = mapAnswers(answers);
-            console.log('data?????', data);
+            console.log('data', data);
             const response = await axiosInstance.post('api/profile/create/', data);
             console.log('개인정보 입력 요청 성공', response);
-            alert('개인 정보가 저장되었습니다.');
-            setIsLoading(false);
-            navigate('/');
         } catch(error) {
             console.log('개인정보 입력 요청 실패', error);
-            setIsLoading(false);
         }
     }
 
     const handleEdit = async () => {
         try {
-            setIsLoading(true);
+            setLoading(true);
             const data = mapAnswers(answers);
             console.log('data', data);
             const response = await axiosInstance.patch('/api/profile/', data);
             console.log('개인정보 수정 성공', response);
-            alert('개인 정보가 수정되었습니다.');
-            setIsLoading(false);
-            navigate('/');
         } catch(error) {
             console.log(error);
-            setIsLoading(false);
         }
     }
 
@@ -133,11 +121,11 @@ const PersonalInformationPage = () => {
         <>
             <Header />
             <Layout>
-                <S.Title>개인 정보 입력</S.Title>
                 {isLoading ? (
-                    <img src={loading} alt="loading icon" />
+                    <ProgressBar />
                 ) : (
                     <>
+                        <S.Title>개인 정보 입력</S.Title>
                         <S.Wrapper>
                         {personalInformationData.map((data, index) => (
                             <S.QuestionWrapper key={index}>
