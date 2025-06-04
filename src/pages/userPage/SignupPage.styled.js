@@ -25,7 +25,9 @@ export const ColumnWrapper = styled.div`
 `
 
 export const Name = styled.h2`
-    font-size: 20px;
+    font-size: 18px;
+    font-family: ${({ theme }) =>
+    theme.fonts.SUITMedium["font-family"]};
 `
 
 export const Input = styled.input`
@@ -53,7 +55,7 @@ export const Button = styled.button`
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 12px;
 
     &:disabled {
@@ -64,7 +66,7 @@ export const Button = styled.button`
 
 export const GuideWrapper = styled.div`
     display: flex;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
     gap: 4px;
 `
 
@@ -76,4 +78,9 @@ export const LoginButton = styled.p`
     font-size: 18px;
     color: ${({ theme }) => theme.colors.mainColor};
     text-decoration: underline;
+
+    &:hover {
+        font-family: ${({ theme }) =>
+        theme.fonts.SUITSemiBold["font-family"]};
+    }
 `

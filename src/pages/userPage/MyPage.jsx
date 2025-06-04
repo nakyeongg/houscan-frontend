@@ -89,7 +89,6 @@ const MyPage = () => {
             const response = await axiosInstance.delete('/api/users/auth/');
             console.log('로그아웃 성공', response);
             localStorage.removeItem('accessToken');
-            alert('로그아웃되었습니다.');
             setIsLogin(false);
             navigate('/');
         } catch(error) {

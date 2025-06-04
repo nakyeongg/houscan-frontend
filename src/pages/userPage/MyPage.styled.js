@@ -4,7 +4,7 @@ export const Title = styled.h1`
     margin-bottom: 40px;
     font-size: 24px;
     font-family: ${({ theme }) => 
-    theme.fonts.SUITSemiBold["font-family"]};
+    theme.fonts.SUITMedium["font-family"]};
     color: ${({ theme }) => theme.colors.mainColor};
 `
 
@@ -18,7 +18,9 @@ export const Wrapper = styled.div`
 `
 
 export const Category = styled.h2`
-    font-size: 20px;
+    font-size: 18px;
+    font-family: ${({ theme }) =>
+    theme.fonts.SUITMedium["font-family"]};
 `
 
 export const ValueWrapper = styled.div`
@@ -32,6 +34,7 @@ export const Value = styled.p`
     border: 1px solid #E5E7EB;
     padding: 12px;
     width: 100%;
+    font-size: 18px;
     cursor: default;
 `
 
