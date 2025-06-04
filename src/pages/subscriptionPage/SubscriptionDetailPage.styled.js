@@ -137,9 +137,10 @@ export const ChatbotButton = styled.button`
     bottom: 55px;
     right: 30px;
     z-index: 1;
+    transition: transform 0.3s ease;
 
     &:hover {
-        opacity: 0.8;
+        transform: scale(1.1);
     }
 `
 

@@ -7,8 +7,6 @@ import { Footer } from '../../components/main/Footer';
 import { RegionButton } from '../../components/subscription/RegionButton';
 import { HouseList } from '../../components/subscription/HouseList';
 import chatbot from '../../assets/images/chatbot.png';
-import info from '../../assets/icons/info.svg';
-import loading from '../../assets/images/loading.gif';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
@@ -16,7 +14,6 @@ const SubscriptionDetailPage = () => {
     const {id} = useParams();
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [region, setRegion] = useState("전체");
     const navigate = useNavigate();
 
@@ -33,13 +30,11 @@ const SubscriptionDetailPage = () => {
 
     const handleDetail = async () => {
         try {
-            setIsLoading(true);
             const response = await axiosInstance.get(`/api/announcements/${id}`);
             console.log('공고 디테일 가져오기 성공', response.data);
             setSubscription(response.data);
             setHouses(response.data.housing_info);
             console.log('주택 정보', houses);
-            setIsLoading(false);
         } catch(error) {
             console.log('공고 디테일 가져오기 에러', error);
         }
