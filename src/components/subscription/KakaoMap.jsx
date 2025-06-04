@@ -26,16 +26,19 @@ const KakaoMap = ({ placeName, address }) => {
 
                 const infowindow = new window.kakao.maps.InfoWindow({
                     content: `
-                    <div style="
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-size: 14px;
-                        width: 150px;
-                        min-height: 30px;
-                        padding: 10px;">
-                        ${placeName}
-                    </div>`,
+                        <div style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 16px;
+                            width: 150px;
+                            min-height: 30px;
+                            padding: 10px;
+                            border: none;
+                            font-family: 'SUIT-Medium', sans-serif;"
+                        >
+                            ${placeName}
+                        </div>`,
                 });
                 infowindow.open(map, marker);
                 map.setCenter(coords);
