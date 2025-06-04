@@ -114,6 +114,7 @@ const HouseWrapper = styled.button`
     margin-right: 10px;
     text-align: left;
     font-size: 14px;
+    color: #000000;
 `
 
 const NumberWrapper = styled.div`
