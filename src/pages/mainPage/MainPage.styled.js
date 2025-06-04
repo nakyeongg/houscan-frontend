@@ -6,11 +6,10 @@ export const More = styled(Link)`
     text-align: center;
     color: #B5B7C0 !important;
     font-size: 14px;
-    font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
     
     &:hover {
         cursor: pointer;
-        text-decoration: underline;
+        font-family: ${({ theme }) =>
+        theme.fonts.SUITSemiBold["font-family"]};
     }
 `

@@ -62,4 +62,9 @@ export const GreyButton = styled.button`
     color: #9FA6B2;
     margin-bottom: 24px;
     font-size: 16px;
+
+    &:hover {
+        font-family: ${({ theme }) =>
+        theme.fonts.SUITSemiBold["font-family"]};
+    }
 `
