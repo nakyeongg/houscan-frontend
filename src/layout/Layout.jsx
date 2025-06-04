@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px;
-    min-height: 100%;
+    min-height: calc(100vh - 100px - 188px);
     overflow-y: auto;
     margin-top: 106px;
     display: flex;

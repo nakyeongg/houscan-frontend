@@ -17,7 +17,7 @@ export const ProgressBar = () => {
 
     useEffect(() => {
         if (available===0) {
-            navigate('/');
+            navigate('/subscription');
         }
     }, [available, navigate])
 

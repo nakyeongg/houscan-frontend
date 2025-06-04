@@ -99,46 +99,46 @@ const SubscriptionListPage = () => {
         <>
             <Header />
             <Layout>
-                    <S.Wrapper>
-                        { (isLogin && isAnswered) && (
-                            <S.ButtonWrapper>
-                                {Ranks.map((rank, index) => (
-                                    <label key={index}>
-                                        <S.Input
-                                            type='radio'
-                                            name='rank'
-                                            value={rank.value}
-                                            onClick={handleRank}
-                                            onChange={()=>{}}
-                                            checked={rank.value===selectedRank}
-                                        />
-                                        <S.Text selected={index===selectedRank}>
-                                            {rank.text}
-                                        </S.Text>
-                                    </label>
-                                ))}
-                            </S.ButtonWrapper>
-                        )}
-                        {!hasCookie && (
-                            !isLogin ? (
-                                <ButtonModal
-                                    title='로그인 후 개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
-                                    blueButtonText='로그인하러 가기'
-                                    whtieButtonText='머무르기'
-                                    blueButtonClick={() => navigate('/login')}
-                                    whiteButtonClick={handleStay}
-                                />
-                            ) : !isAnswered ? (
-                                <ButtonModal
-                                    title='개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
-                                    blueButtonText='개인정보 입력하러 가기'
-                                    whtieButtonText='머무르기'
-                                    blueButtonClick={() => navigate('/information')}
-                                    whiteButtonClick={handleStay}
-                                />
-                            ) : null
-                        )}
-                    </S.Wrapper>
+                <S.Wrapper>
+                    { (isLogin && isAnswered) && (
+                        <S.ButtonWrapper>
+                            {Ranks.map((rank, index) => (
+                                <label key={index}>
+                                    <S.Input
+                                        type='radio'
+                                        name='rank'
+                                        value={rank.value}
+                                        onClick={handleRank}
+                                        onChange={()=>{}}
+                                        checked={rank.value===selectedRank}
+                                    />
+                                    <S.Text selected={index===selectedRank}>
+                                        {rank.text}
+                                    </S.Text>
+                                </label>
+                            ))}
+                        </S.ButtonWrapper>
+                    )}
+                    {!hasCookie && (
+                        !isLogin ? (
+                            <ButtonModal
+                                title='로그인 후 개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
+                                blueButtonText='로그인하러 가기'
+                                whtieButtonText='머무르기'
+                                blueButtonClick={() => navigate('/login')}
+                                whiteButtonClick={handleStay}
+                            />
+                        ) : !isAnswered ? (
+                            <ButtonModal
+                                title='개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
+                                blueButtonText='개인정보 입력하러 가기'
+                                whtieButtonText='머무르기'
+                                blueButtonClick={() => navigate('/information')}
+                                whiteButtonClick={handleStay}
+                            />
+                        ) : null
+                    )}
+                </S.Wrapper>
                 <SubscriptionList rank={selectedRankText}/>
             </Layout>
             <Footer />
