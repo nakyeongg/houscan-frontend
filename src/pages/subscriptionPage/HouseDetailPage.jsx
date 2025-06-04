@@ -3,14 +3,12 @@ import * as S from './HouseDetailPage.styled';
 import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
-import loading from '../../assets/images/loading.gif';
 import KakaoMap from '../../components/subscription/KakaoMap';
 import { useParams } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
 
 const HouseDetailPage = () => {
     const {id} = useParams();
-    const [isLoading, setIsLoading] = useState(false);
     const [house, setHouse] = useState();
     const [supplyHouseholds, setSupplyHouseholds] = useState([]);
     const [type, setType] = useState([]);
@@ -29,7 +27,6 @@ const HouseDetailPage = () => {
 
     const handleHouse = async () => {
         try {
-            setIsLoading(true);
             const response = await axiosInstance.get(`/api/announcements/house/${id}`);
             console.log('주택 정보 가져오기 성공', response);
             setHouse(response.data.housing_info);
@@ -39,8 +36,7 @@ const HouseDetailPage = () => {
             setSupplyHouseholds(tempSupply);
             setType(tempType);
             setHouseType(tempHouseType);
-            console.log('tempType???????????????',tempType);
-            setIsLoading(false);
+            console.log('tempType',tempType);
         } catch(error) {
             console.log('주택 정보 가져오기 에러', error);
         }
@@ -74,9 +70,7 @@ const HouseDetailPage = () => {
         <>
             <Header />
             <Layout>
-                {(isLoading || !house) ? (
-                    <img src={loading} alt="loading icon" />
-                ) : (
+                {house && (
                     <>
                         <S.House>{house.name ? house.name : house.address}</S.House>
                         {(house.address!=="null" && house.address!==null) && (
