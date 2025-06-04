@@ -128,7 +128,7 @@ const SubscriptionListPage = () => {
                                     blueButtonClick={() => navigate('/login')}
                                     whiteButtonClick={handleStay}
                                 />
-                            ) : (
+                            ) : !isAnswered ? (
                                 <ButtonModal
                                     title='개인정보를 입력하고 나에게 맞는 공고를 확인하세요'
                                     blueButtonText='개인정보 입력하러 가기'
@@ -136,7 +136,7 @@ const SubscriptionListPage = () => {
                                     blueButtonClick={() => navigate('/information')}
                                     whiteButtonClick={handleStay}
                                 />
-                            )
+                            ) : null
                         )}
                     </S.Wrapper>
                 <SubscriptionList rank={selectedRankText}/>

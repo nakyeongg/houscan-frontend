@@ -5,7 +5,6 @@ import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import Slider from './../../components/main/Slider';
 import { SubscriptionList } from '../../components/subscription/SubscriptionList';
-import { Link } from 'react-router-dom';
 
 const MainPage = () => {
     return (
@@ -14,9 +13,7 @@ const MainPage = () => {
             <Layout>
                 <Slider />
                 <SubscriptionList display='none' />
-                <Link to='/subscription'>
-                    <S.More>더보기</S.More>
-                </Link>
+                <S.More to='/subscription'>더보기</S.More>
             </Layout>
             <Footer />
         </>
