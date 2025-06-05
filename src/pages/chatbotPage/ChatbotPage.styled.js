@@ -33,11 +33,6 @@ export const BotWrapper = styled.div`
     }
 `
 
-export const BotImage = styled.img`
-    width: 50px;
-    height: 50px;
-`
-
 export const BotChat = styled.p`
     background-color: #F5F5F5;
     border-radius: 12px;

@@ -93,14 +93,12 @@ const ChatbotPage = () => {
                             </S.UserWrapper>
                         ) : (
                             <S.BotWrapper>
-                                <S.BotImage src={chatbot} />
                                 <S.BotChat>{message.text}</S.BotChat>
                             </S.BotWrapper>
                         )
                     ))}
                     {isBotLoading && 
                         <S.BotWrapper>
-                            <S.BotImage src={chatbot} />
                             <S.BotLoading src={loading}/>
                         </S.BotWrapper>
                     }
