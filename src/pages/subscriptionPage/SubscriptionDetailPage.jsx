@@ -12,6 +12,7 @@ import axiosInstance from '../../apis/axiosInstance';
 
 const SubscriptionDetailPage = () => {
     const {id} = useParams();
+    const [title, setTitle] = useState('');
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
     const [region, setRegion] = useState("전체");
@@ -32,9 +33,10 @@ const SubscriptionDetailPage = () => {
         try {
             const response = await axiosInstance.get(`/api/announcements/${id}`);
             console.log('공고 디테일 가져오기 성공', response.data);
-            setSubscription(response.data);
-            setHouses(response.data.housing_info);
-            console.log('주택 정보', houses);
+            setTitle(response.data.title);
+            setSubscription(response.data.ai_summary_json);
+            setHouses(response.data.housing_info_list);
+            console.log('주택 정보', response.data.housing_info_list);
         } catch(error) {
             console.log('공고 디테일 가져오기 에러', error);
         }
@@ -59,7 +61,7 @@ const SubscriptionDetailPage = () => {
                 {subscription && (
                     <>
                         <S.Wrapper>
-                            {subscription.analysis!==null && (
+                            {/* {subscription.analysis!==null && (
                                 subscription.analysis.is_eligible ? (
                                 <S.BadgeWrapper>
                                     <S.Badge>해당됨</S.Badge>
@@ -67,26 +69,26 @@ const SubscriptionDetailPage = () => {
                                 </S.BadgeWrapper>
                             ) : (
                                 <S.WarningBadge>해당되지 않음</S.WarningBadge>
-                            ))}
-                            <S.Title>{subscription.title}</S.Title>
-                            {subscription.criteria.content && (
+                            ))} */}
+                            <S.Title>{title}</S.Title>
+                            {subscription.application_eligibility && (
                                 <S.CategoryWrapper>
                                     <S.Category>신청자격</S.Category>
-                                    <p>{subscription.criteria.content}</p>
-                                    {subscription.analysis!==null && !subscription.analysis.is_eligible && subscription.analysis.reasons.length && (
+                                    <p>{subscription.application_eligibility}</p>
+                                    {/* {subscription.analysis!==null && !subscription.analysis.is_eligible && subscription.analysis.reasons.length && (
                                         <S.ReasonWrapper>
                                             <S.ReasonTitle>미해당 사유</S.ReasonTitle>
                                             {subscription.analysis.reasons.map((reason, index) => (
                                             <S.Reason key={index}>{reason}</S.Reason>
                                         ))}
                                         </S.ReasonWrapper>
-                                    )}
+                                    )} */}
                                 </S.CategoryWrapper>
                             )}
-                            {subscription.schedule && (
+                            {subscription.application_schedule && (
                                 <S.CategoryWrapper>
                                     <S.Category>모집일정</S.Category>
-                                    {Object.entries(subscription.schedule).map(([key, value]) => {
+                                    {Object.entries(subscription.application_schedule).map(([key, value]) => {
                                         if (!value || (typeof value === 'object' && !value.start && !value.end)) return null;
                                         const label = scheduleLabel[key] || key;
                                         const displayValue =
@@ -101,11 +103,11 @@ const SubscriptionDetailPage = () => {
                                     })}
                                 </S.CategoryWrapper>
                             )}
-                            {Array.isArray(subscription.priority_score.priority_criteria) && subscription.priority_score.priority_criteria.length > 0 && subscription.priority_score.priority_criteria[0].priority!==null && (
+                            {Array.isArray(subscription.priority_and_bonus.priority_criteria) && subscription.priority_and_bonus.priority_criteria.length > 0 && subscription.priority_and_bonus.priority_criteria[0].priority!==null && (
                                 <S.CategoryWrapper>
                                     <S.Category>순위별 자격요건</S.Category>
                                     <S.MiniCategoryWrapper>
-                                        {subscription.priority_score.priority_criteria.map((priority, index) => (
+                                        {subscription.priority_and_bonus.priority_criteria.map((priority, index) => (
                                             <div key={index}>
                                                 <S.MiniCategory>{priority.priority}</S.MiniCategory>
                                                 {Array.isArray(priority.criteria) && priority.criteria.map((criterion, index) => (
@@ -116,11 +118,11 @@ const SubscriptionDetailPage = () => {
                                     </S.MiniCategoryWrapper>
                                 </S.CategoryWrapper>
                             )}
-                            {(Array.isArray(subscription.priority_score.score_items) && subscription.priority_score.score_items.length > 0 && subscription.priority_score.score_items[0].priority!==null) && (
+                            {(Array.isArray(subscription.priority_and_bonus.score_items) && subscription.priority_and_bonus.score_items.length > 0 && subscription.priority_and_bonus.score_items[0].priority!==null) && (
                                 <S.CategoryWrapper>
                                 <S.Category>가점사항</S.Category>
                                 <S.MiniCategoryWrapper>
-                                    {subscription.priority_score.score_items.map((items, index) => (
+                                    {subscription.priority_and_bonus.score_items.map((items, index) => (
                                         <div key={index}>
                                             <S.MiniCategory>{items.priority}</S.MiniCategory>
                                             {items.items.map((item, index) => (
@@ -143,10 +145,7 @@ const SubscriptionDetailPage = () => {
                             {subscription.precautions && (
                                 <S.CategoryWrapper>
                                     <S.Category>유의사항</S.Category>
-                                    {subscription.precautions.map((precaution, index) => (
-                                        <S.RowWrapper key={index}>• {precaution}</S.RowWrapper>
-                                    ))}
-                                    <p></p>
+                                    <S.RowWrapper>{subscription.precautions}</S.RowWrapper>
                                 </S.CategoryWrapper>
                             )}
                             <S.CategoryWrapper>

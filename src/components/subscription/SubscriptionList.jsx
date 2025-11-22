@@ -56,12 +56,12 @@ export const SubscriptionList = ({ display, rank }) => {
                         <p>{subscription.title}</p>
                     </TitleWrapper>
                     <DateWrapper>
-                        <p>{subscription.posted_date}</p>
+                        <p>{subscription.announcement_date}</p>
                     </DateWrapper>
                     <StateWrapper>
                         {
-                            subscription.state==='upcoming' ? <PendingBadge /> :
-                            subscription.state==='open' ? <ProcessBadge /> :
+                            subscription.status==='upcoming' ? <PendingBadge /> :
+                            subscription.status==='open' ? <ProcessBadge /> :
                             <ClosedBadge />
                         }
                     </StateWrapper>

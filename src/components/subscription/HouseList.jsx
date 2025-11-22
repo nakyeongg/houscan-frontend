@@ -9,20 +9,13 @@ export const HouseList = ({ houses, display, region }) => {
 
     console.log('houses', houses);
 
-    // 공급 호수를 모두 더해서 총 호수를 계산
-    const handleTotalHouseholds = (house) => {
+    const handleHouseholds = (house) => {
         let total = 0;
             try {
-                const fixedStr = house.replace(/'/g, '"');
-                const arr = JSON.parse(fixedStr);
-
-                arr.forEach((item) => {
-                    const cleaned = item.endsWith('호') ? item.slice(0, -1) : item;
-                    const num = parseInt(cleaned, 10);
-                    if (!isNaN(num)) {
-                        total += num;
-                    }
-                }) 
+                const item = String(house);
+                const cleaned = item.replace(/호|세대|실/g, '').trim(); 
+                const num = parseInt(cleaned, 10);
+                return isNaN(num) ? 0 : num;
             } catch(error) {
                 console.log(error);
             }
@@ -66,7 +59,7 @@ export const HouseList = ({ houses, display, region }) => {
                         <p>{house.name ? house.name : house.address}</p>
                     </HouseWrapper>
                     <NumberWrapper>
-                        <p>{handleTotalHouseholds(house.supply_households)}호</p>
+                        <p>{handleHouseholds(house.supply_households)}호</p>
                     </NumberWrapper>
                 </SubscriptionWrapper>
             ))}

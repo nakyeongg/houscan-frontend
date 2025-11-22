@@ -15,50 +15,57 @@ const HouseDetailPage = () => {
     const [houseType, setHouseType] = useState([]);
 
     const handleList = (data) => {
+        if (!data) return [];
+        
         let arr = [];
+        const dataStr = String(data).trim();
+
         try {
-            const fixedStr = data.replace(/'/g, '"');
-            arr = JSON.parse(fixedStr);
+            if (dataStr.startsWith('[') && dataStr.endsWith(']')) {
+                const fixedStr = dataStr.replace(/'/g, '"');
+                arr = JSON.parse(fixedStr);
+            } else if (dataStr.startsWith('"') && dataStr.endsWith('"')) {
+                const innerStr = dataStr.slice(1, -1).replace(/'/g, '"');
+                arr = JSON.parse(innerStr);
+            } else {
+                arr = [dataStr];
+            }
         } catch(error) {
             console.log(error);
+            return [];
         }
-        return arr;
+        
+        return Array.isArray(arr) ? arr : [];
     }
 
     const handleHouse = async () => {
         try {
             const response = await axiosInstance.get(`/api/announcements/house/${id}`);
             console.log('주택 정보 가져오기 성공', response);
-            setHouse(response.data.housing_info);
-            const tempSupply = handleList(response.data.housing_info.supply_households);
-            const tempType = handleList(response.data.housing_info.type);
-            const tempHouseType = handleList(response.data.housing_info.house_type);
+            const houseData = response.data.housing_info;
+            setHouse(houseData);
+            const tempSupply = handleList(houseData.supply_households);
+            const tempType = handleList(houseData.type);
+            const tempHouseType = handleList(houseData.house_type);
             setSupplyHouseholds(tempSupply);
+            console.log('tempSupply????', tempSupply);
             setType(tempType);
             setHouseType(tempHouseType);
-            console.log('tempType',tempType);
         } catch(error) {
             console.log('주택 정보 가져오기 에러', error);
         }
     }
 
-    // 공급 호수를 모두 더해서 총 호수를 계산
-    const handleTotalHouseholds = (house) => {
+    const handleHouseholds = (house) => {
         let total = 0;
-        try {
-            const fixedStr = house.replace(/'/g, '"');
-            const arr = JSON.parse(fixedStr);
-
-            arr.forEach((item) => {
-                const cleaned = item.endsWith('호') ? item.slice(0, -1) : item;
+            try {
+                const item = String(house);
+                const cleaned = item.replace(/호|세대|실/g, '').trim(); 
                 const num = parseInt(cleaned, 10);
-                if (!isNaN(num)) {
-                    total += num;
-                }
-            }) 
-        } catch(error) {
-            console.log(error);
-        }
+                return isNaN(num) ? 0 : num;
+            } catch(error) {
+                console.log(error);
+            }
         return total;
     }
 
@@ -86,10 +93,10 @@ const HouseDetailPage = () => {
                             {house.supply_households && (
                                 <S.CategoryWrapper>
                                     <S.Title>총 세대수</S.Title>
-                                    <p>{handleTotalHouseholds(house.supply_households)}호</p>
+                                    <p>{handleHouseholds(house.supply_households || house.total_households)}호</p>
                                 </S.CategoryWrapper>
                             )}
-                            {supplyHouseholds && (
+                            {Array.isArray(supplyHouseholds) && supplyHouseholds.length > 0 && (
                                 <S.CategoryWrapper>
                                     <S.HouseCategoryWrapper>
                                             <S.Title>공급호수</S.Title>
@@ -102,10 +109,10 @@ const HouseDetailPage = () => {
                                                 <p>{supply.endsWith('호') ? supply.slice(0, -1) : supply}호</p>
                                             </S.HouseCategoryContent>
                                             <S.HouseCategoryContent>
-                                                <p>{(type[index]&& type.length > 0) ? type[index] : "유형 없음"}</p>
+                                                <p>{(type[index] && type.length > index) ? type[index] : "유형 없음"}</p>
                                             </S.HouseCategoryContent>
                                             <S.HouseCategoryContent>
-                                                <p>{houseType[index] ? houseType[index] : "주택형 없음"}</p>
+                                                <p>{(houseType[index] && houseType.length > index) ? houseType[index] : "주택형 없음"}</p>
                                             </S.HouseCategoryContent>
                                         </S.HouseCategoryWrapper>
                                     ))}
@@ -114,7 +121,7 @@ const HouseDetailPage = () => {
                             {house.elevator && (
                                 <S.CategoryWrapper>
                                     <S.Title>승강기</S.Title>
-                                    <p>{house.elevator==="True" ? "있음" : "없음"}</p>
+                                    <p>{house.elevator}</p>
                                 </S.CategoryWrapper>
                             )}
                             {house.parking && (
