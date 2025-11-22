@@ -8,7 +8,6 @@ import PersonalInformationPage from './pages/userPage/PersonalInformationPage';
 import SubscriptionListPage from './pages/subscriptionPage/SubscriptionListPage';
 import SubscriptionDetailPage from './pages/subscriptionPage/SubscriptionDetailPage';
 import HouseDetailPage from './pages/subscriptionPage/HouseDetailPage';
-import ChatbotPage from './pages/chatbotPage/ChatbotPage';
 import ErrorPage from './pages/errorPage/ErrorPage';
 
 const App = () => {
@@ -23,7 +22,6 @@ const App = () => {
                 <Route path='/subscription' element={<SubscriptionListPage />} />
                 <Route path='/subscription/:id' element={<SubscriptionDetailPage />} />
                 <Route path='/house/:id' element={<HouseDetailPage />} />
-                <Route path='/chatbot/:id' element={<ChatbotPage />} />
                 <Route path='/*' element={<ErrorPage />} />
             </Routes>
         </BrowserRouter>

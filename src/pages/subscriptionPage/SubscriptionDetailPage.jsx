@@ -6,7 +6,6 @@ import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import { RegionButton } from '../../components/subscription/RegionButton';
 import { HouseList } from '../../components/subscription/HouseList';
-import chatbot from '../../assets/images/chatbot.png';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
@@ -40,10 +39,6 @@ const SubscriptionDetailPage = () => {
         } catch(error) {
             console.log('공고 디테일 가져오기 에러', error);
         }
-    }
-
-    const handleChatbot = () => {
-        navigate(`/chatbot/${id}`);
     }
 
     const handleRegionChange = (newRegion) => {
@@ -158,9 +153,6 @@ const SubscriptionDetailPage = () => {
                                 <HouseList houses={houses} onDataChange={handleRegionChange} region={region}/>
                             </>
                         )}
-                        <S.ChatbotButton onClick={handleChatbot}>
-                            <S.ChatbotIcon src={chatbot} />
-                        </S.ChatbotButton>
                     </>
                 )}
             </Layout>
