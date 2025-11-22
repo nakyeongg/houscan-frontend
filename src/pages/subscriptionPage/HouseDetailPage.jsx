@@ -4,6 +4,7 @@ import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import KakaoMap from '../../components/subscription/KakaoMap';
+import KakaoRoadview from '../../components/subscription/KakaoRoadview';
 import { useParams } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
 
@@ -48,7 +49,6 @@ const HouseDetailPage = () => {
             const tempType = handleList(houseData.type);
             const tempHouseType = handleList(houseData.house_type);
             setSupplyHouseholds(tempSupply);
-            console.log('tempSupply????', tempSupply);
             setType(tempType);
             setHouseType(tempHouseType);
         } catch(error) {
@@ -81,7 +81,10 @@ const HouseDetailPage = () => {
                     <>
                         <S.House>{house.name ? house.name : house.address}</S.House>
                         {(house.address!=="null" && house.address!==null) && (
-                            <KakaoMap address={house.address} placeName={house.name ? house.name : house.address}/>
+                            <S.MapWrapper>
+                                <KakaoMap address={house.address} placeName={house.name ? house.name : house.address}/>
+                                <KakaoRoadview address={house.address} />
+                            </S.MapWrapper>
                         )}
                         <S.Wrapper>
                             {(house.address!=="null" && house.address!==null) && (
