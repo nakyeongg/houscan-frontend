@@ -8,6 +8,7 @@ import { InformationRadio } from '../../components/personalInformation/Informati
 import { ProgressBar } from '../../components/personalInformation/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
+import { InformationResidenceRadio } from '../../components/personalInformation/InformationResidenceRadio';
 
 const PersonalInformationPage = () => {
     const [isAnswered, setIsAnswered] = useState(); // 처음 작성하는 것인지 수정하는 것인지 파악하기 위함
@@ -15,6 +16,8 @@ const PersonalInformationPage = () => {
     const [answers, setAnswers] = useState(Array(personalInformationData.length).fill(null)); // 현재 체크한 답변
     const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const RESIDENCE_OPTIONS = personalInformationData[3].options;
 
     const handleInputChange = (index, value) => {
         const updatedAnswers = [...answers];
@@ -29,29 +32,37 @@ const PersonalInformationPage = () => {
     };
 
     const mapAnswers = (answers) => {
+        const residence = RESIDENCE_OPTIONS.find(option => option.value === answers[3])?.text || null;
+
         return {
             "birth_date": answers[0],
             "gender": answers[1]===0 ? "M" : "F",
-            "university": answers[2]===0,
-            "graduate": answers[3]===0,
-            "employed": answers[4]===0,
-            "job_seeker": answers[5]===0,
-            "welfare_receipient": answers[6]===0,
-            "parents_own_house": answers[7]===1,
-            "disability_in_family": answers[8]===0,
-            "subscription_account": Number(answers[9]),
-            "total_assets": Number(answers[10]),
-            "car_value": Number(answers[11]),
-            "income_range": answers[12]===0 ? "100% 이하" : "50% 이하",
+            "is_married": answers[2]===0,
+            "residence": residence,
+            "university": answers[4]===0,
+            "graduate": answers[5]===0,
+            "employed": answers[6]===0,
+            "job_seeker": answers[7]===0,
+            "welfare_receipient": answers[8]===0,
+            "parents_own_house": answers[9]===1,
+            "disability_in_family": answers[10]===0,
+            "subscription_account": Number(answers[11]),
+            "total_assets": Number(answers[12]),
+            "car_value": Number(answers[13]),
+            "income_range": answers[14]===0 ? "100% 이하" : "50% 이하",
             "is_eligible": null,
             "priority_info": null,
         }
     }
 
     const mapFetchAnswers = (data) => {
+        const residence = RESIDENCE_OPTIONS.find(option => option.text === data.residence)?.value || null;
+
         return [
             data.birth_date,
             data.gender==="M" ? 0 : 1,
+            data.is_married ? 0 : 1,
+            residence,
             data.university ? 0 : 1,
             data.graduate ? 0 : 1,
             data.employed ? 0 : 1,
@@ -137,8 +148,14 @@ const PersonalInformationPage = () => {
                                         onChange={(event)=> handleInputChange(index, event)} 
                                         value={answers[index]}
                                     /> 
-                                    : <InformationRadio 
+                                    : data.type === 'radio'
+                                    ? <InformationRadio 
                                         options={data.options} 
+                                        onChange={(event) => handleRadioChange(index, event)} 
+                                        value={answers[index]}
+                                    />
+                                    : <InformationResidenceRadio 
+                                        options={data.options}
                                         onChange={(event) => handleRadioChange(index, event)} 
                                         value={answers[index]}
                                     />
