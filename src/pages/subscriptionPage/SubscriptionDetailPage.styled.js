@@ -94,20 +94,20 @@ export const CategoryWrapper = styled.div`
 export const Category = styled.div`
     font-size: 18px;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+    theme.fonts.SUITSemiBold["font-family"]};
     margin-bottom: 12px;
 `
 
 export const MiniCategoryWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
 `
 
 export const MiniCategory = styled.div`
-    font-size: 17px;
+    font-size: 16px;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+    theme.fonts.SUITSemiBold["font-family"]};
 `
 
 export const Score = styled.div`

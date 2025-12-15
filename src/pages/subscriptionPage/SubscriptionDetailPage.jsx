@@ -15,15 +15,13 @@ const SubscriptionDetailPage = () => {
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
     const [region, setRegion] = useState("전체");
-    const navigate = useNavigate();
 
     const scheduleLabel = {
         announcement_date: '모집공고',
-        online_application_period: '인터넷 신청접수',
+        online_application_period: '신청접수',
         document_submission_period: '서류제출',
-        inspection_period: '입주자격 검증',
+        document_announce_date: '서류 심사 대상자 발표',
         winner_announcement: '당첨자 발표',
-        payment_period: '계약금 납부 기간',
         contract_period: '계약 기간',
         move_in_period: '입주 기간',
     }
@@ -83,9 +81,10 @@ const SubscriptionDetailPage = () => {
                             {subscription.application_schedule && (
                                 <S.CategoryWrapper>
                                     <S.Category>모집일정</S.Category>
-                                    {Object.entries(subscription.application_schedule).map(([key, value]) => {
+                                    {Object.keys(scheduleLabel).map((key) => {
+                                        const value = subscription.application_schedule[key];
                                         if (!value || (typeof value === 'object' && !value.start && !value.end)) return null;
-                                        const label = scheduleLabel[key] || key;
+                                        const label = scheduleLabel[key];
                                         const displayValue =
                                             typeof value === 'string'
                                                 ? value
@@ -120,12 +119,16 @@ const SubscriptionDetailPage = () => {
                                     {subscription.priority_and_bonus.score_items.map((items, index) => (
                                         <div key={index}>
                                             <S.MiniCategory>{items.priority}</S.MiniCategory>
-                                            {items.items.map((item, index) => (
-                                                <S.RowWrapper key={index}>
-                                                    <p>• {item.item}</p>
-                                                    <S.Score>{item.score}점</S.Score>
-                                                </S.RowWrapper>
-                                            ))}
+                                            {items.items.map((item, index) => {
+                                                const scoreString = String(item.score);
+                                                const score = scoreString.endsWith('점') ? scoreString : `${scoreString}점`;
+                                                return (
+                                                    <S.RowWrapper key={index}>
+                                                        <p>• {item.item}</p>
+                                                        <S.Score>{score}</S.Score>
+                                                    </S.RowWrapper>
+                                                )
+                                            })}
                                         </div>
                                     ))}
                                 </S.MiniCategoryWrapper>
@@ -137,10 +140,24 @@ const SubscriptionDetailPage = () => {
                                     <p>{subscription.residence_period}</p>
                                 </S.CategoryWrapper>
                             )}
-                            {subscription.precautions && (
+                            {subscription.precautions.length > 0 && ( 
                                 <S.CategoryWrapper>
                                     <S.Category>유의사항</S.Category>
-                                    <S.RowWrapper>{subscription.precautions}</S.RowWrapper>
+                                    {(() => {
+                                        const precautionsData = subscription.precautions;
+                                        let precautions = [];
+                                        if (Array.isArray(precautionsData)) {
+                                            precautions = precautionsData;
+                                        } else if (typeof precautionsData === 'string' && precautionsData.trim() !== '') {
+                                            precautions = precautionsData
+                                                .split('.')
+                                                .map(item => item.trim())
+                                                .filter(item => item !== '');
+                                        }
+                                        return precautions.map((precaution, index) => (
+                                            <S.RowWrapper key={index}>• {precaution}</S.RowWrapper>
+                                        ))
+                                    })()}
                                 </S.CategoryWrapper>
                             )}
                             <S.CategoryWrapper>

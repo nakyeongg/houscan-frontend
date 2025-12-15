@@ -47,7 +47,3 @@ export const HouseCategoryContent = styled.div`
     flex-direction: column;
     width: 100%;
 `
-
-export const Content = styled.p`
-
-`

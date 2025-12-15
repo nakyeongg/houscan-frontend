@@ -9,19 +9,6 @@ export const HouseList = ({ houses, display, region }) => {
 
     console.log('houses', houses);
 
-    const handleHouseholds = (house) => {
-        let total = 0;
-            try {
-                const item = String(house);
-                const cleaned = item.replace(/호|세대|실/g, '').trim(); 
-                const num = parseInt(cleaned, 10);
-                return isNaN(num) ? 0 : num;
-            } catch(error) {
-                console.log(error);
-            }
-        return total;
-    }
-
     const handleHouse = (house) => {
         navigate(`/house/${house.id}`);
     }
@@ -59,7 +46,7 @@ export const HouseList = ({ houses, display, region }) => {
                         <p>{house.name ? house.name : house.address}</p>
                     </HouseWrapper>
                     <NumberWrapper>
-                        <p>{handleHouseholds(house.supply_households)}호</p>
+                        <p>{house.total_households}호</p>
                     </NumberWrapper>
                 </SubscriptionWrapper>
             ))}
