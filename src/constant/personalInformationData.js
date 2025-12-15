@@ -49,6 +49,7 @@ export const personalInformationData = [
             {text: '종로구', value: 23},
             {text: '중구', value: 24},
             {text: '중랑구', value: 25},
+            {text: '기타', value: 26},
         ]
     },
     {
@@ -92,7 +93,7 @@ export const personalInformationData = [
         ]
     },
     {
-        question: '부모가 무주택자이십니까?',
+        question: '세대 구성원 전체가 모두 무주택자이십니까?',
         type: 'radio',
         options: [
             {text: '예', value: 0},
