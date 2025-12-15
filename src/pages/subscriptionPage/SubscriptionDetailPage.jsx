@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as S from './SubscriptionDetailPage.styled';
 import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import { RegionButton } from '../../components/subscription/RegionButton';
 import { HouseList } from '../../components/subscription/HouseList';
-import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
 const SubscriptionDetailPage = () => {
@@ -15,6 +14,7 @@ const SubscriptionDetailPage = () => {
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
     const [region, setRegion] = useState("전체");
+    const [analysis ,setAnalysis] = useState();
 
     const scheduleLabel = {
         announcement_date: '모집공고',
@@ -33,6 +33,7 @@ const SubscriptionDetailPage = () => {
             setTitle(response.data.title);
             setSubscription(response.data.ai_summary_json);
             setHouses(response.data.housing_info_list);
+            setAnalysis(response.data.analysis);
             console.log('주택 정보', response.data.housing_info_list);
         } catch(error) {
             console.log('공고 디테일 가져오기 에러', error);
@@ -54,28 +55,28 @@ const SubscriptionDetailPage = () => {
                 {subscription && (
                     <>
                         <S.Wrapper>
-                            {/* {subscription.analysis!==null && (
-                                subscription.analysis.is_eligible ? (
+                            {analysis && (
+                                analysis.is_eligible ? (
                                 <S.BadgeWrapper>
                                     <S.Badge>해당됨</S.Badge>
                                     <S.Badge>{subscription.analysis.priority}</S.Badge>
                                 </S.BadgeWrapper>
                             ) : (
                                 <S.WarningBadge>해당되지 않음</S.WarningBadge>
-                            ))} */}
+                            ))}
                             <S.Title>{title}</S.Title>
                             {subscription.application_eligibility && (
                                 <S.CategoryWrapper>
                                     <S.Category>신청자격</S.Category>
                                     <p>{subscription.application_eligibility}</p>
-                                    {/* {subscription.analysis!==null && !subscription.analysis.is_eligible && subscription.analysis.reasons.length && (
+                                    {analysis && analysis.is_eligible===false && analysis.reasons.length && (
                                         <S.ReasonWrapper>
                                             <S.ReasonTitle>미해당 사유</S.ReasonTitle>
-                                            {subscription.analysis.reasons.map((reason, index) => (
-                                            <S.Reason key={index}>{reason}</S.Reason>
+                                            {analysis.reasons.map((reason, index) => (
+                                            <S.Reason key={index}>• {reason}</S.Reason>
                                         ))}
                                         </S.ReasonWrapper>
-                                    )} */}
+                                    )}
                                 </S.CategoryWrapper>
                             )}
                             {subscription.application_schedule && (

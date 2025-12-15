@@ -5,10 +5,10 @@ import { Header } from '../../components/main/Header';
 import { personalInformationData } from './../../constant/personalInformationData';
 import { InformationInput } from '../../components/personalInformation/InformationInput';
 import { InformationRadio } from '../../components/personalInformation/InformationRadio';
-import { ProgressBar } from '../../components/personalInformation/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
 import { InformationResidenceRadio } from '../../components/personalInformation/InformationResidenceRadio';
+import Loading from '../../assets/images/loading.gif';
 
 const PersonalInformationPage = () => {
     const [isAnswered, setIsAnswered] = useState(); // 처음 작성하는 것인지 수정하는 것인지 파악하기 위함
@@ -96,26 +96,30 @@ const PersonalInformationPage = () => {
     }
 
     const handleSubmit = async () => {
+        setLoading(true);
         try {
-            setLoading(true);
             const data = mapAnswers(answers);
             console.log('data', data);
             const response = await axiosInstance.post('api/profile/create/', data);
-            console.log('개인정보 입력 요청 성공', response);
+            console.log('개인정보 입력 성공', response);
         } catch(error) {
             console.log('개인정보 입력 요청 실패', error);
+        } finally {
+            setLoading(false);
         }
     }
 
     const handleEdit = async () => {
+        setLoading(true);
         try {
-            setLoading(true);
             const data = mapAnswers(answers);
             console.log('data', data);
             const response = await axiosInstance.patch('/api/profile/', data);
             console.log('개인정보 수정 성공', response);
         } catch(error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -133,7 +137,7 @@ const PersonalInformationPage = () => {
             <Header />
             <Layout>
                 {isLoading ? (
-                    <ProgressBar />
+                    <img src={Loading} alt="로딩 아이콘" />
                 ) : (
                     <>
                         <S.Title>개인 정보 입력</S.Title>
