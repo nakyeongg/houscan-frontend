@@ -59,7 +59,7 @@ const SubscriptionDetailPage = () => {
                                 analysis.is_eligible ? (
                                 <S.BadgeWrapper>
                                     <S.Badge>해당됨</S.Badge>
-                                    <S.Badge>{subscription.analysis.priority}</S.Badge>
+                                    {analysis.priority && <S.Badge>{analysis.priority}</S.Badge>}
                                 </S.BadgeWrapper>
                             ) : (
                                 <S.WarningBadge>해당되지 않음</S.WarningBadge>
@@ -163,6 +163,7 @@ const SubscriptionDetailPage = () => {
                             )}
                             <S.CategoryWrapper>
                                 <p>본 정보는 AI를 활용하여 요약되었으며, 정확성이 보장되지 않을 수 있으므로 참고용으로만 사용하기시 바랍니다. 더 자세한 정보는 아래의 첨부파일을 참고하세요.</p>
+                                {subscription.pre_url && <S.PdfLink to={subscription.pre_url}>공고 자세히 보기</S.PdfLink>}
                             </S.CategoryWrapper>
                         </S.Wrapper>
                         {houses && (

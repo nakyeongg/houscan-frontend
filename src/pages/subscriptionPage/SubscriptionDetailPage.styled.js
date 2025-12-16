@@ -127,4 +127,5 @@ export const PdfLink = styled(Link)`
     color: ${({theme}) => theme.colors.mainColor} !important;
     text-decoration: underline;
     width: fit-content;
+    margin-top: 12px;
 `
