@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { PendingBadge, ProcessBadge, ClosedBadge } from './Badge';
 import { Pagination } from './Pagination';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
@@ -31,9 +30,20 @@ export const SubscriptionList = ({ display, rank }) => {
     };
 
     const offset = (page - 1) * 10;
-    const filteredSubscriptions
-        = rank ? subscriptions.filter(subscription => subscription.analysis.priority === rank)
-        : subscriptions;
+
+    let filteredSubscriptions = subscriptions;
+    if (rank) {
+        filteredSubscriptions = subscriptions.filter(subscription => {
+            const analysis = subscription.analysis;
+            if (!analysis || analysis.is_eligible !== true) return false;
+
+            const priorityText = analysis.priority || '';
+            const rankMatches = priorityText.includes(rank);
+            
+            return rankMatches;
+        })
+    } 
+
     const currentPageData = filteredSubscriptions.slice(offset, offset + 10);
 
     return (

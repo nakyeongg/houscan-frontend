@@ -25,6 +25,7 @@ const SubscriptionListPage = () => {
     const Ranks = [
         {text: '1순위', value: 0},
         {text: '2순위', value: 1},
+        {text: '3순위', value: 2},
     ]
 
     const handleRank = (event) => {
