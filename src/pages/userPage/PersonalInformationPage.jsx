@@ -106,6 +106,7 @@ const PersonalInformationPage = () => {
             console.log('개인정보 입력 요청 실패', error);
         } finally {
             setLoading(false);
+            navigate('/');
         }
     }
 
@@ -120,6 +121,7 @@ const PersonalInformationPage = () => {
             console.log(error);
         } finally {
             setLoading(false);
+            navigate('/');
         }
     }
 
