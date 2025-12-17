@@ -4,9 +4,8 @@
 하우스캔은 **청년을 위한 개인 맞춤형 청약 정보**를 쉽고 빠르게 제공합니다. <br />
 AI를 통해 나의 정보를 분석하여 지원 자격에 해당하는지 알 수 있습니다.  <br />
 자격이 충족된다면 몇 순위에 해당하는지, 충족되지 않는다면 그 이유를 함께 설명해드립니다.  <br />
-청약 공고에 관해 궁금한 점이 생긴다면 언제든 챗봇에게 질문해 보세요!
 
-### ⚙ FE Technology Stacks      
+### ⚙ FE Technology Stacks
 <table>
   <tr>
     <td>
@@ -43,7 +42,15 @@ AI를 통해 나의 정보를 분석하여 지원 자격에 해당하는지 알 
 </table>
 
 ### 📸 Demo Video
-- <a href='https://youtu.be/jyJlv0aYP5U'>시연 영상</a>
+- <a href='https://youtu.be/sXYb3mKDirA'>시연 영상</a>
+
+### 🚀 Getting Started
+```
+git clone https://github.com/Houscan-dev/houscan-frontend.git
+cd houscan-frontend
+npm install
+npm start
+```
 
 ### 🔥 Commit Convention
 "태그:제목"의 형태이며, : 뒤에만 space가 있음에 유의합니다. ex) Feat: 메인페이지 추가
@@ -84,7 +91,6 @@ AI를 통해 나의 정보를 분석하여 지원 자격에 해당하는지 알 
  ┃ ┣ 📂context
  ┃ ┣ 📂layout
  ┃ ┣ 📂pages
- ┃ ┃ ┣ 📂chatbotPage
  ┃ ┃ ┣ 📂errorPage
  ┃ ┃ ┣ 📂mainPage
  ┃ ┃ ┣ 📂subscriptionPage
@@ -102,6 +108,6 @@ AI를 통해 나의 정보를 분석하여 지원 자격에 해당하는지 알 
 ```
 
 ### 📆 Development Period
-2025.03 - 2025.06
+2025.03 - 2025.12
 <br/>
 > 본 프로젝트는 2025년 성신여자대학교 AI융합학부 캡스톤디자인 프로젝트입니다.
