@@ -93,7 +93,7 @@ export const personalInformationData = [
         ]
     },
     {
-        question: '세대 구성원 전체가 모두 무주택자이십니까?',
+        question: '세대 구성원이 주택을 소유 중이십니까?',
         type: 'radio',
         options: [
             {text: '예', value: 0},
