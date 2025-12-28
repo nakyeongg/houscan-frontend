@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as S from './PersonalInformationPage.styled';
 import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
@@ -16,6 +16,7 @@ const PersonalInformationPage = () => {
     const [answers, setAnswers] = useState(Array(personalInformationData.length).fill(null)); // 현재 체크한 답변
     const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
+    let timerId;
 
     const RESIDENCE_OPTIONS = personalInformationData[3].options;
 
@@ -77,13 +78,34 @@ const PersonalInformationPage = () => {
         ]
     }
 
+    const handlePolling = async () => {
+        try {
+            const handleStatus = async () => {
+                const response = await axiosInstance.get('/api/profile/');
+                const status = response.data.profile.eligibility_status;
+                console.log('자격 판단 상태', status);
+                if (status==='done') {
+                    setLoading(false);
+                    navigate('/');
+                } else {
+                    timerId = setTimeout(handleStatus, 2000);
+                }
+            }
+            await handleStatus();
+        } catch(error) {
+            console.log('자격 판단 상태 가져오기 에러', error);
+            setLoading(false);
+            navigate('/');
+        }
+    }
+
     const getPersonalInformation = async () => {
         try {
             const response = await axiosInstance.get('/api/profile/');
             console.log('개인정보 가져오기 성공', response.data);
             if (response.status===200) {
                 setIsAnswered(true);
-                setAnswers(mapFetchAnswers(response.data));
+                setAnswers(mapFetchAnswers(response.data.profile));
                 console.log('isAnswered', isAnswered);
             }
         } catch(error) {
@@ -102,9 +124,15 @@ const PersonalInformationPage = () => {
             console.log('data', data);
             const response = await axiosInstance.post('api/profile/create/', data);
             console.log('개인정보 입력 성공', response);
+            const status = response.data.profile.eligibility_status;
+            if (status==='running') {
+                await handlePolling();
+            } else {
+                setLoading(false);
+                navigate('/');
+            }
         } catch(error) {
             console.log('개인정보 입력 요청 실패', error);
-        } finally {
             setLoading(false);
             navigate('/');
         }
@@ -117,9 +145,15 @@ const PersonalInformationPage = () => {
             console.log('data', data);
             const response = await axiosInstance.patch('/api/profile/', data);
             console.log('개인정보 수정 성공', response);
+            const status = response.data.profile.eligibility_status;
+            if (status==='running') {
+                await handlePolling();
+            } else {
+                setLoading(false);
+                navigate('/');
+            }
         } catch(error) {
             console.log(error);
-        } finally {
             setLoading(false);
             navigate('/');
         }
@@ -132,6 +166,9 @@ const PersonalInformationPage = () => {
 
     useEffect(() => {
         getPersonalInformation();
+        return () => {
+            if (timerId) clearTimeout(timerId);
+        }
     }, [])
 
     return (
