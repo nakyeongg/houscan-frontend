@@ -175,8 +175,8 @@ const PersonalInformationPage = () => {
         <>
             <Header />
             <Layout>
-                {isLoading ? (
-                    <img src={Loading} alt="로딩 아이콘" />
+                {!isLoading ? (
+                    <S.LoadingIcon src={Loading} alt="로딩 아이콘" />
                 ) : (
                     <>
                         <S.Title>개인 정보 입력</S.Title>

@@ -98,6 +98,10 @@ const TopWrapper = styled.div`
     theme.fonts.SUITMedium["font-family"]};
     padding: 0 40px 15px 40px;
     display: flex;
+
+    @media screen and (max-width: 600px) {
+        padding: 0 10px 15px 10px
+    }
 `
 
 const TopTitleWrapper = styled.div`
@@ -151,4 +155,8 @@ const SubscriptionWraper = styled.div`
     font-family: ${({ theme }) =>
     theme.fonts.SUITMedium["font-family"]};
     height: 58px;
+
+    @media screen and (max-width: 600px) {
+        margin: 0 10px;
+    }
 `

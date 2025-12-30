@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const LoadingIcon = styled.img`
+    width: 100px;
+`
+
 export const Title = styled.h1`
     margin-bottom: 40px;
     font-size: 24px;
