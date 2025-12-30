@@ -175,7 +175,7 @@ const PersonalInformationPage = () => {
         <>
             <Header />
             <Layout>
-                {!isLoading ? (
+                {isLoading ? (
                     <S.LoadingIcon src={Loading} alt="로딩 아이콘" />
                 ) : (
                     <>
