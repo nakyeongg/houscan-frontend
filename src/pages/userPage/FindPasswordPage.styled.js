@@ -9,25 +9,16 @@ export const Wrapper = styled.div`
 `
 
 export const Title = styled.h1`
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 24px;
     font-family: ${({ theme }) => 
     theme.fonts.SUITSemiBold["font-family"]};
     color: ${({ theme }) => theme.colors.mainColor};
 `
 
-export const ColumnWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    width: 100%;
-`
-
-export const Name = styled.h2`
-    font-size: 18px;
-    font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+export const Desc = styled.p`
+    font-size: 16px;
+    color: #767676;
 `
 
 export const Input = styled.input`
@@ -35,7 +26,7 @@ export const Input = styled.input`
     border-radius: 12px;
     height: 48px;
     width: 100%;
-    margin-bottom: 28px;
+    margin: 28px 0;
     padding: 0 14px;
 
     &::placeholder {
@@ -62,28 +53,4 @@ export const Button = styled.button`
         background-color: #E5E7EB;
         cursor: default;
     }
-`
-
-export const TextButtonWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-    gap: 4px;
-`
-
-export const TextButton = styled.button`
-    font-size: 16px;
-    color: #767676;
-
-    &:hover {
-        font-family: ${({ theme }) =>
-        theme.fonts.SUITSemiBold["font-family"]};
-    }
-`
-
-export const Line = styled.div`
-    width: 1px;
-    height: 16px;
-    background-color: #D1D5DB;
-    margin: 0 5px;
 `

@@ -83,7 +83,7 @@ const SignupPage = () => {
                         <S.ColumnWrapper>
                             <S.Name>비밀번호</S.Name>
                             <S.Input 
-                                placeholder='영문, 숫자, 특수문자를 포함하며 8자 이상이어야 합니다' 
+                                placeholder='영문, 숫자, 특수문자를 포함하며 8자 이상이어야 합니다' 
                                 value={password}
                                 onChange={handlePassword}
                                 type='password'

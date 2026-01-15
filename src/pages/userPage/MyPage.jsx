@@ -67,7 +67,7 @@ const MyPage = () => {
         }
     }
 
-    const changePassword = async () => {
+    const ResetPassword = async () => {
         try {
             const response = await axiosInstance.post('/api/users/change-pw/', {
                 current_password: nowPassword,
@@ -129,7 +129,7 @@ const MyPage = () => {
     
     const handlePasswordEnter = (event) => {
         if (event.key === "Enter") {
-            changePassword();
+            ResetPassword();
         }
     }
 
@@ -158,7 +158,7 @@ const MyPage = () => {
                     title='비밀번호 변경'
                     blueButtonText='저장'
                     whtieButtonText='취소'
-                    blueButtonClick={changePassword}
+                    blueButtonClick={ResetPassword}
                     whiteButtonClick={handleCancel}
                     placeholder1='현재 비밀번호를 입력하세요'
                     placeholder2='새 비밀번호를 다시 입력하세요'

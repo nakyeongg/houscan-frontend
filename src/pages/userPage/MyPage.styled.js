@@ -4,7 +4,7 @@ export const Title = styled.h1`
     margin-bottom: 40px;
     font-size: 24px;
     font-family: ${({ theme }) => 
-    theme.fonts.SUITMedium["font-family"]};
+    theme.fonts.SUITSemiBold["font-family"]};
     color: ${({ theme }) => theme.colors.mainColor};
 `
 

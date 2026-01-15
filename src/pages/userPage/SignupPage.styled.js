@@ -71,13 +71,11 @@ export const GuideWrapper = styled.div`
 `
 
 export const Guide = styled.p`
-    font-size: 18px;
+    font-size: 16px;
 `
 
 export const LoginButton = styled.p`
-    font-size: 18px;
     color: ${({ theme }) => theme.colors.mainColor};
-    text-decoration: underline;
 
     &:hover {
         font-family: ${({ theme }) =>

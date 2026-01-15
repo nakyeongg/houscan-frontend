@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `
 
 export const Title = styled.h1`
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 24px;
     font-family: ${({ theme }) => 
     theme.fonts.SUITSemiBold["font-family"]};
@@ -62,28 +62,4 @@ export const Button = styled.button`
         background-color: #E5E7EB;
         cursor: default;
     }
-`
-
-export const TextButtonWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-    gap: 4px;
-`
-
-export const TextButton = styled.button`
-    font-size: 16px;
-    color: #767676;
-
-    &:hover {
-        font-family: ${({ theme }) =>
-        theme.fonts.SUITSemiBold["font-family"]};
-    }
-`
-
-export const Line = styled.div`
-    width: 1px;
-    height: 16px;
-    background-color: #D1D5DB;
-    margin: 0 5px;
 `

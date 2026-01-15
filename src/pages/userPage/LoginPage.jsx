@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import * as S from './LoginPage.styled';
 import { Header } from '../../components/main/Header';
 import { Layout } from '../../layout/Layout';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
@@ -82,10 +81,11 @@ const LoginPage = () => {
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>
                         <S.Button disabled={disable} onClick={handleLogin}>로그인</S.Button>
-                        <S.GuideWrapper>
-                            <S.Guide>아직 회원이 아니신가요?</S.Guide>
-                            <S.SignupButton onClick={() => navigate('/signup')}>회원가입</S.SignupButton>
-                        </S.GuideWrapper>
+                        <S.TextButtonWrapper>
+                            <S.TextButton onClick={() => navigate('/signup')}>회원가입</S.TextButton>
+                            <S.Line />
+                            <S.TextButton onClick={() => navigate('/find-password')}>비밀번호 찾기</S.TextButton>
+                        </S.TextButtonWrapper>
                     </S.ColumnWrapper>
                 </S.Wrapper>
             </Layout>

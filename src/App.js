@@ -8,6 +8,8 @@ import PersonalInformationPage from './pages/userPage/PersonalInformationPage';
 import SubscriptionListPage from './pages/subscriptionPage/SubscriptionListPage';
 import SubscriptionDetailPage from './pages/subscriptionPage/SubscriptionDetailPage';
 import HouseDetailPage from './pages/subscriptionPage/HouseDetailPage';
+import FindPasswordPage from './pages/userPage/FindPasswordPage';
+import ResetPasswordPage from './pages/userPage/ResetPasswordPage';
 import ErrorPage from './pages/errorPage/ErrorPage';
 
 const App = () => {
@@ -22,6 +24,8 @@ const App = () => {
                 <Route path='/subscription' element={<SubscriptionListPage />} />
                 <Route path='/subscription/:id' element={<SubscriptionDetailPage />} />
                 <Route path='/house/:id' element={<HouseDetailPage />} />
+                <Route path='/find-password' element={<FindPasswordPage />} />
+                <Route path='/reset-password' element={<ResetPasswordPage />} />
                 <Route path='/*' element={<ErrorPage />} />
             </Routes>
         </BrowserRouter>
