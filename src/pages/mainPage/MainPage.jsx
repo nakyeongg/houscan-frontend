@@ -5,6 +5,7 @@ import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import Slider from './../../components/main/Slider';
 import { SubscriptionList } from '../../components/subscription/SubscriptionList';
+import { MainKakaoMap } from '../../components/main/MainKakaoMap';
 
 const MainPage = () => {
     return (
@@ -14,6 +15,7 @@ const MainPage = () => {
                 <Slider />
                 <SubscriptionList display='none' />
                 <S.More to='/subscription'>더보기</S.More>
+                <MainKakaoMap />
             </Layout>
             <Footer />
         </>

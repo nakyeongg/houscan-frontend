@@ -1,52 +1,84 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 
-const KakaoMap = ({ placeName, address }) => {
-    const mapRef = useRef(null);
+export const KakaoMap = ({ placeName, address }) => {
+    const [coords, setCoords] = useState({ lat: 33.450701, lng: 126.570667 });
 
     useEffect(() => {
         if (!window.kakao || !window.kakao.maps) return;
 
-        const mapContainer = mapRef.current;
-        const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-            level: 3,
-        };
-
-        const map = new window.kakao.maps.Map(mapContainer, options);
         const geocoder = new window.kakao.maps.services.Geocoder();
-
-        geocoder.addressSearch(address, function (result, status) {
+        geocoder.addressSearch(address, (result, status) => {
             if (status === window.kakao.maps.services.Status.OK) {
-                const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-
-                const marker = new window.kakao.maps.Marker({
-                    map: map,
-                    position: coords,
+                setCoords({
+                    lat: parseFloat(result[0].y),
+                    lng: parseFloat(result[0].x),
                 });
-
-                const infowindow = new window.kakao.maps.InfoWindow({
-                    content: `
-                        <div style="
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            font-size: 16px;
-                            width: 150px;
-                            min-height: 30px;
-                            padding: 10px;
-                            border: none;
-                            font-family: 'SUIT-Medium', sans-serif;"
-                        >
-                            ${placeName}
-                        </div>`,
-                });
-                infowindow.open(map, marker);
-                map.setCenter(coords);
             }
         });
-    }, [address, placeName]);
+    }, [address]);
 
-    return <div ref={mapRef} style={{ width: '100%', height: '400px' }} />;
-};
+    return (
+        <MapContainer>
+            <Map
+                center={coords}
+                level={3}
+                style={{ width: '100%', height: '400px' }}
+            >
+                <MapMarker
+                    position={coords}
+                    image={{
+                        src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                        size: { width: 24, height: 35 }
+                    }}
+                />
+                <CustomOverlayMap position={coords} clickable={true}>
+                    <InfoWrapper>
+                        <HouseName>{placeName}</HouseName>
+                        <Address>{address}</Address>
+                    </InfoWrapper>
+                </CustomOverlayMap>
+            </Map>
+        </MapContainer>
+    )
+}
 
-export default KakaoMap;
+const MapContainer = styled.div`
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+`
+
+const InfoWrapper = styled.div`
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    bottom: 90px;
+    text-align: left;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-top: 10px solid white;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+    }
+`
+
+const HouseName = styled.h4`
+    font-size: 15px;
+    color: #333333;
+    font-family: ${({ theme }) => theme.fonts.SUITSemiBold["font-family"]};
+`
+
+const Address = styled.p`
+    font-size: 12px;
+    color: #888888;
+    margin-top: 5px;
+`

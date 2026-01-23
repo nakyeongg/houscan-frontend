@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const KakaoRoadview = ({ address }) => {
+export const KakaoRoadview = ({ address }) => {
     const roadviewRef = useRef(null);
     const [isRoadviewExist, setIsRoadviewExist] = useState(true);
 
@@ -12,7 +12,7 @@ const KakaoRoadview = ({ address }) => {
 
         const roadviewContainer = roadviewRef.current;
         setIsRoadviewExist(true);
-        
+
         const roadview = new window.kakao.maps.Roadview(roadviewContainer);
         const roadviewClient = new window.kakao.maps.RoadviewClient();
         const geocoder = new window.kakao.maps.services.Geocoder();
@@ -21,9 +21,9 @@ const KakaoRoadview = ({ address }) => {
             if (status === window.kakao.maps.services.Status.OK) {
                 const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
-                roadviewClient.getNearestPanoId(coords, 50, function(panoId) {
+                roadviewClient.getNearestPanoId(coords, 50, function (panoId) {
                     if (panoId) {
-                        roadview.setPanoId(panoId, coords); 
+                        roadview.setPanoId(panoId, coords);
                     } else {
                         console.log('로드뷰가 제공되지 않는 위치입니다.');
                         setIsRoadviewExist(false);
@@ -35,7 +35,7 @@ const KakaoRoadview = ({ address }) => {
                 setIsRoadviewExist(false);
             }
         })
-        
+
     }, [address])
 
     if (!isRoadviewExist) {
@@ -43,6 +43,4 @@ const KakaoRoadview = ({ address }) => {
     }
 
     return <div ref={roadviewRef} style={{ width: '100%', height: '400px' }} />;
-};
-
-export default KakaoRoadview;
+}
