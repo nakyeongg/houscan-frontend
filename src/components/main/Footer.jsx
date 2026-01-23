@@ -2,16 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
-import github from '../../assets/icons/github.svg';
 
 export const Footer = () => {
     return (
         <Wrapper>
             <Content>
                 <Logo src={logo} />
-                <GithubLink to='https://github.com/Houscan-dev'>
-                    <GithubIcon src={github} />
-                </GithubLink>
                 <ColumnWrapper>
                     <DescWrapper>
                         <Desc>개인정보 처리방침</Desc>
@@ -64,7 +60,7 @@ const ColumnWrapper = styled.div`
     display: flex;
     font-size: 16px;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+        theme.fonts.SUITMedium["font-family"]};
     width: 100%;
     justify-content: space-between;
     flex-wrap: wrap;

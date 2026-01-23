@@ -5,6 +5,8 @@ import { Layout } from '../../layout/Layout';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
+import Eye from '../../assets/icons/eye.svg';
+import EyeCrossed from '../../assets/icons/eyeCrossed.svg';
 
 const SignupPage = () => {
     const [nickname, setNickname] = useState('');
@@ -12,6 +14,8 @@ const SignupPage = () => {
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [disable, setDisable] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const navigate = useNavigate();
 
     const handleNickname = (event) => {
@@ -30,6 +34,14 @@ const SignupPage = () => {
         setPasswordConfirm(event.target.value)
     }
 
+    const handlePasswordVisibility = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const handlePasswordConfirmVisibility = () => {
+        setShowPasswordConfirm(!showPasswordConfirm);
+    }
+
     useEffect(() => {
         setDisable(nickname.trim() === "" || email.trim() === "" || password.trim() === "" || passwordConfirm.trim() === "");
     }, [nickname, email, password, passwordConfirm]);
@@ -40,11 +52,11 @@ const SignupPage = () => {
                 'email': email,
                 'nickname': nickname,
                 'password': password,
-                'password2':passwordConfirm,
+                'password2': passwordConfirm,
             },)
             console.log('회원가입 성공', response);
             navigate('/login');
-        } catch(error) {
+        } catch (error) {
             console.log('회원가입 실패', error);
             alert(error.response.data.message);
         }
@@ -57,61 +69,75 @@ const SignupPage = () => {
     }
 
     return (
-            <>
-                <Header />
-                <Layout>
-                    <S.Wrapper>
-                        <S.Title>회원가입</S.Title>
-                        <S.ColumnWrapper>
-                            <S.Name>닉네임</S.Name>
-                            <S.Input 
-                                placeholder='닉네임을 입력하세요' 
+        <>
+            <Header />
+            <Layout>
+                <S.Wrapper>
+                    <S.Title>회원가입</S.Title>
+                    <S.ColumnWrapper>
+                        <S.Name>닉네임</S.Name>
+                        <S.InputWrapper>
+                            <S.Input
+                                placeholder='닉네임을 입력하세요'
                                 value={nickname}
                                 onChange={handleNickname}
                                 onKeyDown={handleEnter}
                             />
-                        </S.ColumnWrapper>
-                        <S.ColumnWrapper>
-                            <S.Name>이메일</S.Name>
-                            <S.Input 
-                                placeholder='example@naver.com' 
+                        </S.InputWrapper>
+                    </S.ColumnWrapper>
+                    <S.ColumnWrapper>
+                        <S.Name>이메일</S.Name>
+                        <S.InputWrapper>
+                            <S.Input
+                                placeholder='example@naver.com'
                                 value={email}
                                 onChange={handleEmail}
                                 onKeyDown={handleEnter}
                             />
-                        </S.ColumnWrapper>
-                        <S.ColumnWrapper>
-                            <S.Name>비밀번호</S.Name>
-                            <S.Input 
-                                placeholder='영문, 숫자, 특수문자를 포함하며 8자 이상이어야 합니다' 
+                        </S.InputWrapper>
+                    </S.ColumnWrapper>
+                    <S.ColumnWrapper>
+                        <S.Name>비밀번호</S.Name>
+                        <S.InputWrapper>
+                            <S.Input
+                                placeholder='영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다'
                                 value={password}
                                 onChange={handlePassword}
-                                type='password'
+                                type={showPassword ? 'text' : 'password'}
                                 onKeyDown={handleEnter}
                             />
-                        </S.ColumnWrapper>
-                        <S.ColumnWrapper>
-                            <S.Name>비밀번호 확인</S.Name>
-                            <S.Input 
-                                placeholder='비밀번호를 한 번 더 입력하세요' 
+                            <S.EyeIconButton type="button" onClick={handlePasswordVisibility}>
+                                <S.EyeIcon src={showPassword ? Eye : EyeCrossed} alt="토글" />
+                            </S.EyeIconButton>
+                        </S.InputWrapper>
+                    </S.ColumnWrapper>
+                    <S.ColumnWrapper>
+                        <S.Name>비밀번호 확인</S.Name>
+                        <S.InputWrapper>
+                            <S.Input
+                                placeholder='비밀번호를 한 번 더 입력하세요'
                                 value={passwordConfirm}
                                 onChange={handlePasswordConfirm}
-                                type='password'
+                                type={showPasswordConfirm ? 'text' : 'password'}
                                 onKeyDown={handleEnter}
                             />
-                        </S.ColumnWrapper>
-                        <S.ColumnWrapper>
-                            <S.Button disabled={disable} onClick={handleSignup}>회원가입</S.Button>
-                            <S.GuideWrapper>
-                                <S.Guide>이미 계정이 있으신가요?</S.Guide>
-                                <Link to='/login'>
-                                    <S.LoginButton>로그인</S.LoginButton>
-                                </Link>
-                            </S.GuideWrapper>
-                        </S.ColumnWrapper>
-                    </S.Wrapper>
-                </Layout>
-            </>
+                            <S.EyeIconButton type="button" onClick={handlePasswordConfirmVisibility}>
+                                <S.EyeIcon src={showPasswordConfirm ? Eye : EyeCrossed} alt="토글" />
+                            </S.EyeIconButton>
+                        </S.InputWrapper>
+                    </S.ColumnWrapper>
+                    <S.ColumnWrapper>
+                        <S.Button disabled={disable} onClick={handleSignup}>회원가입</S.Button>
+                        <S.GuideWrapper>
+                            <S.Guide>이미 계정이 있으신가요?</S.Guide>
+                            <Link to='/login'>
+                                <S.LoginButton>로그인</S.LoginButton>
+                            </Link>
+                        </S.GuideWrapper>
+                    </S.ColumnWrapper>
+                </S.Wrapper>
+            </Layout>
+        </>
     )
 }
 

@@ -5,6 +5,8 @@ import { Layout } from '../../layout/Layout';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
+import Eye from '../../assets/icons/eye.svg';
+import EyeCrossed from '../../assets/icons/eyeCrossed.svg';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +14,7 @@ const LoginPage = () => {
     const [disable, setDisable] = useState(true);
     const navigate = useNavigate();
     const { setIsLogin } = useGlobalContext();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleEmail = (event) => {
         setEmail(event.target.value)
@@ -19,6 +22,10 @@ const LoginPage = () => {
 
     const handlePassword = (event) => {
         setPassword(event.target.value)
+    }
+
+    const handlePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     }
 
     const handleLogin = async () => {
@@ -62,22 +69,29 @@ const LoginPage = () => {
                     <S.Title>로그인</S.Title>
                     <S.ColumnWrapper>
                         <S.Name>이메일</S.Name>
-                        <S.Input
-                            placeholder='example@naver.com'
-                            value={email}
-                            onChange={handleEmail}
-                            onKeyDown={handleEnter}
-                        />
+                        <S.InputWrapper>
+                            <S.Input
+                                placeholder='example@naver.com'
+                                value={email}
+                                onChange={handleEmail}
+                                onKeyDown={handleEnter}
+                            />
+                        </S.InputWrapper>
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>
                         <S.Name>비밀번호</S.Name>
-                        <S.Input
-                            placeholder='비밀번호를 입력하세요'
-                            value={password}
-                            onChange={handlePassword}
-                            type='password'
-                            onKeyDown={handleEnter}
-                        />
+                        <S.InputWrapper>
+                            <S.Input
+                                placeholder='비밀번호를 입력하세요'
+                                value={password}
+                                onChange={handlePassword}
+                                type={showPassword ? 'text' : 'password'}
+                                onKeyDown={handleEnter}
+                            />
+                            <S.EyeIconButton onClick={handlePasswordVisibility}>
+                                <S.EyeIcon src={showPassword ? Eye : EyeCrossed} alt="비밀번호 보기 토글" />
+                            </S.EyeIconButton>
+                        </S.InputWrapper>
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>
                         <S.Button disabled={disable} onClick={handleLogin}>로그인</S.Button>
