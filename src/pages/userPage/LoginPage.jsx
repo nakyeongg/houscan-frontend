@@ -11,7 +11,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [disable, setDisable] = useState(true);
     const navigate = useNavigate();
-    const {isLogin, setIsLogin} = useGlobalContext();
+    const { setIsLogin } = useGlobalContext();
 
     const handleEmail = (event) => {
         setEmail(event.target.value)
@@ -28,9 +28,9 @@ const LoginPage = () => {
                 password,
             })
             console.log('로그인 요청 성공', response);
-            if (response.data.message==='로그인 성공!') {
+            if (response.data.message === '로그인 성공!') {
                 console.log('로그인 성공', response.data);
-                console.log('토큰을 저장합니다',response.data.token.access);
+                console.log('토큰을 저장합니다', response.data.token.access);
                 localStorage.setItem('accessToken', response.data.token.access);
                 localStorage.setItem('refreshToken', response.data.token.refresh)
                 setIsLogin(true);
@@ -38,7 +38,7 @@ const LoginPage = () => {
             } else {
                 console.log('로그인 실페');
             }
-        } catch(error) {
+        } catch (error) {
             console.log('로그인 실패', error);
             alert(error.response.data.message);
         }
@@ -62,8 +62,8 @@ const LoginPage = () => {
                     <S.Title>로그인</S.Title>
                     <S.ColumnWrapper>
                         <S.Name>이메일</S.Name>
-                        <S.Input 
-                            placeholder='example@naver.com' 
+                        <S.Input
+                            placeholder='example@naver.com'
                             value={email}
                             onChange={handleEmail}
                             onKeyDown={handleEnter}
@@ -71,8 +71,8 @@ const LoginPage = () => {
                     </S.ColumnWrapper>
                     <S.ColumnWrapper>
                         <S.Name>비밀번호</S.Name>
-                        <S.Input 
-                            placeholder='비밀번호를 입력하세요' 
+                        <S.Input
+                            placeholder='비밀번호를 입력하세요'
                             value={password}
                             onChange={handlePassword}
                             type='password'

@@ -12,20 +12,17 @@ const HouseDetailPage = () => {
     const { id } = useParams();
     const [house, setHouse] = useState();
 
-    const handleHouse = async () => {
-        try {
-            const response = await axiosInstance.get(`/api/announcements/house/${id}`);
-            console.log('주택 정보 가져오기 성공', response);
-            const houseData = response.data.housing_info;
-            setHouse(houseData);
-        } catch (error) {
-            console.log('주택 정보 가져오기 에러', error);
-        }
-    }
-
     useEffect(() => {
+        const handleHouse = async () => {
+            try {
+                const response = await axiosInstance.get(`/api/announcements/house/${id}`);
+                setHouse(response.data.housing_info);
+            } catch (error) {
+                console.log('주택 정보 가져오기 에러', error);
+            }
+        }
         handleHouse();
-    }, [])
+    }, [id])
 
     return (
         <>

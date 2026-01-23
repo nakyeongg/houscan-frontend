@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import close from '../../assets/icons/close.svg';
 import file from '../../assets/icons/file.svg';
@@ -8,17 +8,17 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../context/context';
 
 export const Sidebar = ({ onClose }) => {
-    const {isLogin, setIsLogin} = useGlobalContext();
+    const { isLogin } = useGlobalContext();
 
     return (
         <Wrapper>
-            <Close src={close} onClick={onClose}/>
+            <Close src={close} onClick={onClose} />
             <Container>
                 <Link to='/subscription'>
                     <Category onClick={onClose}>
                         <Icon src={file} />
                         <Name>청약 공고</Name>
-                    </Category>                
+                    </Category>
                 </Link>
                 {!isLogin ? (
                     <>
@@ -33,9 +33,9 @@ export const Sidebar = ({ onClose }) => {
                                 <Icon src={userAdd} />
                                 <Name>회원가입</Name>
                             </Category>
-                        </Link>               
+                        </Link>
                     </>
-                ):( 
+                ) : (
                     <>
                         <Link to='/information'>
                             <Category onClick={onClose}>
@@ -48,11 +48,11 @@ export const Sidebar = ({ onClose }) => {
                                 <Icon src={user} />
                                 <Name>마이페이지</Name>
                             </Category>
-                        </Link> 
+                        </Link>
                     </>
                 )}
             </Container>
-        </Wrapper>    
+        </Wrapper>
     )
 }
 

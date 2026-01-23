@@ -9,7 +9,7 @@ export const MainKakaoMap = () => {
     const mapRef = useRef(null);
     const [houses, setHouses] = useState([]);
     const [selectedHouse, setSelectedHouse] = useState(null);
-    const [_level, setLevel] = useState(8);
+    const [, setLevel] = useState(8);
 
     const handleOpenAnnouncements = async () => {
         try {

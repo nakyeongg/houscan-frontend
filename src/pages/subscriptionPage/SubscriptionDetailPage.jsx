@@ -9,12 +9,12 @@ import { HouseList } from '../../components/subscription/HouseList';
 import axiosInstance from '../../apis/axiosInstance';
 
 const SubscriptionDetailPage = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const [title, setTitle] = useState('');
     const [subscription, setSubscription] = useState();
     const [houses, setHouses] = useState([]);
     const [region, setRegion] = useState("전체");
-    const [analysis ,setAnalysis] = useState();
+    const [analysis, setAnalysis] = useState();
 
     const scheduleLabel = {
         announcement_date: '모집공고',
@@ -26,27 +26,26 @@ const SubscriptionDetailPage = () => {
         move_in_period: '입주 기간',
     }
 
-    const handleDetail = async () => {
-        try {
-            const response = await axiosInstance.get(`/api/announcements/${id}`);
-            console.log('공고 디테일 가져오기 성공', response.data);
-            setTitle(response.data.title);
-            setSubscription(response.data.ai_summary_json);
-            setHouses(response.data.housing_info_list);
-            setAnalysis(response.data.analysis);
-            console.log('주택 정보', response.data.housing_info_list);
-        } catch(error) {
-            console.log('공고 디테일 가져오기 에러', error);
-        }
-    }
-
     const handleRegionChange = (newRegion) => {
         setRegion(newRegion);
     }
 
     useEffect(() => {
+        const handleDetail = async () => {
+            try {
+                const response = await axiosInstance.get(`/api/announcements/${id}`);
+                console.log('공고 디테일 가져오기 성공', response.data);
+                setTitle(response.data.title);
+                setSubscription(response.data.ai_summary_json);
+                setHouses(response.data.housing_info_list);
+                setAnalysis(response.data.analysis);
+                console.log('주택 정보', response.data.housing_info_list);
+            } catch (error) {
+                console.log('공고 디테일 가져오기 에러', error);
+            }
+        }
         handleDetail();
-    }, [])
+    }, [id])
 
     return (
         <>
@@ -57,24 +56,24 @@ const SubscriptionDetailPage = () => {
                         <S.Wrapper>
                             {analysis && (
                                 analysis.is_eligible ? (
-                                <S.BadgeWrapper>
-                                    <S.Badge>해당됨</S.Badge>
-                                    {analysis.priority && <S.Badge>{analysis.priority}</S.Badge>}
-                                </S.BadgeWrapper>
-                            ) : (
-                                <S.WarningBadge>해당되지 않음</S.WarningBadge>
-                            ))}
+                                    <S.BadgeWrapper>
+                                        <S.Badge>해당됨</S.Badge>
+                                        {analysis.priority && <S.Badge>{analysis.priority}</S.Badge>}
+                                    </S.BadgeWrapper>
+                                ) : (
+                                    <S.WarningBadge>해당되지 않음</S.WarningBadge>
+                                ))}
                             <S.Title>{title}</S.Title>
                             {subscription.application_eligibility && (
                                 <S.CategoryWrapper>
                                     <S.Category>신청자격</S.Category>
                                     <p>{subscription.application_eligibility}</p>
-                                    {analysis && analysis.is_eligible===false && analysis.reasons.length && (
+                                    {analysis && analysis.is_eligible === false && analysis.reasons.length && (
                                         <S.ReasonWrapper>
                                             <S.ReasonTitle>미해당 사유</S.ReasonTitle>
                                             {analysis.reasons.map((reason, index) => (
-                                            <S.Reason key={index}>• {reason}</S.Reason>
-                                        ))}
+                                                <S.Reason key={index}>• {reason}</S.Reason>
+                                            ))}
                                         </S.ReasonWrapper>
                                     )}
                                 </S.CategoryWrapper>
@@ -90,7 +89,7 @@ const SubscriptionDetailPage = () => {
                                             typeof value === 'string'
                                                 ? value
                                                 : `${value.start ?? ''} ~ ${value.end ?? ''}`.trim();
-                                            return (
+                                        return (
                                             <S.RowWrapper key={key}>
                                                 • {label}: {displayValue}
                                             </S.RowWrapper>
@@ -98,7 +97,7 @@ const SubscriptionDetailPage = () => {
                                     })}
                                 </S.CategoryWrapper>
                             )}
-                            {Array.isArray(subscription.priority_and_bonus.priority_criteria) && subscription.priority_and_bonus.priority_criteria.length > 0 && subscription.priority_and_bonus.priority_criteria[0].priority!==null && (
+                            {Array.isArray(subscription.priority_and_bonus.priority_criteria) && subscription.priority_and_bonus.priority_criteria.length > 0 && subscription.priority_and_bonus.priority_criteria[0].priority !== null && (
                                 <S.CategoryWrapper>
                                     <S.Category>순위별 자격요건</S.Category>
                                     <S.MiniCategoryWrapper>
@@ -113,27 +112,27 @@ const SubscriptionDetailPage = () => {
                                     </S.MiniCategoryWrapper>
                                 </S.CategoryWrapper>
                             )}
-                            {(Array.isArray(subscription.priority_and_bonus.score_items) && subscription.priority_and_bonus.score_items.length > 0 && subscription.priority_and_bonus.score_items[0].priority!==null) && (
+                            {(Array.isArray(subscription.priority_and_bonus.score_items) && subscription.priority_and_bonus.score_items.length > 0 && subscription.priority_and_bonus.score_items[0].priority !== null) && (
                                 <S.CategoryWrapper>
-                                <S.Category>가점사항</S.Category>
-                                <S.MiniCategoryWrapper>
-                                    {subscription.priority_and_bonus.score_items.map((items, index) => (
-                                        <div key={index}>
-                                            <S.MiniCategory>{items.priority}</S.MiniCategory>
-                                            {items.items.map((item, index) => {
-                                                const scoreString = String(item.score);
-                                                const score = scoreString.endsWith('점') ? scoreString : `${scoreString}점`;
-                                                return (
-                                                    <S.RowWrapper key={index}>
-                                                        <p>• {item.item}</p>
-                                                        <S.Score>{score}</S.Score>
-                                                    </S.RowWrapper>
-                                                )
-                                            })}
-                                        </div>
-                                    ))}
-                                </S.MiniCategoryWrapper>
-                            </S.CategoryWrapper>
+                                    <S.Category>가점사항</S.Category>
+                                    <S.MiniCategoryWrapper>
+                                        {subscription.priority_and_bonus.score_items.map((items, index) => (
+                                            <div key={index}>
+                                                <S.MiniCategory>{items.priority}</S.MiniCategory>
+                                                {items.items.map((item, index) => {
+                                                    const scoreString = String(item.score);
+                                                    const score = scoreString.endsWith('점') ? scoreString : `${scoreString}점`;
+                                                    return (
+                                                        <S.RowWrapper key={index}>
+                                                            <p>• {item.item}</p>
+                                                            <S.Score>{score}</S.Score>
+                                                        </S.RowWrapper>
+                                                    )
+                                                })}
+                                            </div>
+                                        ))}
+                                    </S.MiniCategoryWrapper>
+                                </S.CategoryWrapper>
                             )}
                             {subscription.residence_period && (
                                 <S.CategoryWrapper>
@@ -141,7 +140,7 @@ const SubscriptionDetailPage = () => {
                                     <p>{subscription.residence_period}</p>
                                 </S.CategoryWrapper>
                             )}
-                            {subscription.precautions.length > 0 && ( 
+                            {subscription.precautions.length > 0 && (
                                 <S.CategoryWrapper>
                                     <S.Category>유의사항</S.Category>
                                     {(() => {
@@ -168,8 +167,8 @@ const SubscriptionDetailPage = () => {
                         </S.Wrapper>
                         {houses && (
                             <>
-                                <RegionButton onDataChange={handleRegionChange}/>
-                                <HouseList houses={houses} onDataChange={handleRegionChange} region={region}/>
+                                <RegionButton onDataChange={handleRegionChange} />
+                                <HouseList houses={houses} onDataChange={handleRegionChange} region={region} />
                             </>
                         )}
                     </>

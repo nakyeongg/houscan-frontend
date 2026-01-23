@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as S from './FindPasswordPage.styled';
 import { Header } from '../../components/main/Header';
 import { Layout } from '../../layout/Layout';
-import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
 const FindPasswordPage = () => {
@@ -31,7 +30,7 @@ const FindPasswordPage = () => {
             handleSubmit();
         }
     }
-    
+
     useEffect(() => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const isValid = email.trim() !== "" && emailRegex.test(email);
@@ -46,7 +45,7 @@ const FindPasswordPage = () => {
                     <S.Title>비밀번호 찾기</S.Title>
                     <S.Desc>기존에 가입하신 이메일을 입력하시면 비밀번호 변경 메일을 발송해드립니다.</S.Desc>
                     <S.Input
-                        placeholder='example@naver.com' 
+                        placeholder='example@naver.com'
                         value={email}
                         onChange={handleEmail}
                         onKeyDown={handleEnter}
