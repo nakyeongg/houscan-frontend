@@ -42,20 +42,6 @@ const Logo = styled.img`
     margin-bottom: 20px;
 `
 
-const GithubLink = styled(Link)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 25px;
-    height: 25px;
-    margin-bottom: 10px;
-`
-
-const GithubIcon = styled.img`
-    width: 25px;
-    height: 25px;
-`
-
 const ColumnWrapper = styled.div`
     display: flex;
     font-size: 16px;
