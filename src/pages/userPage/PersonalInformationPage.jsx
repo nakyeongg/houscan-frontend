@@ -35,11 +35,13 @@ const PersonalInformationPage = () => {
 
     const mapAnswers = (answers) => {
         const residence = RESIDENCE_OPTIONS.find(option => option.value === answers[3])?.text || null;
+        const marriageMap = { 0: "single", 1: "new", 2: "married" };
+        const isMarried = marriageMap[answers[2]] || "single";
 
         return {
             "birth_date": answers[0],
             "gender": answers[1] === 0 ? "M" : "F",
-            "is_married": answers[2] === 0,
+            "is_married": isMarried,
             "residence": residence,
             "university": answers[4] === 0,
             "graduate": answers[5] === 0,
@@ -59,11 +61,13 @@ const PersonalInformationPage = () => {
 
     const mapFetchAnswers = (data) => {
         const residence = RESIDENCE_OPTIONS.find(option => option.text === data.residence)?.value || null;
+        const marriageMap = { "single": 0, "new": 1, "married": 2 };
+        const isMarried = marriageMap[data.is_married] !== undefined ? marriageMap[data.is_married] : 0;
 
         return [
             data.birth_date,
             data.gender === "M" ? 0 : 1,
-            data.is_married ? 0 : 1,
+            isMarried,
             residence,
             data.university ? 0 : 1,
             data.graduate ? 0 : 1,
