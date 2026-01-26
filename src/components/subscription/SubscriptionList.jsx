@@ -5,8 +5,8 @@ import { Pagination } from './Pagination';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
-export const SubscriptionList = ({ display, rank }) => {
-    const [subscriptions, setSubscriptions]= useState([]);
+export const SubscriptionList = ({ display, rank, limit }) => {
+    const [subscriptions, setSubscriptions] = useState([]);
     const [page, setPage] = useState(1);
 
     console.log('rank', rank);
@@ -16,7 +16,7 @@ export const SubscriptionList = ({ display, rank }) => {
             const response = await axiosInstance.get('/api/announcements/');
             console.log('공고 리스트 가져오기', response);
             setSubscriptions(response.data);
-        } catch(error) {
+        } catch (error) {
             console.log('공고 가져오기 에러', error);
         }
     }
@@ -29,8 +29,6 @@ export const SubscriptionList = ({ display, rank }) => {
         setPage(selected + 1);
     };
 
-    const offset = (page - 1) * 10;
-
     let filteredSubscriptions = subscriptions;
     if (rank) {
         filteredSubscriptions = subscriptions.filter(subscription => {
@@ -39,12 +37,15 @@ export const SubscriptionList = ({ display, rank }) => {
 
             const priorityText = analysis.priority || '';
             const rankMatches = priorityText.includes(rank);
-            
+
             return rankMatches;
         })
-    } 
+    }
 
-    const currentPageData = filteredSubscriptions.slice(offset, offset + 10);
+    const offset = (page - 1) * 10;
+    const currentPageData = limit
+        ? filteredSubscriptions.slice(0, limit)
+        : filteredSubscriptions.slice(offset, offset + 10);
 
     return (
         <Wrapper>
@@ -70,9 +71,9 @@ export const SubscriptionList = ({ display, rank }) => {
                     </DateWrapper>
                     <StateWrapper>
                         {
-                            subscription.status==='upcoming' ? <PendingBadge /> :
-                            subscription.status==='open' ? <ProcessBadge /> :
-                            <ClosedBadge />
+                            subscription.status === 'upcoming' ? <PendingBadge /> :
+                                subscription.status === 'open' ? <ProcessBadge /> :
+                                    <ClosedBadge />
                         }
                     </StateWrapper>
                 </SubscriptionWraper>
@@ -95,7 +96,7 @@ const TopWrapper = styled.div`
     color: #B5B7C0;
     font-size: 14px;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+        theme.fonts.SUITMedium["font-family"]};
     padding: 0 40px 15px 40px;
     display: flex;
 
@@ -153,7 +154,7 @@ const SubscriptionWraper = styled.div`
     margin: 0 40px;
     font-size: 14px;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+        theme.fonts.SUITMedium["font-family"]};
     height: 58px;
 
     @media screen and (max-width: 600px) {

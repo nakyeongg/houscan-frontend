@@ -13,7 +13,7 @@ const MainPage = () => {
             <Header />
             <Layout>
                 <Slider />
-                <SubscriptionList display='none' />
+                <SubscriptionList display='none' limit={5} />
                 <S.More to='/subscription'>더보기</S.More>
                 <MainKakaoMap />
             </Layout>
