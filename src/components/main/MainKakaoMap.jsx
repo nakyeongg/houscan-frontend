@@ -9,7 +9,19 @@ export const MainKakaoMap = () => {
     const mapRef = useRef(null);
     const [houses, setHouses] = useState([]);
     const [selectedHouse, setSelectedHouse] = useState(null);
-    const [, setLevel] = useState(8);
+    const [level, setLevel] = useState(8);
+
+    const handleMarkerClick = (house) => {
+        setSelectedHouse(house);
+        const map = mapRef.current;
+        if (map) {
+            const currentLevel = map.getLevel();
+            setLevel(currentLevel);
+            const offset = currentLevel < 5 ? 0.0005 : 0.0035;
+            const moveLatLon = new window.kakao.maps.LatLng(house.lat + offset, house.lng);
+            map.panTo(moveLatLon);
+        }
+    }
 
     const handleOpenAnnouncements = async () => {
         try {
@@ -23,9 +35,9 @@ export const MainKakaoMap = () => {
                     allHouses.push({
                         ...house,
                         announcement_id: announcement.id,
-                    });
-                });
-            });
+                    })
+                })
+            })
 
             const coordsPromises = allHouses.map((house) => {
                 return new Promise((resolve) => {
@@ -36,10 +48,12 @@ export const MainKakaoMap = () => {
                                 lat: parseFloat(result[0].y),
                                 lng: parseFloat(result[0].x),
                             });
-                        } else { resolve(null); }
-                    });
-                });
-            });
+                        } else {
+                            resolve(null);
+                        }
+                    })
+                })
+            })
 
             const results = await Promise.all(coordsPromises);
             const validHouses = results.filter((item) => item !== null);
@@ -64,7 +78,7 @@ export const MainKakaoMap = () => {
             <Map
                 center={{ lat: 37.5665, lng: 126.9780 }}
                 style={{ width: "100%", height: "400px" }}
-                level={8}
+                level={level}
                 ref={mapRef}
                 onZoomChanged={(map) => setLevel(map.getLevel())}
             >
@@ -78,15 +92,7 @@ export const MainKakaoMap = () => {
                             <MapMarker
                                 key={`${house.announcement_id}-${house.id}`}
                                 position={{ lat: house.lat, lng: house.lng }}
-                                onClick={() => {
-                                    setSelectedHouse(house);
-                                    const map = mapRef.current;
-                                    if (map) {
-                                        const offset = 0.012;
-                                        const moveLatLon = new window.kakao.maps.LatLng(house.lat + offset, house.lng);
-                                        map.panTo(moveLatLon);
-                                    }
-                                }}
+                                onClick={() => handleMarkerClick(house)}
                                 image={{
                                     src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
                                     size: { width: 24, height: 35 }
