@@ -28,13 +28,14 @@ export const ClosedBadge = () => {
 const Wrapper = styled.div`
     font-size: 14px;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+        theme.fonts.SUITMedium["font-family"]};
 `
 
 const PendingWrapper = styled.div`
     border-radius: 4px;
-    border: 1px solid #608CD9;
-    color: #0048C2;
+    border: 1px solid #D97706;
+    color: #D97706;
+    background-color: #FFFBEB;
     width: 84px;
     height: 30px;
     display: flex;
@@ -44,9 +45,9 @@ const PendingWrapper = styled.div`
 
 const ProcessWrapper = styled.div`
     border-radius: 4px;
-    border: 1px solid #0048C2;
-    color: #0048C2;
-    background-color: rgba(0, 123, 255, 0.24);
+    border: 1px solid #2563EB;
+    color: #2563EB;
+    background-color: #CEE7FF;
     width: 84px;
     height: 30px;
     display: flex;
@@ -56,14 +57,14 @@ const ProcessWrapper = styled.div`
 
 const CloseWrapper = styled.div`
     border-radius: 4px;
-    border: 1px solid #0048C2;
-    color: #0742A7;
-    background-color: rgba(150, 167, 196, 0.43);
+    border: 1px solid #5C5C5C;
+    color: #5C5C5C;
+    background-color: #E3E3E3;
     width: 84px;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: ${({ theme }) =>
-    theme.fonts.SUITMedium["font-family"]};
+        theme.fonts.SUITMedium["font-family"]};
 `
