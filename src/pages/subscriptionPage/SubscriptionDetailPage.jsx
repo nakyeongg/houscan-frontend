@@ -58,7 +58,11 @@ const SubscriptionDetailPage = () => {
                                 analysis.is_eligible ? (
                                     <S.BadgeWrapper>
                                         <S.Badge>해당됨</S.Badge>
-                                        {analysis.priority && <S.Badge>{analysis.priority}</S.Badge>}
+                                        <S.Badge>
+                                            {analysis.priority && analysis.priority.trim() !== ""
+                                                ? analysis.priority
+                                                : "우선순위 해당없음"}
+                                        </S.Badge>
                                     </S.BadgeWrapper>
                                 ) : (
                                     <S.WarningBadge>해당되지 않음</S.WarningBadge>
