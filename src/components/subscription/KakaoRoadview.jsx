@@ -42,5 +42,5 @@ export const KakaoRoadview = ({ address }) => {
         return null;
     }
 
-    return <div ref={roadviewRef} style={{ width: '100%', height: '400px' }} />;
+    return <div ref={roadviewRef} style={{ width: '100%', height: window.innerWidth <= 600 ? '250px' : '400px' }} />;
 }

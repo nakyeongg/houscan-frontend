@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const MapWrapper = styled.div`
     width: 100%;
     display: flex;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+    }
 `
 
 export const Wrapper = styled.div`

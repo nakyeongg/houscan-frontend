@@ -24,7 +24,7 @@ export const KakaoMap = ({ placeName, address }) => {
             <Map
                 center={coords}
                 level={3}
-                style={{ width: '100%', height: '400px' }}
+                style={{ width: '100%', height: window.innerWidth <= 600 ? '250px' : '400px' }}
             >
                 <MapMarker
                     position={coords}
