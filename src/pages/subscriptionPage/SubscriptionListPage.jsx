@@ -69,7 +69,7 @@ const SubscriptionListPage = () => {
     }
 
     // 쿠키 유효기간
-    const handleExpiredDate = (days: number) => {
+    const handleExpiredDate = (days) => {
         const date = new Date();
         date.setDate(date.getDate() + days);
         return date;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
 
-export const Pagination = ({ length, handlePageChange, display }) => {
+export const Pagination = ({ length, handlePageChange, display, forcePage }) => {
     return (
         <Wrapper display={display}>
             <StyledPagination
@@ -14,13 +14,14 @@ export const Pagination = ({ length, handlePageChange, display }) => {
                 nextLabel={">"}
                 containerClassName={"pagination"}
                 activeClassName={"active"}
+                forcePage={forcePage}
             />
         </Wrapper>
     )
 }
 
 const Wrapper = styled.div`
-    display: ${({display}) => display==='none' ? 'none' : 'flex'};
+    display: ${({ display }) => display === 'none' ? 'none' : 'flex'};
 `
 
 const StyledPagination = styled(ReactPaginate)`

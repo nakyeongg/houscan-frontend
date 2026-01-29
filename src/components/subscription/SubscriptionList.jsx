@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { PendingBadge, ProcessBadge, ClosedBadge } from './Badge';
 import { Pagination } from './Pagination';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
 export const SubscriptionList = ({ display, rank, limit }) => {
     const [subscriptions, setSubscriptions] = useState([]);
-    const [page, setPage] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const prevRankRef = useRef(rank);
+    const page = parseInt(searchParams.get('page') || '1', 10);
 
     console.log('rank', rank);
 
@@ -26,8 +28,19 @@ export const SubscriptionList = ({ display, rank, limit }) => {
     }, [])
 
     const handlePageChange = ({ selected }) => {
-        setPage(selected + 1);
-    };
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('page', selected + 1);
+        setSearchParams(newParams);
+    }
+
+    useEffect(() => {
+        if (prevRankRef.current !== rank) {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.set('page', '1');
+            setSearchParams(newParams, { replace: true });
+            prevRankRef.current = rank;
+        }
+    }, [rank])
 
     let filteredSubscriptions = subscriptions;
     if (rank) {
@@ -82,6 +95,7 @@ export const SubscriptionList = ({ display, rank, limit }) => {
                 length={filteredSubscriptions.length}
                 handlePageChange={handlePageChange}
                 display={display}
+                forcePage={page - 1}
             />
         </Wrapper>
     )
