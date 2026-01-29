@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 const SliderWrapper = styled(Swiper)`
     width: 100%;
-    z-index: -1;
+    z-index: 1;
 `
 
 const Slide = styled(SwiperSlide)`
@@ -30,6 +30,7 @@ const Slider = () => {
             loop={true}
             autoplay={{
                 delay: 10000,
+                disableOnInteraction: false,
             }}
             modules={[Autoplay]}
         >
