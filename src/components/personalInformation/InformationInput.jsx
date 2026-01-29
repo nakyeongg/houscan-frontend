@@ -2,12 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const InformationInput = ({ placeholder, onChange, value }) => {
+    const handleWheel = (e) => {
+        e.target.blur();
+    }
+
     return (
-        <Input 
-            placeholder={placeholder} 
+        <Input
+            placeholder={placeholder}
             onChange={(event) => onChange(event.target.value)}
             type='number'
             value={value ?? ''}
+            onWheel={handleWheel}
         />
     )
 }
