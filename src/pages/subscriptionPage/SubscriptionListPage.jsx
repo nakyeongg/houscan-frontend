@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as S from './SubscriptionListPage.styled';
 import { Layout } from '../../layout/Layout';
 import { Header } from '../../components/main/Header';
@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/context';
 import { useCookies } from 'react-cookie';
 import axiosInstance from '../../apis/axiosInstance';
+import Down from '../../assets/icons/down.svg';
+import Up from '../../assets/icons/up.svg';
 
 const SubscriptionListPage = () => {
     const navigate = useNavigate();
@@ -19,6 +21,15 @@ const SubscriptionListPage = () => {
     const [isAnswered, setIsAnswers] = useState(false);
     const [hasCookie, setHasCookie] = useState(true); // 쿠키의 저장 여부
     const [cookies, setCookies] = useCookies(); // 쿠키에 저장되는 내용
+
+    const [filterUser, setFilterUser] = useState('전체');
+    const [filterType, setFilterType] = useState('전체');
+    const [isUserOpen, setIsUserOpen] = useState(false);
+    const [isTypeOpen, setIsTypeOpen] = useState(false);
+    const userOptions = ['전체', '청년', '신혼부부', '기타'];
+    const typeOptions = ['전체', '안심주택', '행복주택', '임대주택', '기타'];
+    const userDropdownRef = useRef(null);
+    const typeDropdownRef = useRef(null);
 
     console.log(isLogin, isAnswered);
 
@@ -96,6 +107,32 @@ const SubscriptionListPage = () => {
         getPersonalInformation();
     }, [])
 
+    const toggleUserDropdown = () => {
+        setIsUserOpen(!isUserOpen);
+        setIsTypeOpen(false);
+    }
+
+    const toggleTypeDropdown = () => {
+        setIsTypeOpen(!isTypeOpen);
+        setIsUserOpen(false);
+    }
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
+                setIsUserOpen(false);
+            }
+            if (typeDropdownRef.current && !typeDropdownRef.current.contains(event.target)) {
+                setIsTypeOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+    }, [])
+
     return (
         <>
             <Header />
@@ -120,6 +157,44 @@ const SubscriptionListPage = () => {
                             ))}
                         </S.ButtonWrapper>
                     )}
+                    <S.DropdownWrapper>
+                        <S.Dropdown ref={userDropdownRef}>
+                            <S.DropdownSelect onClick={toggleUserDropdown}>
+                                {filterUser}
+                                <S.DropdownImg src={isUserOpen ? Up : Down} alt="arrow" />
+                            </S.DropdownSelect>
+                            {isUserOpen && (
+                                <S.DropdownOptionWrapper>
+                                    {userOptions.map(option => (
+                                        <S.DropdownOption key={option} onClick={() => {
+                                            setFilterUser(option);
+                                            setIsUserOpen(false);
+                                        }}>
+                                            {option}
+                                        </S.DropdownOption>
+                                    ))}
+                                </S.DropdownOptionWrapper>
+                            )}
+                        </S.Dropdown>
+                        <S.Dropdown ref={typeDropdownRef}>
+                            <S.DropdownSelect onClick={toggleTypeDropdown}>
+                                {filterType}
+                                <S.DropdownImg src={isTypeOpen ? Up : Down} alt="arrow" />
+                            </S.DropdownSelect>
+                            {isTypeOpen && (
+                                <S.DropdownOptionWrapper>
+                                    {typeOptions.map(option => (
+                                        <S.DropdownOption key={option} onClick={() => {
+                                            setFilterType(option);
+                                            setIsTypeOpen(false);
+                                        }}>
+                                            {option}
+                                        </S.DropdownOption>
+                                    ))}
+                                </S.DropdownOptionWrapper>
+                            )}
+                        </S.Dropdown>
+                    </S.DropdownWrapper>
                     {!hasCookie && (
                         !isLogin ? (
                             <ButtonModal
@@ -140,7 +215,11 @@ const SubscriptionListPage = () => {
                         ) : null
                     )}
                 </S.Wrapper>
-                <SubscriptionList rank={selectedRankText} />
+                <SubscriptionList
+                    rank={selectedRankText}
+                    filterUser={filterUser}
+                    filterType={filterType}
+                />
             </Layout>
             <Footer />
         </>

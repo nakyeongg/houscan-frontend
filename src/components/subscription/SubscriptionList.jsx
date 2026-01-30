@@ -5,7 +5,7 @@ import { Pagination } from './Pagination';
 import { Link, useSearchParams } from 'react-router-dom';
 import axiosInstance from '../../apis/axiosInstance';
 
-export const SubscriptionList = ({ display, rank, limit }) => {
+export const SubscriptionList = ({ display, rank, limit, filterUser = '전체', filterType = '전체' }) => {
     const [subscriptions, setSubscriptions] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const prevRankRef = useRef(rank);
@@ -42,18 +42,35 @@ export const SubscriptionList = ({ display, rank, limit }) => {
         }
     }, [rank])
 
-    let filteredSubscriptions = subscriptions;
-    if (rank) {
-        filteredSubscriptions = subscriptions.filter(subscription => {
+    const filteredSubscriptions = subscriptions.filter(subscription => {
+        if (rank) {
             const analysis = subscription.analysis;
             if (!analysis || analysis.is_eligible !== true) return false;
+            if (!analysis.priority || !analysis.priority.includes(rank)) return false;
+        }
 
-            const priorityText = analysis.priority || '';
-            const rankMatches = priorityText.includes(rank);
+        if (filterUser !== '전체') {
+            if (!subscription.category_user || !subscription.category_user.includes(filterUser)) {
+                return false;
+            }
+        }
 
-            return rankMatches;
-        })
-    }
+        if (filterType !== '전체') {
+            if (!subscription.category_type || !subscription.category_type.includes(filterType)) {
+                return false;
+            }
+        }
+
+        return true;
+    })
+
+    useEffect(() => {
+        if (!limit && (filterUser !== '전체' || filterType !== '전체')) {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.set('page', '1');
+            setSearchParams(newParams, { replace: true });
+        }
+    }, [filterUser, filterType, limit]);
 
     const offset = (page - 1) * 10;
     const currentPageData = limit
