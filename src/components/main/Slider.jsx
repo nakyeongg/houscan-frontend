@@ -4,6 +4,7 @@ import "swiper/swiper-bundle.css";
 import { Autoplay } from "swiper/modules";
 import slide1 from '../../assets/images/slide1.svg';
 import slide2 from '../../assets/images/slide2.svg';
+import slide3 from '../../assets/images/slide3.svg';
 import styled from 'styled-components';
 
 const SliderWrapper = styled(Swiper)`
@@ -39,6 +40,9 @@ const Slider = () => {
             </Slide>
             <Slide>
                 <img src={slide2} alt="slide2" />
+            </Slide>
+            <Slide>
+                <img src={slide3} alt="slide3" />
             </Slide>
         </SliderWrapper>
     )

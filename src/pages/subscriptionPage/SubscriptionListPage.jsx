@@ -143,29 +143,13 @@ const SubscriptionListPage = () => {
 
     const toggleUserDropdown = () => {
         setIsUserOpen(!isUserOpen);
-        setIsTypeOpen(false);
     }
 
     const toggleTypeDropdown = () => {
         setIsTypeOpen(!isTypeOpen);
-        setIsUserOpen(false);
     }
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
-                setIsUserOpen(false);
-            }
-            if (typeDropdownRef.current && !typeDropdownRef.current.contains(event.target)) {
-                setIsTypeOpen(false);
-            }
-        }
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        }
-    }, [])
 
     return (
         <>
