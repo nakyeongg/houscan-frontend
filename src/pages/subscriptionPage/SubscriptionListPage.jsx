@@ -5,7 +5,7 @@ import { Header } from '../../components/main/Header';
 import { Footer } from '../../components/main/Footer';
 import { SubscriptionList } from '../../components/subscription/SubscriptionList';
 import { ButtonModal } from '../../components/modal/ButtonModal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGlobalContext } from '../../context/context';
 import { useCookies } from 'react-cookie';
 import axiosInstance from '../../apis/axiosInstance';
@@ -14,16 +14,22 @@ import Up from '../../assets/icons/up.svg';
 
 const SubscriptionListPage = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { isLogin } = useGlobalContext();
     const [userId, setUserId] = useState(0);
-    const [selectedRank, setSelectedRank] = useState();
-    const [selectedRankText, setSelectedRankText] = useState();
+    const getParamRank = () => searchParams.get('rank');
+    const getParamUser = () => searchParams.get('user') || '전체';
+    const getParamType = () => searchParams.get('type') || '전체';
+    const [selectedRank, setSelectedRank] = useState(getParamRank() !== null ? Number(getParamRank()) : undefined);
+    const [selectedRankText, setSelectedRankText] = useState(
+        getParamRank() !== null ? ['1순위', '2순위', '3순위'][Number(getParamRank())] : undefined
+    );
+    const [filterUser, setFilterUser] = useState(getParamUser());
+    const [filterType, setFilterType] = useState(getParamType());
     const [isAnswered, setIsAnswers] = useState(false);
     const [hasCookie, setHasCookie] = useState(true); // 쿠키의 저장 여부
     const [cookies, setCookies] = useCookies(); // 쿠키에 저장되는 내용
 
-    const [filterUser, setFilterUser] = useState('전체');
-    const [filterType, setFilterType] = useState('전체');
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isTypeOpen, setIsTypeOpen] = useState(false);
     const userOptions = ['전체', '청년', '신혼부부', '기타'];
@@ -39,18 +45,50 @@ const SubscriptionListPage = () => {
         { text: '3순위', value: 2 },
     ]
 
+
+    useEffect(() => {
+        const rank = getParamRank();
+        const user = getParamUser();
+        const type = getParamType();
+
+        // URL에 rank가 있으면 숫자와 텍스트 세팅, 없으면 초기화
+        setSelectedRank(rank !== null ? Number(rank) : undefined);
+        setSelectedRankText(rank !== null ? ['1순위', '2순위', '3순위'][Number(rank)] : undefined);
+
+        // URL에 있는 user, type 값을 state에 반영
+        setFilterUser(user);
+        setFilterType(type);
+    }, [searchParams]);
+
+    const updateURL = (key, value) => {
+        const newParams = new URLSearchParams(searchParams);
+        if (value === undefined || value === '전체' || value === null) {
+            newParams.delete(key); // 기본값이면 URL에서 파라미터 제거 (깔끔함)
+        } else {
+            newParams.set(key, value); // 값이 있으면 URL에 기록
+        }
+        setSearchParams(newParams);
+    };
+
     const handleRank = (event) => {
         const value = Number(event.target.value);
-        const text = Ranks.find(rank => rank.value === value).text;
-        console.log('click', value, text);
+        // State를 직접 바꾸지 말고 URL만 업데이트 -> useEffect가 State를 바꿈
         if (value === selectedRank) {
-            setSelectedRank(undefined);
-            setSelectedRankText(undefined);
+            updateURL('rank', null);
         } else {
-            setSelectedRank(value);
-            setSelectedRankText(text)
+            updateURL('rank', value);
         }
-    }
+    };
+
+    const handleSelectUser = (option) => {
+        updateURL('user', option); // URL 업데이트
+        setIsUserOpen(false);
+    };
+
+    const handleSelectType = (option) => {
+        updateURL('type', option); // URL 업데이트
+        setIsTypeOpen(false);
+    };
 
     const getUserId = async () => {
         try {
@@ -166,10 +204,7 @@ const SubscriptionListPage = () => {
                             {isUserOpen && (
                                 <S.DropdownOptionWrapper>
                                     {userOptions.map(option => (
-                                        <S.DropdownOption key={option} onClick={() => {
-                                            setFilterUser(option);
-                                            setIsUserOpen(false);
-                                        }}>
+                                        <S.DropdownOption key={option} onClick={() => handleSelectUser(option)}>
                                             {option}
                                         </S.DropdownOption>
                                     ))}
@@ -184,10 +219,7 @@ const SubscriptionListPage = () => {
                             {isTypeOpen && (
                                 <S.DropdownOptionWrapper>
                                     {typeOptions.map(option => (
-                                        <S.DropdownOption key={option} onClick={() => {
-                                            setFilterType(option);
-                                            setIsTypeOpen(false);
-                                        }}>
+                                        <S.DropdownOption key={option} onClick={() => handleSelectType(option)}>
                                             {option}
                                         </S.DropdownOption>
                                     ))}
