@@ -180,7 +180,7 @@ const PersonalInformationPage = () => {
         <>
             <Header />
             <Layout>
-                {!isLoading ? (
+                {isLoading ? (
                     <S.LoadingContainer>
                         <S.LoadingIcon src={Loading} alt="로딩 아이콘" />
                         <S.LoadingTitle>자격 요건을 분석하는 중입니다.</S.LoadingTitle>
