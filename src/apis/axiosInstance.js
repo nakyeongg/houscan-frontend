@@ -6,14 +6,24 @@ const axiosInstance = axios.create({
 });
 
 let isRefreshing = false;
+let failedQueue = []; // 실패한 요청들
+
+const processQueue = (error, token = null) => {
+    failedQueue.forEach(prom => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+    failedQueue = [];
+};
 
 axiosInstance.interceptors.request.use(
     (config) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             config.headers["Authorization"] = `Bearer ${accessToken}`;
-        } else {
-            delete config.headers["Authorization"];
         }
         return config;
     },
@@ -46,7 +56,14 @@ axiosInstance.interceptors.response.use(
 
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
-                return Promise.reject(error);
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then(token => {
+                        originalRequest.headers['Authorization'] = `Bearer ${token}`;
+                        return axiosInstance(originalRequest);
+                    })
+                    .catch(err => Promise.reject(err));
             }
             originalRequest._retry = true;
             isRefreshing = true;
@@ -60,10 +77,11 @@ axiosInstance.interceptors.response.use(
             try {
                 // 새로운 AccessToken을 받아와서 다시 요청 보내기
                 const newAccessToken = await getNewAcessToken(refreshToken);
-                axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+                processQueue(null, newAccessToken);
                 originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
                 return axiosInstance(originalRequest);
             } catch (error) {
+                processQueue(error, null);
                 handleLogout();
                 return Promise.reject(error);
             } finally {
