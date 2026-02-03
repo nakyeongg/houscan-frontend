@@ -45,50 +45,46 @@ const SubscriptionListPage = () => {
         { text: '3순위', value: 2 },
     ]
 
-
     useEffect(() => {
         const rank = getParamRank();
         const user = getParamUser();
         const type = getParamType();
 
-        // URL에 rank가 있으면 숫자와 텍스트 세팅, 없으면 초기화
         setSelectedRank(rank !== null ? Number(rank) : undefined);
         setSelectedRankText(rank !== null ? ['1순위', '2순위', '3순위'][Number(rank)] : undefined);
 
-        // URL에 있는 user, type 값을 state에 반영
         setFilterUser(user);
         setFilterType(type);
-    }, [searchParams]);
+    }, [searchParams])
 
     const updateURL = (key, value) => {
         const newParams = new URLSearchParams(searchParams);
         if (value === undefined || value === '전체' || value === null) {
-            newParams.delete(key); // 기본값이면 URL에서 파라미터 제거 (깔끔함)
+            newParams.delete(key);
         } else {
-            newParams.set(key, value); // 값이 있으면 URL에 기록
+            newParams.set(key, value);
         }
         setSearchParams(newParams);
-    };
+    }
 
     const handleRank = (event) => {
         const value = Number(event.target.value);
-        // State를 직접 바꾸지 말고 URL만 업데이트 -> useEffect가 State를 바꿈
         if (value === selectedRank) {
             updateURL('rank', null);
         } else {
             updateURL('rank', value);
         }
-    };
+    }
 
     const handleSelectUser = (option) => {
-        updateURL('user', option); // URL 업데이트
+        updateURL('user', option);
         setIsUserOpen(false);
-    };
+    }
 
     const handleSelectType = (option) => {
-        updateURL('type', option); // URL 업데이트
+        updateURL('type', option);
         setIsTypeOpen(false);
-    };
+    }
 
     const getUserId = async () => {
         try {
