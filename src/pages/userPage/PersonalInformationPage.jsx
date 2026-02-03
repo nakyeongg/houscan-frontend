@@ -180,8 +180,15 @@ const PersonalInformationPage = () => {
         <>
             <Header />
             <Layout>
-                {isLoading ? (
-                    <S.LoadingIcon src={Loading} alt="로딩 아이콘" />
+                {!isLoading ? (
+                    <S.LoadingContainer>
+                        <S.LoadingIcon src={Loading} alt="로딩 아이콘" />
+                        <S.LoadingTitle>자격 요건을 분석하는 중입니다.</S.LoadingTitle>
+                        <S.LoadingDescription>
+                            사용자님의 정보를 바탕으로 맞춤 공고를 분석하고 있습니다.<br />
+                            결과 산출까지 <strong>최대 2분</strong>이 소요될 수 있으니 잠시만 기다려주세요.
+                        </S.LoadingDescription>
+                    </S.LoadingContainer>
                 ) : (
                     <>
                         <S.Title>개인 정보 입력</S.Title>

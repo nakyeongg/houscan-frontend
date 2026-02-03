@@ -1,14 +1,42 @@
 import styled from "styled-components";
 
+
+export const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+`
+
 export const LoadingIcon = styled.img`
-    width: 100px;
+    width: 80px;
+    margin-bottom: 24px;
+`
+
+export const LoadingTitle = styled.h2`
+    font-size: 20px;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 12px;
+`
+
+export const LoadingDescription = styled.p`
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    
+    strong {
+        font-weight: 600;
+    }
 `
 
 export const Title = styled.h1`
     margin-bottom: 40px;
     font-size: 24px;
-    font-family: ${({ theme }) => 
-    theme.fonts.SUITSemiBold["font-family"]};
+    font-family: ${({ theme }) =>
+        theme.fonts.SUITSemiBold["font-family"]};
     color: ${({ theme }) => theme.colors.mainColor};
 `
 
@@ -28,8 +56,8 @@ export const QuestionWrapper = styled.div`
 
 export const Question = styled.h2`
     font-size: 18px;
-    font-family: ${({ theme }) => 
-    theme.fonts.SUITSemiBold["font-family"]};
+    font-family: ${({ theme }) =>
+        theme.fonts.SUITSemiBold["font-family"]};
 `
 
 export const Button = styled.button`
