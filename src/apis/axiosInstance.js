@@ -43,6 +43,7 @@ const getNewAcessToken = async (refreshToken) => {
         return newAccessToken;
     } catch (error) {
         console.log('새로운 acessToken 가져오기 실패', error);
+        throw error;
     }
 }
 
