@@ -96,7 +96,6 @@ axiosInstance.interceptors.response.use(
 const handleLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    window.location.href = '/';
 }
 
 export default axiosInstance;
