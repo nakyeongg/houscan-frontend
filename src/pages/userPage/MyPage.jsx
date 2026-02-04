@@ -9,7 +9,7 @@ import axiosInstance from '../../apis/axiosInstance';
 import { useGlobalContext } from '../../context/context';
 
 const MyPage = () => {
-    const {isLogin, setIsLogin} = useGlobalContext();
+    const { isLogin, setIsLogin } = useGlobalContext();
     const [name, setName] = useState('');
     const [changedName, setChangedName] = useState('');
     const [email, setEmail] = useState('');
@@ -18,14 +18,14 @@ const MyPage = () => {
     const [activeModal, setActiveModal] = useState(null);
     const navigate = useNavigate();
     console.log('isLogin?', isLogin);
-    
+
     const handleInfo = async () => {
         try {
             const response = await axiosInstance.get('/api/users/my');
             console.log('나의 정보 가져오기 성공', response);
             setName(response.data.nickname);
             setEmail(response.data.email);
-        } catch(error) {
+        } catch (error) {
             console.log('나의 정보 가져오기 실패', error);
         }
     }
@@ -43,12 +43,12 @@ const MyPage = () => {
     }
 
     const changeName = async () => {
-        console.log('changedName',changedName);
+        console.log('changedName', changedName);
         if (!changedName.trim()) {
             alert('닉네임을 입력해주세요.');
             return;
         }
-        if (changedName===name) {
+        if (changedName === name) {
             alert('기존과 다른 닉네임을 입력해주세요.');
             return;
         }
@@ -61,7 +61,7 @@ const MyPage = () => {
             setName(changedName.trim());
             setChangedName('');
             alert('닉네임이 성공적으로 변경되었습니다.');
-        } catch(error) {
+        } catch (error) {
             console.log('닉네임 변경 에러', error);
             alert('닉네임 변경에 실패했습니다. 다시 시도해주세요.');
         }
@@ -78,7 +78,7 @@ const MyPage = () => {
             console.log('비밀번호 변경 요청 성공', response);
             setActiveModal(null);
             alert(response.data.message);
-        } catch(error) {
+        } catch (error) {
             console.log('비밀번호 변경 에러', error);
             alert(error.response.data.message);
         }
@@ -89,9 +89,10 @@ const MyPage = () => {
             const response = await axiosInstance.delete('/api/users/auth/');
             console.log('로그아웃 성공', response);
             localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
             setIsLogin(false);
             navigate('/');
-        } catch(error) {
+        } catch (error) {
             console.log('로그아웃 실패', error);
         }
     }
@@ -101,7 +102,7 @@ const MyPage = () => {
             const response = await axiosInstance.delete('/api/users/delete/');
             console.log('회원탈퇴 성공', response);
             setActiveModal('deleteConfirm');
-        } catch(error) {
+        } catch (error) {
             console.log('회원탈퇴 실패', error);
 
         }
@@ -126,7 +127,7 @@ const MyPage = () => {
             changeName();
         }
     }
-    
+
     const handlePasswordEnter = (event) => {
         if (event.key === "Enter") {
             ResetPassword();
@@ -138,7 +139,7 @@ const MyPage = () => {
     }, [])
 
     const handleModal = () => {
-        if (activeModal==='nickname') {
+        if (activeModal === 'nickname') {
             return (
                 <InputModal
                     title='닉네임 변경'
@@ -152,7 +153,7 @@ const MyPage = () => {
                     onKeyDown1={handleNameEnter}
                 />
             )
-        } else if (activeModal==='password') {
+        } else if (activeModal === 'password') {
             return (
                 <InputModal
                     title='비밀번호 변경'
@@ -172,7 +173,7 @@ const MyPage = () => {
                     onKeyDown2={handlePasswordEnter}
                 />
             )
-        } else if (activeModal==='logout') {
+        } else if (activeModal === 'logout') {
             return (
                 <ButtonModal
                     title='로그아웃 하시겠습니까?'
@@ -182,7 +183,7 @@ const MyPage = () => {
                     whiteButtonClick={() => setActiveModal(null)}
                 />
             )
-        } else if (activeModal==='delete') {
+        } else if (activeModal === 'delete') {
             return (
                 <ButtonModal
                     title='정말로 탈퇴하시겠습니까?'
@@ -190,9 +191,9 @@ const MyPage = () => {
                     whtieButtonText='취소'
                     blueButtonClick={handleDelete}
                     whiteButtonClick={() => setActiveModal(null)}
-                    />
+                />
             )
-        } else if (activeModal==='deleteConfirm') {
+        } else if (activeModal === 'deleteConfirm') {
             return (
                 <ButtonModal
                     title='탈퇴가 완료되었습니다'
@@ -215,7 +216,7 @@ const MyPage = () => {
                     <S.Category>닉네임</S.Category>
                     <S.ValueWrapper>
                         <S.Value>{name}</S.Value>
-                        <S.EditButton onClick={() =>{setActiveModal('nickname')}}>닉네임 변경</S.EditButton>
+                        <S.EditButton onClick={() => { setActiveModal('nickname') }}>닉네임 변경</S.EditButton>
                     </S.ValueWrapper>
                 </S.Wrapper>
                 <S.Wrapper>
@@ -228,11 +229,11 @@ const MyPage = () => {
                     <S.Category>비밀번호</S.Category>
                     <S.ValueWrapper>
                         <S.Value>**********</S.Value>
-                        <S.EditButton onClick={() => {setActiveModal('password')}}>비밀번호 변경</S.EditButton>
+                        <S.EditButton onClick={() => { setActiveModal('password') }}>비밀번호 변경</S.EditButton>
                     </S.ValueWrapper>
                 </S.Wrapper>
                 <S.InformationButton onClick={() => navigate('/information')}>개인정보 입력 페이지로 이동</S.InformationButton>
-                <S.GreyButton onClick={() =>{setActiveModal('logout')}}>로그아웃</S.GreyButton>
+                <S.GreyButton onClick={() => { setActiveModal('logout') }}>로그아웃</S.GreyButton>
                 <S.GreyButton onClick={() => setActiveModal('delete')}>회원탈퇴</S.GreyButton>
             </Layout>
             {handleModal()}
