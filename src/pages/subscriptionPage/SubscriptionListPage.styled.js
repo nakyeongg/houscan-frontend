@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
     width: 100%;
     margin-bottom: 27px;
 
@@ -18,7 +17,6 @@ export const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
     gap: 15px;
-    width: 100%;
 `
 
 export const Input = styled.input`
@@ -45,6 +43,13 @@ export const DropdownWrapper = styled.div`
     gap: 12px;
     z-index: 1;
     justify-content: flex-end;
+    margin-left: auto;
+
+    @media screen and (max-width: 650px) {
+        margin-left: 0;
+        margin-right: 0; 
+        width: auto;
+    }
 `
 
 export const Dropdown = styled.div`
